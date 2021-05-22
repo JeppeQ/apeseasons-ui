@@ -1,0 +1,29 @@
+@font-face {
+  font-family: "astrospace";
+  src: local("AstroSpace"),
+    url("./assets/fonts/AstroSpace.ttf") format("truetype");
+  font-weight: normal;
+}
+
+a {
+  text-decoration: none;
+}
+
+.spaceFont {
+  font-family: 'astrospace' !important;
+}
+
+.background {
+  height: 100%;
+  background: radial-gradient(ellipse at bottom, #30001f 0%, #131142 100%);
+  overflow: hidden;
+  height: 100vh;
+  width: 100vw;
+}
+
+.main {
+  position: absolute;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+}
