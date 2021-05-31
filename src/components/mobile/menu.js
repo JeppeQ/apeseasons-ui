@@ -10,16 +10,9 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 
-import { Web3Context } from '../../contexts/web3'
-import { PlayerContext } from '../../contexts/player'
-import { ellipseAddress } from '../../helpers/utilities'
-import metamaskLogo from '../../assets/images/metamask-icon.png'
-
 export default function Menu(props) {
   const classes = useStyles()
   const history = useHistory()
-  const web3 = useContext(Web3Context)
-  const player = useContext(PlayerContext)
 
   return (
     <SwipeableDrawer
@@ -36,13 +29,9 @@ export default function Menu(props) {
             </ListItem>
           ))}
           <ListItem style={{ marginTop: '10px' }}>
-            {player.info.address
-              ? <Button startIcon={<img src={metamaskLogo} width="21" height="21" alt='metaMaskIcon' />}>
-                {ellipseAddress(player.info.address, 4, 4)}
-              </Button>
-              : <Button onClick={() => web3.connect()} variant='outlined'>
-                connect wallet
-              </Button>}
+            <Button onClick={() => {}} variant='outlined'>
+              connect wallet
+            </Button>
           </ListItem>
         </List>
       </Box>

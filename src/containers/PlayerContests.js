@@ -10,7 +10,7 @@ import Typography from '@material-ui/core/Typography'
 import { makeStyles } from '@material-ui/core/styles'
 import Skeleton from '@material-ui/lab/Skeleton'
 
-import { Contest } from '../components/contest'
+import { PlayerContest } from '../components/playerContest'
 import { fadeVariant } from '../helpers/variants'
 
 const competitions = [
@@ -26,11 +26,8 @@ function Contests() {
     >
       <motion.div variants={fadeVariant} initial='initial' exit='exit' animate='enter'>
         <Grid container direction='column' alignItems='center' justify='center' className={classes.mainContainer}>
-          <Box mb={2}>
-            <Typography variant='h3'>Contests</Typography>
-          </Box>
           {competitions.map(competition => {
-            return <Contest />
+            return <PlayerContest />
           })}
         </Grid >
       </motion.div>

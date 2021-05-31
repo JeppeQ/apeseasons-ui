@@ -16,6 +16,12 @@ export const mainTheme = createMuiTheme({
     body1: {
       fontSize: '15px'
     },
+    h2: {
+      fontSize: 42,
+      color: 'white',
+      fontFamily: 'system-ui',
+      fontWeight: 'bold'
+    },
     h3: {
       letterSpacing: '1px',
       fontFamily: 'astrospace',
@@ -24,14 +30,22 @@ export const mainTheme = createMuiTheme({
     h4: {
       fontSize: 35,
     },
+    h5: {
+      fontSize: 16,
+      color: 'white',
+      fontFamily: 'system-ui',
+      fontWeight: 'bold'
+    },
     h6: {
       fontSize: 15,
       color: 'rgba(255, 255, 255, 0.7)',
       fontFamily: 'astrospace',
       letterSpacing: '1px'
     },
-    subtitle2: {
-      fontStyle: 'italic'
+    subtitle1: {
+      fontSize: 13,
+      color: 'rgba(255, 255, 255, 0.7)',
+      fontFamily: 'astrospace',
     }
   },
   overrides: {

@@ -15,14 +15,11 @@ import Box from '@material-ui/core/Box'
 import Header from './components/header'
 import { mainTheme } from './helpers/themes'
 import { routes } from './helpers/routes'
-import { Web3Provider } from './contexts/web3'
-import { PlayerProvider } from './contexts/player'
-import { TournamentProvider } from './contexts/tournament'
 
 if (process.env.NODE_ENV === 'production') {
-  ReactGA.initialize("UA-194864148-1")
+  ReactGA.initialize("")
 } else {
-  ReactGA.initialize("ga-disabled-UA-194864148-1")
+  ReactGA.initialize("")
 }
 
 function App() {
@@ -31,24 +28,18 @@ function App() {
       <Box className='background'>
         <ThemeProvider theme={mainTheme}>
           <CssBaseline />
-          <TournamentProvider>
-            <PlayerProvider>
-              <Web3Provider>
-                <Box className='main'>
-                  <Header />
-                  <Route render={({ location }) => (
-                    <AnimatePresence exitBeforeEnter>
-                      <Switch location={location} key={location.pathname}>
-                        {routes.map((route, index) => {
-                          return <Route key={index} path={route.path} component={route.content} />
-                        })}
-                      </Switch>
-                    </AnimatePresence>
-                  )} />
-                </Box>
-              </Web3Provider>
-            </PlayerProvider>
-          </TournamentProvider>
+          <Box className='main'>
+            <Header />
+            <Route render={({ location }) => (
+              <AnimatePresence exitBeforeEnter>
+                <Switch location={location} key={location.pathname}>
+                  {routes.map((route, index) => {
+                    return <Route key={index} path={route.path} component={route.content} />
+                  })}
+                </Switch>
+              </AnimatePresence>
+            )} />
+          </Box>
         </ThemeProvider>
       </Box>
     </Router>

@@ -15,7 +15,7 @@ import Button from '@material-ui/core/Button'
 
 import { componentStyles } from './styles'
 
-export function Contest(props) {
+export function PlayerContest(props) {
   const classes = useStyles()
   const _styles = componentStyles()
   const [open, setOpen] = useState(false)
@@ -32,29 +32,12 @@ export function Contest(props) {
           <Box className={classes.contestDetails}>
             <AppBar position="static">
               <Tabs value={value} onChange={handleChange}>
+                <Tab label="tokens" />
+                <Tab label="trade" />
                 <Tab label="players" />
-                <Tab label="prizing" />
-                <Tab label="rules" />
+                <Tab label="info" />
               </Tabs>
             </AppBar>
-            <div role="tabpanel" hidden={value !== index} id='playersTab'>
-              {value === index && (
-                <Box p={3}>
-                  <Typography>Tab one</Typography>
-                </Box>
-              )}
-            </div>
-          </Box>
-          <Box className={classes.signupContainer}>
-            <Box display='flex' alignItems='center' flexDirection='column'>
-              <Typography variant='subtitle1'>Duration</Typography>
-              <Typography variant='h5'>7 Days</Typography>
-            </Box>
-            <Box display='flex' alignItems='center' flexDirection='column'>
-              <Typography variant='subtitle1'>Sign up bonus</Typography>
-              <Typography variant='h5'>2 apes</Typography>
-            </Box>
-            <Button variant='contained' color='primary'>ENTER</Button>
           </Box>
         </Box>
       </Collapse>
@@ -66,15 +49,15 @@ export function Contest(props) {
       <Box className={classes.contestOverview} onClick={() => setOpen(!open)}>
         <Box className={classes.section}>
           <Typography variant='subtitle1'>name</Typography>
-          <Typography variant='h5'>ApeSeason #1</Typography>
+          <Typography variant='h5'>Season #1</Typography>
         </Box>
         <Box className={classes.section}>
-          <Typography variant='subtitle1'>Buy in</Typography>
-          <Typography variant='h5'>100 DAI</Typography>
+          <Typography variant='subtitle1'>Position</Typography>
+          <Typography variant='h5'>#32</Typography>
         </Box>
         <Box className={classes.section}>
           <Typography variant='subtitle1'>Players</Typography>
-          <Typography variant='h5'>52 / 100</Typography>
+          <Typography variant='h5'>52</Typography>
         </Box>
         <Box className={classes.section}>
           <Typography variant='subtitle1'>starts in</Typography>
@@ -113,18 +96,8 @@ const useStyles = makeStyles({
   },
   contestDetails: {
     height: '500px',
-    width: '75%',
+    width: '100%',
     backgroundColor: '#231E2F',
     boxShadow: '0px 2px 5px rgba(0, 0, 0, 0.4)',
-  },
-  signupContainer: {
-    height: '500px',
-    width: '24%',
-    backgroundColor: '#231E2F',
-    boxShadow: '0px 2px 5px rgba(0, 0, 0, 0.4)',
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'space-evenly',
-    alignItems: 'center'
   },
 });

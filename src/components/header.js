@@ -18,8 +18,6 @@ import ExposurePlus1Icon from '@material-ui/icons/ExposurePlus1'
 import useMediaQuery from '@material-ui/core/useMediaQuery'
 import AnnouncementIcon from '@material-ui/icons/Announcement'
 
-import { PlayerContext } from '../contexts/player'
-import { Web3Context } from '../contexts/web3'
 import { ellipseAddress } from '../helpers/utilities'
 import Menu from './mobile/menu'
 import logo from '../assets/images/logo.png'
@@ -34,6 +32,14 @@ const menuItems = [
     activeWidth: '150px',
     icon: <InfoIcon />
   },
+  {
+    name: 'MY CONTESTS',
+    path: '/mycontests',
+    left: '230px',
+    width: '150px',
+    activeWidth: '150px',
+    icon: <InfoIcon />
+  },
 ]
 
 function Header() {
@@ -42,8 +48,6 @@ function Header() {
   const mobile = useMediaQuery('(max-width: 850px)')
   const [active, setActive] = useState({})
   const [menu, openMenu] = useState(false)
-  const player = useContext(PlayerContext)
-  const web3 = useContext(Web3Context)
 
   useEffect(() => {
     setActive(menuItems.find(item => location.pathname === item.path))
@@ -96,7 +100,7 @@ function Header() {
                 item.name === active.name
                   ? { textShadow: '0 0 1px white' }
                   : { textShadow: 'none', opacity: 0.75 }
-                }>
+              }>
                 {item.name}
               </Box>
             </Link>
@@ -104,13 +108,9 @@ function Header() {
         </Grid>
       </Grid>
       <Grid item>
-        {player.info.address
-          ? <Button startIcon={<img src={metamaskLogo} width="21" height="21" alt='metaMaskIcon' />}>
-            {ellipseAddress(player.info.address, 4, 4)}
-          </Button>
-          : <Button onClick={() => web3.connect()}>
-            connect wallet
-          </Button>}
+        <Button onClick={() => {}}>
+          connect wallet
+        </Button>
       </Grid>
     </Grid >
   )
@@ -170,6 +170,5 @@ const useStyles = makeStyles({
     width: '90px',
     cursor: 'pointer',
     margin: '24px',
-    position: 'fixed'
   }
 });

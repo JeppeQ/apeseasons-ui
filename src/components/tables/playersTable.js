@@ -15,9 +15,6 @@ import { makeStyles } from '@material-ui/core/styles'
 import Skeleton from '@material-ui/lab/Skeleton'
 
 import { styles } from './styles'
-import { SellDialog } from '../dialogs/sellDialog'
-import { PlayerContext } from '../../contexts/player'
-import { TournamentContext } from '../../contexts/tournament'
 
 const CustomTableCell = withStyles(() => ({
   head: {
@@ -31,51 +28,16 @@ const CustomTableCell = withStyles(() => ({
 }))(TableCell)
 
 const cells = [
-  { id: 'name', label: 'Asset', align: 'left', sortable: true },
-  { id: 'amount', label: 'Balance', align: 'right', sortable: true },
-  { id: 'value', label: 'Value', align: 'right', sortable: true },
-  { id: 'returns', label: 'Return', align: 'right', sortable: true },
-  { id: 'sell', label: 'Sell', align: 'center', sortable: false },
+  { id: 'player', label: 'Player', align: 'left', sortable: true },
+  { id: 'networth', label: 'Net worth', align: 'right', sortable: true },
 ]
 
-export function PortfolioTable() {
+export function PlayersTable() {
   const _classes = styles()
   const classes = useStyles()
-  const player = useContext(PlayerContext)
-  const tournament = useContext(TournamentContext)
-  
-  const [sell, setSell] = useState()
-  const [orderBy, setOrderBy] = useState()
-  const [direction, setDirection] = useState()
 
-  function headerClick(id, sortable) {
-    if (!sortable) {
-      return
-    }
-
-    if (orderBy === id) {
-      if (direction === 'DESC') {
-        setDirection('ASC')
-      } else {
-        setDirection('DESC')
-      }
-    } else {
-      setOrderBy(id)
-      setDirection('ASC')
-    }
-  }
-
-  function sortPortfolio() {
-    if (!orderBy) {
-      return player.holdings.sort((a, b) => b['value'] - a['value'])
-    }
-
-    if (direction === 'DESC') {
-      return player.holdings.sort((a, b) => a[orderBy] < b[orderBy] ? -1 : 1)
-    }
-
-    return player.holdings.sort((a, b) => a[orderBy] > b[orderBy] ? -1 : 1)
-  }
+  const [loading, setLoading] = useState(false)
+  const [players, setPlayers] = useState([])
 
   function loadingRow() {
     return (
@@ -92,31 +54,28 @@ export function PortfolioTable() {
   return (
     <React.Fragment>
       <Scrollbars>
-        <Table className={classes.portfolioTable} size='small'>
+        <Table className={classes.playerTable} size='small'>
           <TableHead>
             <TableRow style={{ borderBottom: '1px solid grey' }}>
               {cells.map(cell => (
-                <CustomTableCell key={cell.id} align={cell.align} onClick={() => headerClick(cell.id, cell.sortable)}>
-                  <Box style={{ cursor: cell.sortable ? 'pointer' : '', userSelect: 'none' }}>
-                    {orderBy === cell.id
-                      ? <Typography variant='body1' color='textSecondary' className={_classes.activeColumn}>{cell.label}</Typography>
-                      : <Typography variant='body1' color='textSecondary'>{cell.label}</Typography>
-                    }
+                <CustomTableCell key={cell.id} align={cell.align}>
+                  <Box>
+                    <Typography variant='body1' color='textSecondary'>{cell.label}</Typography>
                   </Box>
                 </CustomTableCell>
               ))}
             </TableRow>
           </TableHead>
           <TableBody>
-            {player.assetsLoading && loadingRow()}
+            {loading && loadingRow()}
 
-            {!player.assetsLoading && player.holdings.length === 0 && 
+            {!loading && player.length === 0 &&
               <Box p={2}>
                 <Typography variant='subtitle2' color='textSecondary'>No assets</Typography>
               </Box>
             }
 
-            {!player.assetsLoading && sortPortfolio().map(row => (
+            {!loading && players.map(row => (
               <TableRow key={row.id}>
                 <CustomTableCell>
                   <Box display='flex'>
@@ -142,29 +101,15 @@ export function PortfolioTable() {
             ))}
           </TableBody>
         </Table>
-        {sell && <SellDialog
-          open={sell}
-          close={() => setSell(false)}
-          token={sell}
-        />}
       </Scrollbars>
     </React.Fragment>
   )
 }
 
 const useStyles = makeStyles({
-  portfolioTable: {
+  playerTable: {
     width: '100%',
     backgroundColor: '#1E2530',
     borderCollapse: 'collapse'
-  },
-  sellButton: {
-    padding: '1px 0',
-    fontSize: '13px',
-    fontWeight: 'bold',
-    backgroundColor: '#c50606',
-    "&:hover": {
-      backgroundColor: '#e60808'
-    }
   },
 })
