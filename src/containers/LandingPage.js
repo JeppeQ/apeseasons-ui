@@ -99,8 +99,8 @@ function SlideThree() {
     <Box className={classes.slideContainer} style={{ width: '80%' }}>
       <Box className={classes.slideTextContainer} style={{ width: '40%' }}>
         <Typography className={classes.slideTwoText}>- Contests are powered by the $APE token</Typography>
-        <Typography className={classes.slideTwoText}>- All players receive $APE tokens upon entry</Typography>
-        <Typography className={classes.slideTwoText}>- 5% of the prize pools goes to $APE holders</Typography>
+        <Typography className={classes.slideTwoText}>- Early contestants are rewarded with $APE tokens upon entry</Typography>
+        <Typography className={classes.slideTwoText}>- 5% of the prize pools goes to $APE stakers</Typography>
       </Box>
       <Box className={classes.slideImageContainer}>
         <Lottie animationData={animation} initialSegment={[50, 450]} loop={false} />
@@ -131,7 +131,8 @@ const useStyles = makeStyles({
     width: '100%',
     display: 'flex',
     flexDirection: 'column',
-    marginBottom: '350px'
+    marginBottom: '25vh',
+    marginTop: '-50px'
   },
   header: {
     position: 'fixed',
@@ -143,7 +144,7 @@ const useStyles = makeStyles({
   },
   buttonsContainer: {
     position: 'fixed',
-    bottom: '15%',
+    bottom: '10%',
     right: '0',
     display: 'flex',
     flexDirection: 'column',
@@ -151,8 +152,8 @@ const useStyles = makeStyles({
   slideContainer: {
     display: 'flex',
     width: '80%',
-    height: '500px',
-    margin: '15vh auto 0',
+    height: '80vh',
+    margin: 'auto',
     justifyContent: 'center',
     alignItems: 'center',
   },

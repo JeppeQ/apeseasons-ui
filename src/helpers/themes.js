@@ -46,6 +46,11 @@ export const mainTheme = createMuiTheme({
       fontSize: 13,
       color: 'rgba(255, 255, 255, 0.7)',
       fontFamily: 'astrospace',
+    },
+    subtitle2: {
+      fontSize: 14,
+      color: 'rgba(255, 255, 255, 0.6)',
+      lineHeight: 'none'
     }
   },
   overrides: {
@@ -75,6 +80,6 @@ export const mainTheme = createMuiTheme({
       paper: {
         margin: '10px'
       }
-    }
+    },
   },
 })

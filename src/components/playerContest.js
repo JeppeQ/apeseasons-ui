@@ -14,6 +14,8 @@ import Tab from '@material-ui/core/Tab'
 import Button from '@material-ui/core/Button'
 
 import { componentStyles } from './styles'
+import { AssetsTable } from './tables/assetsTable'
+import { SwapTokens } from './contest/swapTokens'
 
 export function PlayerContest(props) {
   const classes = useStyles()
@@ -32,12 +34,29 @@ export function PlayerContest(props) {
           <Box className={classes.contestDetails}>
             <AppBar position="static">
               <Tabs value={value} onChange={handleChange}>
-                <Tab label="tokens" />
-                <Tab label="trade" />
+                <Tab label="assets" />
+                <Tab label="swap" />
                 <Tab label="players" />
                 <Tab label="info" />
               </Tabs>
             </AppBar>
+
+            <Box role="tabpanel" hidden={value !== 0} id='assetsTab' className={_styles.tabContent}>
+              {value === 0 && (
+                <Box p={3} className={_styles.tabContent}>
+                  <AssetsTable />
+                </Box>
+              )}
+            </Box>
+
+            <Box role="tabpanel" hidden={value !== 1} id='swapTab' className={_styles.tabContent}>
+              {value === 1 && (
+                <Box className={_styles.tabContent}>
+                  <SwapTokens />
+                </Box>
+              )}
+            </Box>
+
           </Box>
         </Box>
       </Collapse>

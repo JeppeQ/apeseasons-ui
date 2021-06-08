@@ -18,20 +18,22 @@ import { ellipseAddress } from '../../helpers/utilities'
 import { styles, CustomTableCell } from './styles'
 
 const cells = [
-  { id: 'player', label: 'Player', align: 'left', sortable: true },
-  { id: 'networth', label: 'Net worth', align: 'right', sortable: true },
+  { id: 'token', label: 'Token', align: 'left', sortable: true },
+  { id: 'total', label: 'Total', align: 'right', sortable: true },
+  { id: 'usd', label: 'USD Value', align: 'right', sortable: true },
+  { id: 'actions', label: 'Actions', align: 'right' },
 ]
 
-const playerData = [
-  { address: '08XABC5GHAIWKJEWQKE23', networth: 100 },
-  { address: '08BGABC5GHAIWKHAJ89JL', networth: 100 },
+const assetData = [
+  { token: 'Alpha Finance', symbol: 'ALPHA', total: 52, USD: 50 },
+  { token: 'Bitcoin', symbol: 'BTC', total: 2, USD: 50 },
 ]
-export function PlayersTable() {
+export function AssetsTable() {
   const _classes = styles()
   const classes = useStyles()
 
   const [loading, setLoading] = useState(false)
-  const [players, setPlayers] = useState(playerData)
+  const [assets, setAssets] = useState(assetData)
 
   function loadingRow() {
     return (
@@ -63,19 +65,25 @@ export function PlayersTable() {
           <TableBody>
             {loading && loadingRow()}
 
-            {!loading && players.length === 0 &&
+            {!loading && assets.length === 0 &&
               <Box p={2}>
                 <Typography variant='subtitle2' color='textSecondary'>No assets</Typography>
               </Box>
             }
 
-            {!loading && players.map(player => (
-              <TableRow key={player.address}>
+            {!loading && assets.map(asset => (
+              <TableRow key={asset.token}>
                 <CustomTableCell>
-                  {ellipseAddress(player.address, 8, 4)}
+                  {asset.token}
                 </CustomTableCell>
                 <CustomTableCell align={'right'}>
-                  {player.networth} DAI
+                  {asset.total}
+                </CustomTableCell>
+                <CustomTableCell align={'right'}>
+                  {asset.USD}
+                </CustomTableCell>
+                <CustomTableCell align={'right'}>
+                  <Box className={classes.tradeLink} onClick={() => {}}>SWAP</Box>
                 </CustomTableCell>
               </TableRow>
             ))}
@@ -91,5 +99,14 @@ const useStyles = makeStyles({
     width: '100%',
     backgroundColor: '#231E2F',
     borderCollapse: 'collapse'
+  },
+  tradeLink: {
+    cursor: 'pointer',
+    fontSize: '12px',
+    fontFamily: 'astrospace',
+    color: '#058665',
+    "&:hover": {
+      color: 'rgba(14, 70, 26, 0.9)'
+    }
   },
 })

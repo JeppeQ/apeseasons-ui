@@ -14,6 +14,8 @@ import Tab from '@material-ui/core/Tab'
 import Button from '@material-ui/core/Button'
 
 import { componentStyles } from './styles'
+import { PlayersTable } from './tables/playersTable'
+import { PrizingTable } from './tables/prizingTable'
 
 export function Contest(props) {
   const classes = useStyles()
@@ -30,6 +32,7 @@ export function Contest(props) {
       <Collapse in={open} timeout="auto" unmountOnExit>
         <Box display='flex' justifyContent='space-between' mt={4}>
           <Box className={classes.contestDetails}>
+
             <AppBar position="static">
               <Tabs value={value} onChange={handleChange}>
                 <Tab label="players" />
@@ -37,13 +40,30 @@ export function Contest(props) {
                 <Tab label="rules" />
               </Tabs>
             </AppBar>
-            <div role="tabpanel" hidden={value !== index} id='playersTab'>
-              {value === index && (
-                <Box p={3}>
-                  <Typography>Tab one</Typography>
+
+            <Box role="tabpanel" hidden={value !== 0} id='playersTab' className={_styles.tabContent}>
+              {value === 0 && (
+                <Box p={3} className={_styles.tabContent}>
+                  <PlayersTable />
                 </Box>
               )}
-            </div>
+            </Box>
+
+            <Box role="tabpanel" hidden={value !== 1} id='prizingTab' className={_styles.tabContent}>
+              {value === 1 && (
+                <Box p={3} className={_styles.tabContent}>
+                  <PrizingTable />
+                </Box>
+              )}
+            </Box>
+
+            <Box role="tabpanel" hidden={value !== 2} id='rulesTab' className={_styles.tabContent}>
+              {value === 2 && (
+                <Box p={3} className={_styles.tabContent}>
+                  <Typography>Why do we need rules?</Typography>
+                </Box>
+              )}
+            </Box>
           </Box>
           <Box className={classes.signupContainer}>
             <Box display='flex' alignItems='center' flexDirection='column'>
@@ -126,5 +146,5 @@ const useStyles = makeStyles({
     flexDirection: 'column',
     justifyContent: 'space-evenly',
     alignItems: 'center'
-  },
+  }
 });

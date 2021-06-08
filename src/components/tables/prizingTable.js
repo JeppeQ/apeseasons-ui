@@ -18,20 +18,20 @@ import { ellipseAddress } from '../../helpers/utilities'
 import { styles, CustomTableCell } from './styles'
 
 const cells = [
-  { id: 'player', label: 'Player', align: 'left', sortable: true },
-  { id: 'networth', label: 'Net worth', align: 'right', sortable: true },
+  { id: 'Placement', label: 'Placement', align: 'left', sortable: true },
+  { id: 'Prize', label: 'Prize', align: 'right', sortable: true },
 ]
 
-const playerData = [
-  { address: '08XABC5GHAIWKJEWQKE23', networth: 100 },
-  { address: '08BGABC5GHAIWKHAJ89JL', networth: 100 },
+const prizingData = [
+  { placement: '1', prize: 150 },
+  { placement: '2', prize: 100 },
 ]
-export function PlayersTable() {
+export function PrizingTable() {
   const _classes = styles()
   const classes = useStyles()
 
   const [loading, setLoading] = useState(false)
-  const [players, setPlayers] = useState(playerData)
+  const [prizes, setPrizes] = useState(prizingData)
 
   function loadingRow() {
     return (
@@ -63,19 +63,19 @@ export function PlayersTable() {
           <TableBody>
             {loading && loadingRow()}
 
-            {!loading && players.length === 0 &&
+            {!loading && prizes.length === 0 &&
               <Box p={2}>
                 <Typography variant='subtitle2' color='textSecondary'>No assets</Typography>
               </Box>
             }
 
-            {!loading && players.map(player => (
-              <TableRow key={player.address}>
+            {!loading && prizes.map(prize => (
+              <TableRow key={prize.placement}>
                 <CustomTableCell>
-                  {ellipseAddress(player.address, 8, 4)}
+                  {prize.placement}
                 </CustomTableCell>
                 <CustomTableCell align={'right'}>
-                  {player.networth} DAI
+                  {prize.prize} DAI
                 </CustomTableCell>
               </TableRow>
             ))}
@@ -87,7 +87,7 @@ export function PlayersTable() {
 }
 
 const useStyles = makeStyles({
-  playerTable: {
+  prizingTable: {
     width: '100%',
     backgroundColor: '#231E2F',
     borderCollapse: 'collapse'
