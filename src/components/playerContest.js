@@ -72,14 +72,10 @@ export function PlayerContest(props) {
         </Box>
         <Box className={classes.section}>
           <Typography variant='subtitle1'>Position</Typography>
-          <Typography variant='h5'>#32</Typography>
+          <Typography variant='h5'>32/52</Typography>
         </Box>
         <Box className={classes.section}>
-          <Typography variant='subtitle1'>Players</Typography>
-          <Typography variant='h5'>52</Typography>
-        </Box>
-        <Box className={classes.section}>
-          <Typography variant='subtitle1'>starts in</Typography>
+          <Typography variant='subtitle1'>ends in</Typography>
           <Typography variant='h5'>7 Days</Typography>
         </Box>
         <Box className={classes.section}>
