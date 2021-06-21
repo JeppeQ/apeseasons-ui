@@ -118,6 +118,7 @@ const useStyles = makeStyles({
     width: '900px',
     padding: '30px',
     cursor: 'pointer',
+    borderRadius: '4px'
   },
   contestOverview: {
     width: '100%',

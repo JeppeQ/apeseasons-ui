@@ -41,7 +41,7 @@ const useStyles = makeStyles({
     alignItems: 'center',
   },
   filterButton: {
-    padding: '14px 20px 11px',
+    padding: '14px 20px 10px',
     marginRight: '10px',
     borderRadius: '4px',
     position: 'relative',

@@ -19,6 +19,7 @@ import useMediaQuery from '@material-ui/core/useMediaQuery'
 import AnnouncementIcon from '@material-ui/icons/Announcement'
 
 import { ellipseAddress } from '../helpers/utilities'
+import { fadeVariant } from '../helpers/variants'
 import Menu from './mobile/menu'
 import logo from '../assets/images/logo.png'
 import metamaskLogo from '../assets/images/metamask-icon.png'
@@ -56,9 +57,7 @@ function Header() {
   }, [location])
 
   if (!active || !active.name) {
-    return <motion.div className={classes.logoContainer}>
-      <img src={logo} width={'100%'} />
-    </motion.div>
+    return <React.Fragment />
   }
 
   if (mobile) {
@@ -79,40 +78,42 @@ function Header() {
   }
 
   return (
-    <Grid container className={classes.header} justify='space-between' alignItems='center'>
-      <Grid item>
-        <Grid container>
-          <motion.div
-            className={classes.activeContent}
-            animate={{ left: active.left, width: active.activeWidth }}
-            transition={{ duration: 0.2 }}
-          >
-            <Box className={classes.activeGlow} />
-          </motion.div>
-          <Link to='/'>
-            <Box className={clsx(classes.logo, classes.item)}>
-              <img src={logo} className={classes.content} width={'35px'} />
-            </Box>
-          </Link>
-          {menuItems.map(item => {
-            return <Link to={item.path} key={item.name} className={classes.item} style={{ width: item.width }}>
-              <Box className={classes.content} style={
-                item.name === active.name
-                  ? { textShadow: '0 0 1px white' }
-                  : { textShadow: 'none', opacity: 0.75 }
-              }>
-                {item.name}
+    <motion.div variants={fadeVariant} initial='initial' exit='exit' animate='enter'>
+      <Grid container className={classes.header} justify='space-between' alignItems='center'>
+        <Grid item>
+          <Grid container>
+            <motion.div
+              className={classes.activeContent}
+              animate={{ left: active.left, width: active.activeWidth }}
+              transition={{ duration: 0.2 }}
+            >
+              <Box className={classes.activeGlow} />
+            </motion.div>
+            <Link to='/'>
+              <Box className={clsx(classes.logo, classes.item)}>
+                <img src={logo} className={classes.content} width={'35px'} />
               </Box>
             </Link>
-          })}
+            {menuItems.map(item => {
+              return <Link to={item.path} key={item.name} className={classes.item} style={{ width: item.width }}>
+                <Box className={classes.content} style={
+                  item.name === active.name
+                    ? { textShadow: '0 0 1px white' }
+                    : { textShadow: 'none', opacity: 0.75 }
+                }>
+                  {item.name}
+                </Box>
+              </Link>
+            })}
+          </Grid>
         </Grid>
-      </Grid>
-      <Grid item>
-        <Button onClick={() => {}}>
-          connect wallet
-        </Button>
-      </Grid>
-    </Grid >
+        <Grid item>
+          <Button onClick={() => { }}>
+            connect wallet
+          </Button>
+        </Grid>
+      </Grid >
+    </motion.div>
   )
 }
 

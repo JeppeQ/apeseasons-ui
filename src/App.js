@@ -29,16 +29,16 @@ function App() {
         <ThemeProvider theme={mainTheme}>
           <CssBaseline />
           <Box className='main'>
-            <Header />
-            <Route render={({ location }) => (
-              <AnimatePresence exitBeforeEnter>
+            <AnimatePresence exitBeforeEnter>
+              <Header />
+              <Route render={({ location }) => (
                 <Switch location={location} key={location.pathname}>
                   {routes.map((route, index) => {
                     return <Route key={index} path={route.path} component={route.content} />
                   })}
                 </Switch>
-              </AnimatePresence>
-            )} />
+              )} />
+            </AnimatePresence>
           </Box>
         </ThemeProvider>
       </Box>
