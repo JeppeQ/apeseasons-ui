@@ -15,6 +15,7 @@ import Box from '@material-ui/core/Box'
 import Header from './components/header'
 import { mainTheme } from './helpers/themes'
 import { routes } from './helpers/routes'
+import { TournamentProvider } from './contexts/tournament'
 
 if (process.env.NODE_ENV === 'production') {
   ReactGA.initialize("")
@@ -28,18 +29,20 @@ function App() {
       <Box className='background'>
         <ThemeProvider theme={mainTheme}>
           <CssBaseline />
-          <Box className='main'>
-            <AnimatePresence exitBeforeEnter>
-              <Header />
-              <Route render={({ location }) => (
-                <Switch location={location} key={location.pathname}>
-                  {routes.map((route, index) => {
-                    return <Route key={index} path={route.path} component={route.content} />
-                  })}
-                </Switch>
-              )} />
-            </AnimatePresence>
-          </Box>
+          <TournamentProvider>
+            <Box className='main'>
+              <AnimatePresence exitBeforeEnter>
+                <Header />
+                <Route render={({ location }) => (
+                  <Switch location={location} key={location.pathname}>
+                    {routes.map((route, index) => {
+                      return <Route key={index} path={route.path} component={route.content} />
+                    })}
+                  </Switch>
+                )} />
+              </AnimatePresence>
+            </Box>
+          </TournamentProvider>
         </ThemeProvider>
       </Box>
     </Router>
