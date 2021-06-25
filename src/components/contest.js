@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import clsx from 'clsx'
 
@@ -16,12 +16,15 @@ import Button from '@material-ui/core/Button'
 import { componentStyles } from './styles'
 import { PlayersTable } from './tables/playersTable'
 import { PrizingTable } from './tables/prizingTable'
+import { TournamentContext } from '../contexts/tournament'
+
 
 export function Contest(props) {
   const classes = useStyles()
   const _styles = componentStyles()
   const [open, setOpen] = useState(false)
   const [value, setValue] = React.useState(0);
+  const tourney = useContext(TournamentContext)
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -74,7 +77,9 @@ export function Contest(props) {
               <Typography variant='subtitle1'>Sign up bonus</Typography>
               <Typography variant='h5'>2 apes</Typography>
             </Box>
-            <Button variant='contained' color='primary'>ENTER</Button>
+            <Button variant='contained' color='primary' onClick={() => tourney.joinContest()}>
+              ENTER
+            </Button>
           </Box>
         </Box>
       </Collapse>

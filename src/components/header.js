@@ -111,7 +111,7 @@ function Header() {
         </Grid>
         <Grid item>
           {!tourney.address
-            ? <Button onClick={() => { tourney.connect() }}>
+            ? <Button onClick={() => { tourney.connectWallet() }}>
               connect wallet
             </Button>
             : <Button onClick={() => { }}>
