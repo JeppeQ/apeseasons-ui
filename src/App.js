@@ -15,7 +15,7 @@ import Box from '@material-ui/core/Box'
 import Header from './components/header'
 import { mainTheme } from './helpers/themes'
 import { routes } from './helpers/routes'
-import { TournamentProvider } from './contexts/tournament'
+import { Web3Provider } from './contexts/web3'
 
 if (process.env.NODE_ENV === 'production') {
   ReactGA.initialize("")
@@ -29,7 +29,7 @@ function App() {
       <Box className='background'>
         <ThemeProvider theme={mainTheme}>
           <CssBaseline />
-          <TournamentProvider>
+          <Web3Provider>
             <Box className='main'>
               <AnimatePresence exitBeforeEnter>
                 <Header />
@@ -42,7 +42,7 @@ function App() {
                 )} />
               </AnimatePresence>
             </Box>
-          </TournamentProvider>
+          </Web3Provider>
         </ThemeProvider>
       </Box>
     </Router>

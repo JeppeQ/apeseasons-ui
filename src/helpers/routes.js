@@ -1,5 +1,5 @@
 import Contests from "../containers/Contests";
-import PlayerContests from "../containers/PlayerContests";
+import MyContests from "../containers/MyContests";
 import LandingPage from "../containers/LandingPage";
 
 export const routes = [
@@ -9,7 +9,7 @@ export const routes = [
   },
   {
     path: '/mycontests',
-    content: PlayerContests
+    content: MyContests
   },
   {
     path: '/*',

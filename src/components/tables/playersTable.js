@@ -18,15 +18,17 @@ import { ellipseAddress } from '../../helpers/utilities'
 import { styles, CustomTableCell } from './styles'
 
 const cells = [
+  { id: 'rank', label: '#', sortable: true },
   { id: 'player', label: 'Player', align: 'left', sortable: true },
   { id: 'networth', label: 'Net worth', align: 'right', sortable: true },
+  { id: 'prize', label: 'Prize', align: 'right', sortable: true },
 ]
 
 const playerData = [
   { address: '08XABC5GHAIWKJEWQKE23', networth: 100 },
   { address: '08BGABC5GHAIWKHAJ89JL', networth: 100 },
 ]
-export function PlayersTable() {
+export function PlayersTable(props) {
   const _classes = styles()
   const classes = useStyles()
 
@@ -58,6 +60,13 @@ export function PlayersTable() {
                   </Box>
                 </CustomTableCell>
               ))}
+              {props.history &&
+                <CustomTableCell align={'center'}>
+                  <Box>
+                    <Typography variant='body1' color='textSecondary'>Trades</Typography>
+                  </Box>
+                </CustomTableCell>
+              }
             </TableRow>
           </TableHead>
           <TableBody>
@@ -69,14 +78,29 @@ export function PlayersTable() {
               </Box>
             }
 
-            {!loading && players.map(player => (
+            {!loading && players.map((player, i) => (
               <TableRow key={player.address}>
+
+                <CustomTableCell>
+                  {i + 1}
+                </CustomTableCell>
+
                 <CustomTableCell>
                   {ellipseAddress(player.address, 8, 4)}
                 </CustomTableCell>
+
                 <CustomTableCell align={'right'}>
-                  {player.networth} DAI
+                  ${player.networth}
                 </CustomTableCell>
+
+                <CustomTableCell align={'right'}>
+                  <Typography style={{ color: 'rgba(255, 255, 255, 0.7)' }}>$123</Typography>
+                </CustomTableCell>
+
+                {props.history && <CustomTableCell align={'center'}>
+                  <Box className={_classes.link} onClick={() => { }}>View</Box>
+                </CustomTableCell>}
+
               </TableRow>
             ))}
           </TableBody>

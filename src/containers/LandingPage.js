@@ -135,7 +135,7 @@ function SlideThree() {
   return (
     <Box className={classes.slideContainer} style={{ width: '80%' }}>
       <Box className={classes.slideTextContainer} style={{ width: '40%' }}>
-        <Typography className={classes.slideTwoText}>- Contests are powered by the $APE token</Typography>
+        <Typography className={classes.slideTwoText}>- Contests are sponsored by the $APE token</Typography>
         <Typography className={classes.slideTwoText}>- Players are rewarded with $APE tokens upon joining a contest</Typography>
         <Typography className={classes.slideTwoText}>- 5% of the prize pools goes to $APE stakers</Typography>
       </Box>

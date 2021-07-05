@@ -7,7 +7,7 @@ export const mainTheme = createMuiTheme({
       main: 'rgb(69, 59, 93)',
     },
     secondary: {
-      main: '#c50606',
+      main: '#058665',
     }
   },
   typography: {
@@ -63,7 +63,7 @@ export const mainTheme = createMuiTheme({
       label: {
         fontFamily: 'system-ui',
         color: 'white'
-      }
+      },
     },
     MuiSlider: {
       valueLabel: {
@@ -81,5 +81,10 @@ export const mainTheme = createMuiTheme({
         margin: '10px'
       }
     },
+    MuiTabs: {
+      indicator: {
+        background: 'mediumpurple'
+      }
+    }
   },
 })

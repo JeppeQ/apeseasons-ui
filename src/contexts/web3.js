@@ -6,11 +6,11 @@ import { ethers } from "ethers"
 import tournamentContract from "../contracts/tournament.json"
 import daiContract from "../contracts/dai.json"
 
-export const TournamentContext = createContext()
+export const Web3Context = createContext()
 
-export const TournamentProvider = ({ children }) => {
+export const Web3Provider = ({ children }) => {
   const [address, setAddress] = useState(null)
-  const [signer, setSigner] = useState(null)
+  const [_signer, setSigner] = useState(null)
 
   const infuraId = 'f80d51814eef48c3b911ed0f0b52507c'
   const gasOptions = {gasPrice: 1000000000, gasLimit: 850000, nonce: 45, value: 0}
@@ -34,18 +34,27 @@ export const TournamentProvider = ({ children }) => {
 
     const web3ModalConnection = await web3Modal.connect();
 
-    const provider = new ethers.providers.Web3Provider(web3ModalConnection)
-    setSigner(provider.getSigner())
+    const web3Provider = new ethers.providers.Web3Provider(web3ModalConnection)
+    const signer = web3Provider.getSigner()
+    setSigner(signer)
 
-    const accounts = await provider.listAccounts()
+    const accounts = await web3Provider.listAccounts()
     setAddress(accounts[0])
+
+    return signer
   }
   
-  const getSignedContract = (address) => {
+  const getSigner = async () => {
+    return _signer || connectWallet()
+  }
+
+  const getSignedContract = async (address) => {
+    const signer = await getSigner()
     return new ethers.Contract(address, tournamentContract.abi, signer);
   }
 
   const approveDai = async (contractAddress, amount) => {
+    const signer = await getSigner()
     const dai = new ethers.Contract(daiContract.address, daiContract.abi, signer);
     await dai.approve(contractAddress, amount)
   }
@@ -68,7 +77,7 @@ export const TournamentProvider = ({ children }) => {
   }
 
   return (
-    <TournamentContext.Provider
+    <Web3Context.Provider
       value={{
         connectWallet,
         address,
@@ -78,6 +87,6 @@ export const TournamentProvider = ({ children }) => {
       }}
     >
       {children}
-    </TournamentContext.Provider>
+    </Web3Context.Provider>
   );
 };

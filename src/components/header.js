@@ -23,7 +23,7 @@ import { fadeVariant } from '../helpers/variants'
 import Menu from './mobile/menu'
 import logo from '../assets/images/logo.png'
 import metamaskLogo from '../assets/images/metamask-icon.png'
-import { TournamentContext } from '../contexts/tournament'
+import { Web3Context } from '../contexts/web3'
 
 const menuItems = [
   {
@@ -50,7 +50,7 @@ function Header() {
   const mobile = useMediaQuery('(max-width: 850px)')
   const [active, setActive] = useState({})
   const [menu, openMenu] = useState(false)
-  const tourney = useContext(TournamentContext)
+  const web3 = useContext(Web3Context)
 
   useEffect(() => {
     setActive(menuItems.find(item => location.pathname === item.path))
@@ -110,12 +110,12 @@ function Header() {
           </Grid>
         </Grid>
         <Grid item>
-          {!tourney.address
-            ? <Button onClick={() => { tourney.connectWallet() }}>
+          {!web3.address
+            ? <Button onClick={() => { web3.connectWallet() }}>
               connect wallet
             </Button>
             : <Button onClick={() => { }}>
-              {ellipseAddress(tourney.address, 4, 4)}
+              {ellipseAddress(web3.address, 4, 4)}
             </Button>}
         </Grid>
       </Grid >

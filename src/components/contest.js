@@ -16,7 +16,7 @@ import Button from '@material-ui/core/Button'
 import { componentStyles } from './styles'
 import { PlayersTable } from './tables/playersTable'
 import { PrizingTable } from './tables/prizingTable'
-import { TournamentContext } from '../contexts/tournament'
+import { Web3Context } from '../contexts/web3'
 
 
 export function Contest(props) {
@@ -24,7 +24,7 @@ export function Contest(props) {
   const _styles = componentStyles()
   const [open, setOpen] = useState(false)
   const [value, setValue] = React.useState(0);
-  const tourney = useContext(TournamentContext)
+  const web3 = useContext(Web3Context)
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -33,14 +33,13 @@ export function Contest(props) {
   function ContestDetails() {
     return (
       <Collapse in={open} timeout="auto" unmountOnExit>
-        <Box display='flex' justifyContent='space-between' mt={4}>
+        <Box display='flex' justifyContent='space-between' m={'30px'} mt={2}>
           <Box className={classes.contestDetails}>
 
             <AppBar position="static">
-              <Tabs value={value} onChange={handleChange}>
+              <Tabs value={value} onChange={handleChange} indicatorColor="default">
                 <Tab label="players" />
-                <Tab label="prizing" />
-                <Tab label="rules" />
+                <Tab label="info" />
               </Tabs>
             </AppBar>
 
@@ -52,16 +51,8 @@ export function Contest(props) {
               )}
             </Box>
 
-            <Box role="tabpanel" hidden={value !== 1} id='prizingTab' className={_styles.tabContent}>
+            <Box role="tabpanel" hidden={value !== 1} id='rulesTab' className={_styles.tabContent}>
               {value === 1 && (
-                <Box p={3} className={_styles.tabContent}>
-                  <PrizingTable />
-                </Box>
-              )}
-            </Box>
-
-            <Box role="tabpanel" hidden={value !== 2} id='rulesTab' className={_styles.tabContent}>
-              {value === 2 && (
                 <Box p={3} className={_styles.tabContent}>
                   <Typography>Why do we need rules?</Typography>
                 </Box>
@@ -77,7 +68,7 @@ export function Contest(props) {
               <Typography variant='subtitle1'>Sign up bonus</Typography>
               <Typography variant='h5'>2 apes</Typography>
             </Box>
-            <Button variant='contained' color='primary' onClick={() => tourney.joinContest()}>
+            <Button variant='contained' color='secondary' onClick={() => web3.joinContest()}>
               ENTER
             </Button>
           </Box>
@@ -121,13 +112,13 @@ export function Contest(props) {
 const useStyles = makeStyles({
   container: {
     width: '900px',
-    padding: '30px',
     cursor: 'pointer',
     borderRadius: '4px'
   },
   contestOverview: {
     width: '100%',
     display: 'flex',
+    padding: '30px',
     justifyContent: 'space-between'
   },
   section: {

@@ -39,6 +39,7 @@ const useStyles = makeStyles({
     display: 'flex',
     justifyContent: 'space-evenly',
     alignItems: 'center',
+    marginBottom: '5px'
   },
   filterButton: {
     padding: '14px 20px 10px',

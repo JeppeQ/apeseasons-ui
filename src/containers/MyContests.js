@@ -7,20 +7,28 @@ import NumberFormat from 'react-number-format'
 import Box from '@material-ui/core/Box'
 import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
+import Divider from '@material-ui/core/Divider'
 import { makeStyles } from '@material-ui/core/styles'
 import Skeleton from '@material-ui/lab/Skeleton'
 
 import { PlayerContest } from '../components/playerContest'
 import { ContestFilter } from '../components/contestFilter'
 import { fadeVariant } from '../helpers/variants'
+import { Web3Context } from '../contexts/web3'
 
 const competitions = [
-  { name: 'huiji', players: 150, entry: '10' }
+  { name: 'Ape Season #1', players: 150, position: 52, netWorth: '100 USD', status: 'ongoing', endTime: '7 Days' },
+  { name: 'Ape', players: 120, position: 2, netWorth: '100 USD', status: 'ongoing', endTime: '7 Days' },
+  { name: 'huiji', players: 150, startTime: '2 hours', status: 'upcoming', duration: '7 Days' },
+  { name: 'Ape Season Beta', netWorth: '100 USD', players: 150, position: 2, status: 'completed', prize: '100$', prizeStatus: 'unclaimed' },
+  { name: 'Ape Season Beta', netWorth: '100 USD', players: 150, position: 2, status: 'completed', prize: '320$', prizeStatus: 'claimed' },
+  { name: 'Ape Season Beta', netWorth: '100 USD', players: 150, position: 2, status: 'completed', prize: '0$', prizeStatus: 'none' }
 ]
 
-function Contests() {
+function MyContests() {
   const classes = useStyles()
   const [filter, setFilter] = useState('ongoing')
+  const web3 = useContext(Web3Context)
 
   return (
     <Scrollbars
@@ -29,16 +37,24 @@ function Contests() {
       <motion.div variants={fadeVariant} initial='initial' exit='exit' animate='enter'>
         <Grid container direction='column' alignItems='flex-start' justify='center' className={classes.mainContainer}>
           <ContestFilter filter={filter} change={setFilter} />
-          {competitions.map(competition => {
-            return <PlayerContest />
+
+          {!web3.address && competitions.length < 1 &&
+            <Box mt={2} ml={2}>
+              <Typography variant='subtitle1'>No wallet connected</Typography>
+            </Box>
+          }
+          
+          {competitions.filter(c => c.status === filter).map(competition => {
+            return <PlayerContest contest={competition} />
           })}
+
         </Grid >
       </motion.div>
     </Scrollbars>
   )
 }
 
-export default Contests
+export default MyContests
 
 const useStyles = makeStyles({
   mainContainer: {
