@@ -1,16 +1,19 @@
 import React, { createContext, useState, useEffect } from "react"
 import WalletConnectProvider from "@walletconnect/web3-provider";
 import Web3Modal from "web3modal"
+import { DateTime } from "luxon"
 import { ethers } from "ethers"
 
 import tournamentContract from "../contracts/tournament.json"
 import daiContract from "../contracts/dai.json"
+import tournamentFactoryContract from "../contracts/tournamentFactory.json"
 
 export const Web3Context = createContext()
 
 export const Web3Provider = ({ children }) => {
   const [address, setAddress] = useState(null)
   const [_signer, setSigner] = useState(null)
+  const [provider, setProvider] = useState(null)
 
   const infuraId = 'f80d51814eef48c3b911ed0f0b52507c'
   const gasOptions = {gasPrice: 1000000000, gasLimit: 850000, nonce: 45, value: 0}
@@ -35,6 +38,8 @@ export const Web3Provider = ({ children }) => {
     const web3ModalConnection = await web3Modal.connect();
 
     const web3Provider = new ethers.providers.Web3Provider(web3ModalConnection)
+    setProvider(web3Provider)
+
     const signer = web3Provider.getSigner()
     setSigner(signer)
 
@@ -76,6 +81,20 @@ export const Web3Provider = ({ children }) => {
     await contract.withdrawWinnings(gasOptions)
   }
 
+  const createTournament = async (start, end, price) => {
+    if (!provider) {
+      return connectWallet()
+    }
+
+    const currentBlock = await provider.getBlockNumber()
+    console.log(start)
+    console.log(DateTime.now().diff(DateTime.fromISO(start)))
+    console.log(currentBlock)
+    // const signer = await getSigner()
+    // const factory = new ethers.Contract(tournamentFactoryContract.address, tournamentFactoryContract.abi, signer)
+    // await factory.CreateTournament(start, end, price, daiContract.address, tournamentContract.address)
+  }
+
   return (
     <Web3Context.Provider
       value={{
@@ -83,7 +102,8 @@ export const Web3Provider = ({ children }) => {
         address,
         joinContest,
         swapToken,
-        claimReward
+        claimReward,
+        createTournament
       }}
     >
       {children}
