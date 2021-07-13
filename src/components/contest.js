@@ -27,6 +27,8 @@ export function Contest(props) {
   const [value, setValue] = React.useState(0);
   const web3 = useContext(Web3Context)
 
+  const { id, startBlock, endBlock, playerCount, ticketPrice } = props.data
+
   const handleChange = (event, newValue) => {
     setValue(newValue);
   }
@@ -69,7 +71,7 @@ export function Contest(props) {
               <Typography variant='subtitle1'>Sign up bonus</Typography>
               <Typography variant='h5'>2 apes</Typography>
             </Box>
-            <Button variant='contained' color='secondary' onClick={() => web3.joinContest()}>
+            <Button variant='contained' color='secondary' onClick={() => web3.joinContest(id, ticketPrice)}>
               ENTER
             </Button>
           </Box>
@@ -95,7 +97,7 @@ export function Contest(props) {
         </Box>
         <Box className={classes.section}>
           <Typography variant='subtitle1'>starts in</Typography>
-          <Typography variant='h5'>7 Days</Typography>
+          <Typography variant='h5'>{startBlock}</Typography>
         </Box>
         <Box className={classes.section}>
           <IconButton aria-label="expand row" size="small">
@@ -114,7 +116,8 @@ const useStyles = makeStyles({
   container: {
     width: '900px',
     cursor: 'pointer',
-    borderRadius: '4px'
+    borderRadius: '4px',
+    marginBottom: '20px'
   },
   contestOverview: {
     width: '100%',

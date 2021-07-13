@@ -5,8 +5,7 @@ import {
   Route
 } from "react-router-dom";
 import { AnimatePresence } from "framer-motion"
-import { isBrowser } from "react-device-detect"
-import ReactGA from 'react-ga'
+import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client"
 
 import { ThemeProvider } from '@material-ui/core/styles'
 import CssBaseline from '@material-ui/core/CssBaseline'
@@ -17,11 +16,10 @@ import { mainTheme } from './helpers/themes'
 import { routes } from './helpers/routes'
 import { Web3Provider } from './contexts/web3'
 
-if (process.env.NODE_ENV === 'production') {
-  ReactGA.initialize("")
-} else {
-  ReactGA.initialize("")
-}
+const client = new ApolloClient({
+  uri: 'https://api.thegraph.com/subgraphs/id/QmV1xmadwCQsVENoFFKvHF8tgPta2pAHxw8EpMb6NqdpE1',
+  cache: new InMemoryCache()
+});
 
 function App() {
   return (
@@ -29,20 +27,22 @@ function App() {
       <Box className='background'>
         <ThemeProvider theme={mainTheme}>
           <CssBaseline />
-          <Web3Provider>
-            <Box className='main'>
-              <AnimatePresence exitBeforeEnter>
-                <Header />
-                <Route render={({ location }) => (
-                  <Switch location={location} key={location.pathname}>
-                    {routes.map((route, index) => {
-                      return <Route key={index} path={route.path} component={route.content} />
-                    })}
-                  </Switch>
-                )} />
-              </AnimatePresence>
-            </Box>
-          </Web3Provider>
+          <ApolloProvider client={client}>
+            <Web3Provider>
+              <Box className='main'>
+                <AnimatePresence exitBeforeEnter>
+                  <Header />
+                  <Route render={({ location }) => (
+                    <Switch location={location} key={location.pathname}>
+                      {routes.map((route, index) => {
+                        return <Route key={index} path={route.path} component={route.content} />
+                      })}
+                    </Switch>
+                  )} />
+                </AnimatePresence>
+              </Box>
+            </Web3Provider>
+          </ApolloProvider>
         </ThemeProvider>
       </Box>
     </Router>

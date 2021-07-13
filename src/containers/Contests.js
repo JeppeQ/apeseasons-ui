@@ -3,6 +3,7 @@ import clsx from 'clsx'
 import { motion } from 'framer-motion'
 import { Scrollbars } from 'react-custom-scrollbars'
 import NumberFormat from 'react-number-format'
+import { useQuery } from "@apollo/client"
 
 import Box from '@material-ui/core/Box'
 import Grid from '@material-ui/core/Grid'
@@ -12,24 +13,11 @@ import Skeleton from '@material-ui/lab/Skeleton'
 
 import { Contest } from '../components/contest'
 import { fadeVariant } from '../helpers/variants'
-import * as graphApi from '../api/graph'
+import { TournamentsQuery } from '../api/queries'
 
 function Contests() {
   const classes = useStyles()
-  const [loading, setLoading] = useState(false)
-  const [competitions, setCompetitions] = useState([])
-
-  useEffect(() => {
-    async function getTournaments() {
-      setLoading(true)
-
-      const tournaments = await graphApi.getTournaments()
-      setCompetitions(tournaments)
-
-      setLoading(false)
-    }
-    getTournaments()
-  }, [])
+  const { loading, error, data } = useQuery(TournamentsQuery);
 
   return (
     <Scrollbars
@@ -40,8 +28,8 @@ function Contests() {
           <Box mb={2}>
             <Typography variant='h3'>Contests</Typography>
           </Box>
-          {competitions.map(competition => {
-            return <Contest data={competition} key={competition.id} />
+          {!loading && !error && data.tournaments.map(tournament => {
+            return <Contest data={tournament} key={tournament.id} />
           })}
         </Grid >
       </motion.div>

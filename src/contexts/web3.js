@@ -17,7 +17,7 @@ export const Web3Provider = ({ children }) => {
   const [block, setBlock] = useState(null)
 
   const infuraId = 'f80d51814eef48c3b911ed0f0b52507c'
-  const gasOptions = {gasPrice: 1000000000, gasLimit: 850000, nonce: 45, value: 0}
+  const gasOptions = {gasPrice: 1000000000, gasLimit: 8500000, nonce: 45, value: 0}
 
   useEffect(() => {
     const provider = new ethers.providers.InfuraProvider("goerli", infuraId)
@@ -79,17 +79,17 @@ export const Web3Provider = ({ children }) => {
   const joinContest = async (contestId, price) => {
     await approveDai(contestId, price)
 
-    const contract = getSignedContract(contestId)
-    await contract.buy_ticket(gasOptions)
+    const contract = await getSignedContract(contestId)
+    await contract.buyTicket(gasOptions)
   }
   
   const swapToken = async (contestId, token, swapTo) => {
-    const contract = getSignedContract(contestId)
+    const contract = await getSignedContract(contestId)
     await contract.trade(token, swapTo, gasOptions)
   }
   
   const claimReward = async (contestId) => {
-    const contract = getSignedContract(contestId)
+    const contract = await getSignedContract(contestId)
     await contract.withdrawWinnings(gasOptions)
   }
 
