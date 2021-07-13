@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useEffect, useState } from 'react'
 import clsx from 'clsx'
 import { motion } from 'framer-motion'
 import { Scrollbars } from 'react-custom-scrollbars'
@@ -12,13 +12,24 @@ import Skeleton from '@material-ui/lab/Skeleton'
 
 import { Contest } from '../components/contest'
 import { fadeVariant } from '../helpers/variants'
-
-const competitions = [
-  { name: 'huiji', players: 150, entry: '10' }
-]
+import * as graphApi from '../api/graph'
 
 function Contests() {
   const classes = useStyles()
+  const [loading, setLoading] = useState(false)
+  const [competitions, setCompetitions] = useState([])
+
+  useEffect(() => {
+    async function getTournaments() {
+      setLoading(true)
+
+      const tournaments = await graphApi.getTournaments()
+      setCompetitions(tournaments)
+
+      setLoading(false)
+    }
+    getTournaments()
+  }, [])
 
   return (
     <Scrollbars
@@ -30,7 +41,7 @@ function Contests() {
             <Typography variant='h3'>Contests</Typography>
           </Box>
           {competitions.map(competition => {
-            return <Contest />
+            return <Contest data={competition} key={competition.id} />
           })}
         </Grid >
       </motion.div>

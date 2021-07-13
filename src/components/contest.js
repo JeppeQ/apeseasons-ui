@@ -17,6 +17,7 @@ import { componentStyles } from './styles'
 import { PlayersTable } from './tables/playersTable'
 import { PrizingTable } from './tables/prizingTable'
 import { Web3Context } from '../contexts/web3'
+import { ellipseAddress } from '../helpers/utilities'
 
 
 export function Contest(props) {
@@ -37,7 +38,7 @@ export function Contest(props) {
           <Box className={classes.contestDetails}>
 
             <AppBar position="static">
-              <Tabs value={value} onChange={handleChange} indicatorColor="default">
+              <Tabs value={value} onChange={handleChange} indicatorColor="primary">
                 <Tab label="players" />
                 <Tab label="info" />
               </Tabs>
@@ -82,7 +83,7 @@ export function Contest(props) {
       <Box className={classes.contestOverview} onClick={() => setOpen(!open)}>
         <Box className={classes.section}>
           <Typography variant='subtitle1'>name</Typography>
-          <Typography variant='h5'>ApeSeason #1</Typography>
+          <Typography variant='h5'>{ellipseAddress(props.data.id, 4, 4)}</Typography>
         </Box>
         <Box className={classes.section}>
           <Typography variant='subtitle1'>Buy in</Typography>
@@ -90,7 +91,7 @@ export function Contest(props) {
         </Box>
         <Box className={classes.section}>
           <Typography variant='subtitle1'>Players</Typography>
-          <Typography variant='h5'>52 / 100</Typography>
+          <Typography variant='h5'>{props.data.playerCount}</Typography>
         </Box>
         <Box className={classes.section}>
           <Typography variant='subtitle1'>starts in</Typography>

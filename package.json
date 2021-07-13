@@ -17,6 +17,7 @@
     "currency.js": "^2.0.3",
     "ethers": "^5.4.0",
     "framer-motion": "^3.2.1",
+    "graphql": "^15.5.1",
     "lottie-react": "^2.1.0",
     "luxon": "^1.26.0",
     "node-sass": "4.14.1",
@@ -29,6 +30,7 @@
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.0",
     "stackdriver-errors-js": "^0.8.0",
+    "urql": "^2.0.4",
     "web3modal": "^1.9.3"
   },
   "scripts": {

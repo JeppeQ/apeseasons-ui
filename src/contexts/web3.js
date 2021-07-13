@@ -14,9 +14,21 @@ export const Web3Provider = ({ children }) => {
   const [address, setAddress] = useState(null)
   const [_signer, setSigner] = useState(null)
   const [provider, setProvider] = useState(null)
+  const [block, setBlock] = useState(null)
 
   const infuraId = 'f80d51814eef48c3b911ed0f0b52507c'
   const gasOptions = {gasPrice: 1000000000, gasLimit: 850000, nonce: 45, value: 0}
+
+  useEffect(() => {
+    const provider = new ethers.providers.InfuraProvider("goerli", infuraId)
+    
+    async function fetchLatestBlock() {
+      const block = await provider.getBlockNumber()
+      setBlock(block)
+    }
+
+    fetchLatestBlock()
+  })
 
   const connectWallet = async () => {
     const providerOptions = {
@@ -87,12 +99,13 @@ export const Web3Provider = ({ children }) => {
     }
 
     const currentBlock = await provider.getBlockNumber()
-    console.log(start)
-    console.log(DateTime.now().diff(DateTime.fromISO(start)))
-    console.log(currentBlock)
-    // const signer = await getSigner()
-    // const factory = new ethers.Contract(tournamentFactoryContract.address, tournamentFactoryContract.abi, signer)
-    // await factory.CreateTournament(start, end, price, daiContract.address, tournamentContract.address)
+    const startBlock = currentBlock + Math.round(start.diffNow('seconds').seconds / 15)   
+    const endBlock = currentBlock + Math.round(end.diffNow('seconds').seconds / 15)
+    const entry = BigInt(10**18 * price) /* global BigInt */
+
+    const signer = await getSigner()
+    const factory = new ethers.Contract(tournamentFactoryContract.address, tournamentFactoryContract.abi, signer)
+    await factory.createTournament(startBlock, endBlock, entry, daiContract.address, address, gasOptions)
   }
 
   return (
@@ -103,7 +116,8 @@ export const Web3Provider = ({ children }) => {
         joinContest,
         swapToken,
         claimReward,
-        createTournament
+        createTournament,
+        block
       }}
     >
       {children}

@@ -1,5 +1,6 @@
 import React, { useState, useContext } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
+import { DateTime } from "luxon"
 
 import Box from '@material-ui/core/Box'
 import Typography from '@material-ui/core/Typography'
@@ -15,11 +16,11 @@ export function CreateContest(props) {
   const web3 = useContext(Web3Context)
 
   const [entryFee, setEntryFee] = useState(100)
-  const [start, setStart] = useState(new Date())
-  const [end, setEnd] = useState(new Date())
+  const [start, setStart] = useState(DateTime.now())
+  const [end, setEnd] = useState(DateTime.now())
 
   const createTourney = () => {
-    web3.createTournament(start)
+    web3.createTournament(start, end, entryFee)
   }
 
   return (
@@ -31,6 +32,8 @@ export function CreateContest(props) {
         color='secondary'
         label="Entry fee"
         fullWidth
+        value={entryFee}
+        onChange={(event) => setEntryFee(event.target.value)}
         InputProps={{
           endAdornment: <InputAdornment position="start">DAI</InputAdornment>,
         }}
