@@ -51,7 +51,7 @@ export function PlayerContest(props) {
             <Box role="tabpanel" hidden={value !== 0} id='assetsTab' className={_styles.tabContent}>
               {value === 0 && (
                 <Box p={3} className={_styles.tabContent}>
-                  <PlayersTable status={props.contest.status} history={props.contest.status !== 'upcoming'} />
+                  <PlayersTable tournament={props.contest.id} status={props.contest.status} history={props.contest.status !== 'upcoming'} />
                 </Box>
               )}
             </Box>
@@ -82,9 +82,9 @@ export function PlayerContest(props) {
     <Box className={clsx(classes.container, _styles.customBox)}>
       <Box className={classes.contestOverview} onClick={() => setOpen(!open)}>
 
-        {props.contest.name && <Box className={classes.section} width={'20%'}>
+        {props.contest.id && <Box className={classes.section} width={'20%'}>
           <Typography variant='subtitle1'>name</Typography>
-          <Typography variant='h5'>{props.contest.name}</Typography>
+          <Typography variant='h5'>{props.contest.id}</Typography>
         </Box>}
 
         {props.contest.netWorth && <Box className={classes.section} width={'15%'}>
@@ -104,7 +104,7 @@ export function PlayerContest(props) {
 
         {!props.contest.position && <Box className={classes.section} width={'15%'}>
           <Typography variant='subtitle1'>Players</Typography>
-          <Typography variant='h5'>{props.contest.players}</Typography>
+          <Typography variant='h5'>{props.contest.playerCount}</Typography>
         </Box>}
 
         {props.contest.endTime && <Box className={classes.section} width={'15%'}>

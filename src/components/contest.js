@@ -27,7 +27,7 @@ export function Contest(props) {
   const [value, setValue] = React.useState(0);
   const web3 = useContext(Web3Context)
 
-  const { id, startBlock, endBlock, playerCount, ticketPrice } = props.data
+  const { id, start, end, startBlock, endBlock, playerCount, ticketPrice } = props.data
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -49,7 +49,7 @@ export function Contest(props) {
             <Box role="tabpanel" hidden={value !== 0} id='playersTab' className={_styles.tabContent}>
               {value === 0 && (
                 <Box p={3} className={_styles.tabContent}>
-                  <PlayersTable />
+                  <PlayersTable tournament={id} />
                 </Box>
               )}
             </Box>
@@ -97,7 +97,7 @@ export function Contest(props) {
         </Box>
         <Box className={classes.section}>
           <Typography variant='subtitle1'>starts in</Typography>
-          <Typography variant='h5'>{startBlock}</Typography>
+          <Typography variant='h5'>{start - new Date().getTime()}</Typography>
         </Box>
         <Box className={classes.section}>
           <IconButton aria-label="expand row" size="small">

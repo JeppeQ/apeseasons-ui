@@ -1,6 +1,7 @@
 import React, { useState, useContext } from 'react'
 import { Scrollbars } from 'react-custom-scrollbars'
 import NumberFormat from 'react-number-format'
+import { useQuery } from '@apollo/client'
 
 import Box from '@material-ui/core/Box'
 import Button from '@material-ui/core/Button'
@@ -16,6 +17,7 @@ import Skeleton from '@material-ui/lab/Skeleton'
 
 import { ellipseAddress } from '../../helpers/utilities'
 import { styles, CustomTableCell } from './styles'
+import { PlayersQuery } from '../../api/queries'
 
 const cells = [
   { id: 'rank', label: '#', sortable: true },
@@ -32,8 +34,13 @@ export function PlayersTable(props) {
   const _classes = styles()
   const classes = useStyles()
 
-  const [loading, setLoading] = useState(false)
-  const [players, setPlayers] = useState(playerData)
+  const { loading, error, data, fetchMore } = useQuery(PlayersQuery, {
+    variables: {
+      id: props.tournament,
+      first: 10,
+      skip: 0
+    }
+  });
 
   function loadingRow() {
     return (
@@ -72,25 +79,25 @@ export function PlayersTable(props) {
           <TableBody>
             {loading && loadingRow()}
 
-            {!loading && players.length === 0 &&
+            {!loading && !error && data.players.length === 0 &&
               <Box p={2}>
-                <Typography variant='subtitle2' color='textSecondary'>No assets</Typography>
+                <Typography variant='subtitle2' color='textSecondary'>No players</Typography>
               </Box>
             }
 
-            {!loading && players.map((player, i) => (
-              <TableRow key={player.address}>
+            {!loading && !error && data.players.map((player, i) => (
+              <TableRow key={player.id}>
 
                 <CustomTableCell>
                   {i + 1}
                 </CustomTableCell>
 
                 <CustomTableCell>
-                  {ellipseAddress(player.address, 8, 4)}
+                  {ellipseAddress(player.id, 8, 4)}
                 </CustomTableCell>
 
                 <CustomTableCell align={'right'}>
-                  ${player.networth}
+                  $100
                 </CustomTableCell>
 
                 <CustomTableCell align={'right'}>

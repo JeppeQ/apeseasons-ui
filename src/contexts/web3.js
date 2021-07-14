@@ -1,7 +1,6 @@
 import React, { createContext, useState, useEffect } from "react"
 import WalletConnectProvider from "@walletconnect/web3-provider";
 import Web3Modal from "web3modal"
-import { DateTime } from "luxon"
 import { ethers } from "ethers"
 
 import tournamentContract from "../contracts/tournament.json"
@@ -56,6 +55,7 @@ export const Web3Provider = ({ children }) => {
     setSigner(signer)
 
     const accounts = await web3Provider.listAccounts()
+    console.log(accounts)
     setAddress(accounts[0])
 
     return signer

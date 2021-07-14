@@ -17,7 +17,7 @@ import { routes } from './helpers/routes'
 import { Web3Provider } from './contexts/web3'
 
 const client = new ApolloClient({
-  uri: 'https://api.thegraph.com/subgraphs/id/QmV1xmadwCQsVENoFFKvHF8tgPta2pAHxw8EpMb6NqdpE1',
+  uri: 'https://api.thegraph.com/subgraphs/id/QmY28YSj3nJ4i9rtPuv6bSQFJnRa3hmGftWYpqVQ5qvH85',
   cache: new InMemoryCache()
 });
 
