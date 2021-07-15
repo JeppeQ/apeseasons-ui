@@ -53,7 +53,7 @@ function MyContests() {
           }
           
           {!loading && !error && data.players.map(player => {
-            return <PlayerContest contest={player.tournament} tokens={player.tokensBalances} />
+            return <PlayerContest contest={player.tournament} playerTokens={player.tokensBalances} />
           })}
 
         </Grid >

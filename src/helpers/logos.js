@@ -4,10 +4,12 @@ import ETH from '../assets/logos/ETH.svg'
 import BTC from '../assets/logos/BTC.svg'
 import DAI from '../assets/logos/DAI.svg'
 
-export default logos = {
+const Logos = {
   DAI,
   AAVE,
   MATIC,
   ETH,
   BTC
 }
+
+export default Logos

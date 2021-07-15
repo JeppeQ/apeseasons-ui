@@ -21,7 +21,7 @@ import { makeStyles } from '@material-ui/core/styles'
 import { styles } from './styles'
 import { SearchBar } from '../searchBar'
 import { TokenContext } from '../../contexts/tokenContext'
-import { logos } from '../../helpers/logos'
+import Logos from '../../helpers/logos'
 
 const tokens = [
   { name: 'Alpha Finance', symbol: 'ALPHA', icon: <WorkIcon />, balance: '0.25' },
@@ -40,7 +40,7 @@ export function SelectTokenDialog(props) {
   const _classes = styles()
   const classes = useStyles()
   const tokenProvider = useContext(TokenContext) 
-
+  console.log(props.playerTokens)
   return (
     <Dialog open={props.open} onClose={props.close} maxWidth='sm'>
       <Box className={clsx(_classes.dialog, classes.dialog)} style={{ width: '400px' }}>
@@ -56,15 +56,14 @@ export function SelectTokenDialog(props) {
             </ListItem>
             <Scrollbars autoHeight={true} autoHeightMax={400}>
               {tokenProvider.tokens.map(token => {
+                const playerToken = props.playerTokens.find(t => t.token.toUpperCase() === token.address.toUpperCase())  
                 return <ListItem button>
                   <ListItemAvatar>
-                    <Avatar>
-                      <img src={logos.DAI} />
-                    </Avatar>
+                    <Avatar src={Logos[token.symbol]} imgProps={{ style: {objectFit: 'contain' }}} />
                   </ListItemAvatar>
                   <ListItemText primary={token.symbol} secondary={token.name} />
                   <ListItemSecondaryAction>
-                    <Typography>0.252</Typography>
+                    <Typography>{playerToken ? playerToken.amount : 0.0}</Typography>
                   </ListItemSecondaryAction>
                 </ListItem>
               })}

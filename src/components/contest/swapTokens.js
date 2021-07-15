@@ -16,7 +16,7 @@ import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown'
 
 import { SelectTokenDialog } from '../dialogs/selectTokenDialog'
 
-export function SwapTokens() {
+export function SwapTokens(props) {
   const classes = useStyles()
   const [selectToken, setSelectToken] = useState(false)
 
@@ -84,7 +84,11 @@ export function SwapTokens() {
       <Box mt={2}>
         <Button variant='contained' color='primary'>SWAP</Button>
       </Box>
-      {selectToken && <SelectTokenDialog open={selectToken} close={() => setSelectToken(false)} />}
+      {selectToken && <SelectTokenDialog
+        open={selectToken}
+        close={() => setSelectToken(false)}
+        playerTokens={props.playerTokens} />
+      }
     </Box>
   )
 }
