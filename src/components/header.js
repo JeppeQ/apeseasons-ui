@@ -23,7 +23,7 @@ import { fadeVariant } from '../helpers/variants'
 import Menu from './mobile/menu'
 import logo from '../assets/images/logo.png'
 import metamaskLogo from '../assets/images/metamask-icon.png'
-import { Web3Context } from '../contexts/web3'
+import { Web3Context } from '../contexts/web3Context'
 
 const menuItems = [
   {

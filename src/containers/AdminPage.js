@@ -13,7 +13,7 @@ import Skeleton from '@material-ui/lab/Skeleton'
 import { MuiPickersUtilsProvider } from '@material-ui/pickers'
 
 import { CreateContest } from '../components/admin/createContest'
-import { Web3Context } from '../contexts/web3'
+import { Web3Context } from '../contexts/web3Context'
 import { fadeVariant } from '../helpers/variants'
 import { ellipseAddress } from '../helpers/utilities'
 

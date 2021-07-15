@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import clsx from 'clsx'
 import { Scrollbars } from 'react-custom-scrollbars'
 
@@ -20,6 +20,8 @@ import { makeStyles } from '@material-ui/core/styles'
 
 import { styles } from './styles'
 import { SearchBar } from '../searchBar'
+import { TokenContext } from '../../contexts/tokenContext'
+import { logos } from '../../helpers/logos'
 
 const tokens = [
   { name: 'Alpha Finance', symbol: 'ALPHA', icon: <WorkIcon />, balance: '0.25' },
@@ -37,6 +39,7 @@ const tokens = [
 export function SelectTokenDialog(props) {
   const _classes = styles()
   const classes = useStyles()
+  const tokenProvider = useContext(TokenContext) 
 
   return (
     <Dialog open={props.open} onClose={props.close} maxWidth='sm'>
@@ -52,11 +55,11 @@ export function SelectTokenDialog(props) {
               <SearchBar />
             </ListItem>
             <Scrollbars autoHeight={true} autoHeightMax={400}>
-              {tokens.map(token => {
+              {tokenProvider.tokens.map(token => {
                 return <ListItem button>
                   <ListItemAvatar>
                     <Avatar>
-                      {token.icon}
+                      <img src={logos.DAI} />
                     </Avatar>
                   </ListItemAvatar>
                   <ListItemText primary={token.symbol} secondary={token.name} />

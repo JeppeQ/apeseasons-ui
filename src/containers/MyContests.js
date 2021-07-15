@@ -15,7 +15,7 @@ import Skeleton from '@material-ui/lab/Skeleton'
 import { PlayerContest } from '../components/playerContest'
 import { ContestFilter } from '../components/contestFilter'
 import { fadeVariant } from '../helpers/variants'
-import { Web3Context } from '../contexts/web3'
+import { Web3Context } from '../contexts/web3Context'
 import { PlayerTournamentsQuery } from '../api/queries'
 
 const competitions = [

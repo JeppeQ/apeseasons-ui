@@ -16,7 +16,7 @@ import Button from '@material-ui/core/Button'
 import { componentStyles } from './styles'
 import { PlayersTable } from './tables/playersTable'
 import { PrizingTable } from './tables/prizingTable'
-import { Web3Context } from '../contexts/web3'
+import { Web3Context } from '../contexts/web3Context'
 import { ellipseAddress } from '../helpers/utilities'
 
 

@@ -42,8 +42,8 @@ export function PlayerContest(props) {
             <AppBar position="static">
               <Tabs value={value} onChange={handleChange}>
                 <Tab label="players" value={0} />
-                {props.contest.status === 'ongoing' && <Tab label="assets" value={1} />}
-                {props.contest.status === 'ongoing' && <Tab label="swap" value={2} />}
+                {<Tab label="assets" value={1} />}
+                {<Tab label="swap" value={2} />}
                 <Tab label="info" value={3} />
               </Tabs>
             </AppBar>

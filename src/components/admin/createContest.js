@@ -9,7 +9,7 @@ import TextField from '@material-ui/core/TextField'
 import InputAdornment from '@material-ui/core/InputAdornment'
 import { KeyboardDateTimePicker } from '@material-ui/pickers'
 
-import { Web3Context } from '../../contexts/web3'
+import { Web3Context } from '../../contexts/web3Context'
 
 export function CreateContest(props) {
   const classes = useStyles()
