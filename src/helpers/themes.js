@@ -34,7 +34,7 @@ export const mainTheme = createMuiTheme({
       fontSize: 16,
       color: 'white',
       fontFamily: 'system-ui',
-      fontWeight: 'bold'
+      fontWeight: '500'
     },
     h6: {
       fontSize: 15,
@@ -48,7 +48,7 @@ export const mainTheme = createMuiTheme({
       fontFamily: 'astrospace',
     },
     subtitle2: {
-      fontSize: 14,
+      fontSize: 15,
       color: 'rgba(255, 255, 255, 0.6)',
       lineHeight: 'none'
     }

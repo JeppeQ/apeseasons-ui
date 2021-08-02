@@ -55,7 +55,6 @@ export const Web3Provider = ({ children }) => {
     setSigner(signer)
 
     const accounts = await web3Provider.listAccounts()
-    console.log(accounts)
     setAddress(accounts[0])
 
     return signer
@@ -116,8 +115,7 @@ export const Web3Provider = ({ children }) => {
         joinContest,
         swapToken,
         claimReward,
-        createTournament,
-        block
+        createTournament
       }}
     >
       {children}

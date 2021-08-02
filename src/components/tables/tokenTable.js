@@ -17,31 +17,30 @@ import Skeleton from '@material-ui/lab/Skeleton'
 
 import { ellipseAddress } from '../../helpers/utilities'
 import { styles, CustomTableCell } from './styles'
-import * as tournamentApi from '../../api/tournament'
+import Logos from '../../helpers/logos'
+import * as tokenApi from '../../api/token'
 
 const cells = [
-  { id: 'rank', label: '#', sortable: true },
-  { id: 'player', label: 'Player', align: 'left', sortable: true },
-  { id: 'networth', label: 'Net worth', align: 'right', sortable: true },
-  { id: 'prize', label: 'Prize', align: 'right', sortable: true },
+  { id: 'logo', label: '', width: '70px' },
+  { id: 'token', label: 'Token', sortable: true },
+  { id: 'price', label: 'Price', align: 'right' }
 ]
 
-export function PlayersTable(props) {
+export function TokenTable(props) {
   const _classes = styles()
   const classes = useStyles()
-
   const [loading, setLoading] = useState(true)
-  const [players, setPlayers] = useState([])
+  const [tokens, setTokens] = useState([])
 
   useEffect(() => {
-    async function getPlayers() {
+    async function getTokens() {
       setLoading(true)
-      const data = await tournamentApi.getPlayers(props.tournament)
-      setPlayers(data || [])
+      const data = await tokenApi.getTokens()
+      setTokens(data || [])
       setLoading(false)
     }
 
-    getPlayers()
+    getTokens()
   }, [])
 
   function loadingRow() {
@@ -59,58 +58,40 @@ export function PlayersTable(props) {
   return (
     <React.Fragment>
       <Scrollbars>
-        <Table className={classes.playerTable} size='small'>
+        <Table className={classes.tokenTable} size='small'>
           <TableHead>
             <TableRow style={{ borderBottom: '1px solid grey' }}>
               {cells.map(cell => (
-                <CustomTableCell key={cell.id} align={cell.align}>
+                <CustomTableCell key={cell.id} align={cell.align} width={cell.width}>
                   <Box>
                     <Typography variant='body1' color='textSecondary'>{cell.label}</Typography>
                   </Box>
                 </CustomTableCell>
               ))}
-              {props.history &&
-                <CustomTableCell align={'center'}>
-                  <Box>
-                    <Typography variant='body1' color='textSecondary'>Trades</Typography>
-                  </Box>
-                </CustomTableCell>
-              }
             </TableRow>
           </TableHead>
           <TableBody>
             {loading && loadingRow()}
 
-            {!loading && players.length === 0 &&
-              <Box p={2}>
-                <Typography variant='subtitle2' color='textSecondary'>No players</Typography>
-              </Box>
-            }
+            {!loading && tokens.map((token, i) => (
+              <TableRow key={token.address}>
 
-            {!loading && players.map((player, i) => (
-              <TableRow key={player.id}>
-
-                <CustomTableCell>
-                  {player.rank}
+                <CustomTableCell align='center'>
+                  <img src={Logos[token.symbol]} height={25} />
                 </CustomTableCell>
 
                 <CustomTableCell>
-                  {ellipseAddress(player.id, 8, 4)}
+                  <Box display='flex'>
+                    {token.name}
+                    <Box ml={1}>
+                      <Typography variant='body1' color='textSecondary'>{token.symbol}</Typography>
+                    </Box>
+                  </Box>
                 </CustomTableCell>
 
-                <CustomTableCell align={'right'}>
-                  <NumberFormat value={player.netWorth} displayType={'text'} prefix={'$'} thousandSeparator />
+                <CustomTableCell align='right'>
+                  <NumberFormat value={token.price} displayType={'text'} prefix={'$'} thousandSeparator decimalScale={2} />
                 </CustomTableCell>
-
-                <CustomTableCell align={'right'}>
-                  <Typography style={{ color: 'rgba(255, 255, 255, 0.7)' }}>
-                    <NumberFormat value={player.prize} displayType={'text'} prefix={'$'} thousandSeparator />
-                  </Typography>
-                </CustomTableCell>
-
-                {props.history && <CustomTableCell align={'center'}>
-                  <Box className={_classes.link} onClick={() => { }}>View</Box>
-                </CustomTableCell>}
 
               </TableRow>
             ))}
@@ -122,7 +103,7 @@ export function PlayersTable(props) {
 }
 
 const useStyles = makeStyles({
-  playerTable: {
+  tokenTable: {
     width: '100%',
     backgroundColor: '#231E2F',
     borderCollapse: 'collapse'

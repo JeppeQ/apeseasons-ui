@@ -10,7 +10,6 @@ import ClearIcon from '@material-ui/icons/Clear'
 
 export function SearchBar(props) {
   const classes = useStyles()
-  const [_value, setValue] = useState('')
 
   const handleKeyPress = (e) => {
     if (e.key === 'Enter') {
@@ -18,13 +17,8 @@ export function SearchBar(props) {
     }
   }
 
-  const setSearch = (e) => {
-    props.search(e.target.value)
-  }
-
   const removeSearch = () => {
-    setValue('')
-    props.search()
+    props.setSearch('')
   }
 
   return (
@@ -34,12 +28,12 @@ export function SearchBar(props) {
         <SearchIcon />
       </IconButton>
       <InputBase
-        value={_value}
-        onChange={e => setValue(e.target.value)}
-        onBlur={setSearch}
+        fullWidth
+        value={props.search}
+        onChange={e => props.setSearch(e.target.value)}
         placeholder={props.placeholder || 'Search'}
         onKeyDown={handleKeyPress}
-        endAdornment={props.value && <ClearIcon className={classes.removeSearch} onClick={removeSearch} />}
+        endAdornment={props.search && <ClearIcon className={classes.removeSearch} onClick={removeSearch} />}
       />
     </Box>
   )

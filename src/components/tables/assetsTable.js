@@ -16,6 +16,8 @@ import Skeleton from '@material-ui/lab/Skeleton'
 
 import { ellipseAddress } from '../../helpers/utilities'
 import { styles, CustomTableCell } from './styles'
+import Logos from '../../helpers/logos'
+import { TokenContext } from '../../contexts/tokenContext'
 
 const cells = [
   { id: 'token', label: 'Token', align: 'left', sortable: true },
@@ -24,28 +26,10 @@ const cells = [
   { id: 'actions', label: 'Actions', align: 'right' },
 ]
 
-const assetData = [
-  { token: 'Alpha Finance', symbol: 'ALPHA', total: 52, USD: 50 },
-  { token: 'Bitcoin', symbol: 'BTC', total: 2, USD: 50 },
-]
 export function AssetsTable(props) {
   const _classes = styles()
   const classes = useStyles()
-
-  const [loading, setLoading] = useState(false)
-  const [assets, setAssets] = useState(assetData)
-
-  function loadingRow() {
-    return (
-      <TableRow>
-        {cells.map(cell => (
-          <CustomTableCell key={'asset_loading_' + cell.id}>
-            <Skeleton variant="text" animation="wave" />
-          </CustomTableCell>
-        ))}
-      </TableRow>
-    )
-  }
+  const tokenProvider = useContext(TokenContext)
 
   return (
     <React.Fragment>
@@ -63,30 +47,45 @@ export function AssetsTable(props) {
             </TableRow>
           </TableHead>
           <TableBody>
-            {loading && loadingRow()}
 
-            {!loading && assets.length === 0 &&
+            {props.tokens.length === 0 &&
               <Box p={2}>
                 <Typography variant='subtitle2' color='textSecondary'>No assets</Typography>
               </Box>
             }
 
-            {!loading && assets.map(asset => (
-              <TableRow key={asset.token}>
+            {props.tokens.map(token => {
+              const tokenData = tokenProvider.tokens.find(t => t.address === token.tokenAddress)
+
+              return <TableRow key={token.tokenAddress}>
+
                 <CustomTableCell>
-                  {asset.token}
+                  <Box display='flex'>
+                    <img src={Logos[token.tokenSymbol]} style={{ marginRight: '5px' }} height={20} />
+                    {token.tokenName}
+                    <Box ml={1}>
+                      <Typography variant='body1' color='textSecondary'>{token.tokenSymbol}</Typography>
+                    </Box>
+                  </Box>
                 </CustomTableCell>
+
                 <CustomTableCell align={'right'}>
-                  <NumberFormat value={asset.total} displayType={'text'} thousandSeparator />
+                  <NumberFormat value={token.amountFloat} displayType={'text'} thousandSeparator />
                 </CustomTableCell>
+
                 <CustomTableCell align={'right'}>
-                  <NumberFormat value={asset.USD} displayType={'text'} prefix={'$'} thousandSeparator />
+                  <NumberFormat displayType={'text'} prefix={'$'} thousandSeparator decimalScale={2}
+                    value={token.amountFloat * tokenData.price || 0} />
                 </CustomTableCell>
+
                 <CustomTableCell align={'right'}>
-                  <Box className={_classes.link} onClick={() => { props.swap(asset.token) }}>SWAP</Box>
+                  {props.swapAvailable
+                    && <Box className={_classes.link} onClick={() => { props.swap(token) }}>
+                      SWAP
+                    </Box>}
                 </CustomTableCell>
               </TableRow>
-            ))}
+            })}
           </TableBody>
         </Table>
       </Scrollbars>

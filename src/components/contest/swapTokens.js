@@ -1,98 +1,82 @@
-import React, { useContext, useState } from 'react'
-import clsx from 'clsx'
-import { motion } from 'framer-motion'
-import { Scrollbars } from 'react-custom-scrollbars'
-import NumberFormat from 'react-number-format'
+import React, { useContext, useState, useEffect } from 'react'
 
 import Box from '@material-ui/core/Box'
 import Button from '@material-ui/core/Button'
-import Typography from '@material-ui/core/Typography'
-import TextField from '@material-ui/core/TextField'
 import { makeStyles } from '@material-ui/core/styles'
-import ArrowDown from '@material-ui/icons/ArrowDownward'
-import WalletIcon from '@material-ui/icons/AccountBalanceWallet'
-import CurrencyIcon from '@material-ui/icons/MonetizationOn'
-import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown'
-
 import { SelectTokenDialog } from '../dialogs/selectTokenDialog'
+import { TokenContext } from '../../contexts/tokenContext'
+import { Web3Context } from '../../contexts/web3Context'
+import TokenBox from './tokenBox'
 
 export function SwapTokens(props) {
   const classes = useStyles()
-  const [selectToken, setSelectToken] = useState(false)
+  const tokenProvider = useContext(TokenContext)
+  const web3 = useContext(Web3Context)
 
-  function Input() {
-    const [amount, setAmount] = useState()
+  const [selectToken, openSelectToken] = useState(false)
+  const [fromToken, setFromToken] = useState()
+  const [toToken, setToToken] = useState()
+  const [fromAmount, setFromAmount] = useState(props.token ? props.token.amountFloat : undefined)
+  const [toAmount, setToAmount] = useState()
 
-    const handleChange = (event) => {
-      setAmount(event.target.value)
+  useEffect(() => {
+    if (props.token) {
+      setFromToken(tokenProvider.tokens.find(token => token.address === props.token.tokenAddress))
+    }
+  }, [props.token])
+
+  useEffect(() => {
+    if (!fromToken || !toToken || !fromAmount) {
+      return
     }
 
-    return (
-      <TextField
-        className={classes.input}
-        placeholder={0}
-        value={amount}
-        onChange={handleChange}
-        variant="outlined"
-        fullWidth
-        InputProps={{
-          endAdornment: (
-            <Box>
-              <Box display='flex' alignItems='center'>
-                <WalletIcon style={{ color: 'rgba(255, 255, 255, 0.6)', fontSize: 14, marginRight: '3px' }} />
-                <Typography variant='subtitle2'>
-                  <NumberFormat value={0.00058231} displayType={'text'} />
-                </Typography>
-              </Box>
-              <Box display='flex' alignItems='center'>
-                <Typography variant='subtitle2' style={{ color: 'rgba(255, 255, 255, 0.4)' }}>≈ 0.23 USDC</Typography>
-              </Box>
-            </Box>
-          ),
-          classes: { notchedOutline: classes.inputFieldSet }
-        }}
-        inputProps={{
-          style: { height: '1.8em', fontSize: '18px' }
-        }}
-      />
-    )
-  }
+    setToAmount(fromAmount * fromToken.price / toToken.price)
 
-  function TokenBox(props) {
-    return (
-      <Box className={classes.tokenBox}>
-        <Box display='flex'>
-          <CurrencyIcon style={{ fontSize: '50px' }} />
-          <Box ml={1} mr={3} width='140px'>
-            <Typography variant='subtitle1'>{props.text}</Typography>
-            <Box display='flex' onClick={() => setSelectToken(true)}>
-              <Typography variant='h3' style={{ fontSize: '22px' }} noWrap>{props.token}</Typography>
-              <KeyboardArrowDownIcon />
-            </Box>
-          </Box>
-        </Box>
-        {<Input />}
-      </Box>
-    )
+  }, [fromAmount, fromToken, toToken])
+
+  const swapTokens = () => {
+    web3.swapToken(props.id, fromToken.address, toToken.address)
   }
 
   return (
     <Box className={classes.mainContainer}>
-      <TokenBox text='swap from' token='ETH' />
-      {/* <ArrowDown /> */}
-      <TokenBox text='swap to' token='DAI' />
+
+      <TokenBox
+        text='swap from'
+        token={fromToken}
+        amount={fromAmount}
+        setAmount={(value) => setFromAmount(value)}
+        playerToken={fromToken && props.playerTokens.find(t => t.tokenAddress.toUpperCase() === fromToken.address.toUpperCase())}
+        selectToken={() => openSelectToken('1')}
+      />
+
+      <TokenBox
+        text='swap to'
+        token={toToken}
+        amount={toAmount}
+        setAmount={(value) => setToAmount(value)}
+        playerTokens={props.playerTokens}
+        selectToken={() => openSelectToken('2')}
+        disabled={true}
+      />
+
       <Box mt={2}>
-        <Button variant='contained' color='primary'>SWAP</Button>
+        <Button variant='contained' color='primary'
+          disabled={!fromToken.address || !toToken.address}
+          onClick={swapTokens}>
+          SWAP
+        </Button>
       </Box>
+
       {selectToken && <SelectTokenDialog
-        open={selectToken}
-        close={() => setSelectToken(false)}
+        open={Boolean(selectToken)}
+        close={() => openSelectToken(false)}
+        select={(x) => selectToken === '1' ? setFromToken(x) : setToToken(x)}
         playerTokens={props.playerTokens} />
       }
     </Box>
   )
 }
-
 
 const useStyles = makeStyles({
   mainContainer: {
@@ -102,24 +86,5 @@ const useStyles = makeStyles({
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
-  },
-  tokenBox: {
-    width: '550px',
-    height: '100px',
-    borderRadius: '5px',
-    backgroundColor: 'rgba(70, 45, 130, 0.5)',
-    display: 'flex',
-    padding: '0 20px',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    margin: '10px 0'
-  },
-  input: {
-    backgroundColor: '#231E2F',
-    borderRadius: '10px',
-    width: '280px'
-  },
-  inputFieldSet: {
-    border: 'none'
   }
 });

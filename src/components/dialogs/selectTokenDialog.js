@@ -13,9 +13,6 @@ import ListItemText from '@material-ui/core/ListItemText'
 import ListItemAvatar from '@material-ui/core/ListItemAvatar'
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction'
 import Avatar from '@material-ui/core/Avatar'
-import ImageIcon from '@material-ui/icons/Image'
-import WorkIcon from '@material-ui/icons/Work'
-import BeachAccessIcon from '@material-ui/icons/BeachAccess'
 import { makeStyles } from '@material-ui/core/styles'
 
 import { styles } from './styles'
@@ -23,53 +20,45 @@ import { SearchBar } from '../searchBar'
 import { TokenContext } from '../../contexts/tokenContext'
 import Logos from '../../helpers/logos'
 
-const tokens = [
-  { name: 'Alpha Finance', symbol: 'ALPHA', icon: <WorkIcon />, balance: '0.25' },
-  { name: 'Ethereum', symbol: 'ETH', icon: <ImageIcon />, balance: '0.5' },
-  { name: 'Dogecoin', symbol: 'DOGE', icon: <BeachAccessIcon />, balance: '5.25' },
-  { name: 'Dogecoin', symbol: 'DOGE', icon: <BeachAccessIcon />, balance: '5.25' },
-  { name: 'Dogecoin', symbol: 'DOGE', icon: <BeachAccessIcon />, balance: '5.25' },
-  { name: 'Dogecoin', symbol: 'DOGE', icon: <BeachAccessIcon />, balance: '5.25' },
-  { name: 'Dogecoin', symbol: 'DOGE', icon: <BeachAccessIcon />, balance: '5.25' },
-  { name: 'Dogecoin', symbol: 'DOGE', icon: <BeachAccessIcon />, balance: '5.25' },
-  { name: 'Dogecoin', symbol: 'DOGE', icon: <BeachAccessIcon />, balance: '5.25' },
-  { name: 'Dogecoin', symbol: 'DOGE', icon: <BeachAccessIcon />, balance: '5.25' },
-]
 
+/* global BigInt */
 export function SelectTokenDialog(props) {
   const _classes = styles()
   const classes = useStyles()
-  const tokenProvider = useContext(TokenContext) 
-  console.log(props.playerTokens)
+  const tokenProvider = useContext(TokenContext)
+  const [search, setSearch] = useState('')
+
   return (
     <Dialog open={props.open} onClose={props.close} maxWidth='sm'>
-      <Box className={clsx(_classes.dialog, classes.dialog)} style={{ width: '400px' }}>
+      <Box className={clsx(_classes.dialog, classes.dialog)}>
         <DialogTitle>
           <Box ml={2} mb={-3}>
             <Typography className={_classes.title}>Select a token</Typography>
           </Box>
         </DialogTitle>
-        <DialogContent>
-          <List>
-            <ListItem>
-              <SearchBar />
-            </ListItem>
-            <Scrollbars autoHeight={true} autoHeightMax={400}>
-              {tokenProvider.tokens.map(token => {
-                const playerToken = props.playerTokens.find(t => t.token.toUpperCase() === token.address.toUpperCase())  
-                return <ListItem button>
-                  <ListItemAvatar>
-                    <Avatar src={Logos[token.symbol]} imgProps={{ style: {objectFit: 'contain' }}} />
-                  </ListItemAvatar>
-                  <ListItemText primary={token.symbol} secondary={token.name} />
-                  <ListItemSecondaryAction>
-                    <Typography>{playerToken ? playerToken.amount : 0.0}</Typography>
-                  </ListItemSecondaryAction>
-                </ListItem>
-              })}
-            </Scrollbars>
-          </List>
-        </DialogContent>
+        <Box mx={5} mt={3} mb={1}>
+          <SearchBar search={search} setSearch={setSearch} />
+        </Box>
+        <Scrollbars autoHeight={true} autoHeightMax={400}>
+          <DialogContent style={{ paddingTop: '0px' }}>
+            <List>
+              {tokenProvider.tokens.
+                filter(t => t.name.toLowerCase().includes(search.toLowerCase()) || t.symbol.toLowerCase().includes(search.toLowerCase()))
+                .map(token => {
+                  const playerToken = props.playerTokens.find(t => t.tokenAddress.toUpperCase() === token.address.toUpperCase())
+                  return <ListItem button onClick={() => { props.select(token); props.close() }}>
+                    <ListItemAvatar>
+                      <Avatar src={Logos[token.symbol]} imgProps={{ style: { objectFit: 'contain' } }} />
+                    </ListItemAvatar>
+                    <ListItemText primary={token.symbol} secondary={token.name} />
+                    <ListItemSecondaryAction>
+                      <Typography>{playerToken ? playerToken.amountFloat : 0}</Typography>
+                    </ListItemSecondaryAction>
+                  </ListItem>
+                })}
+            </List>
+          </DialogContent>
+        </Scrollbars>
       </Box>
     </Dialog>
   )
@@ -77,5 +66,7 @@ export function SelectTokenDialog(props) {
 
 const useStyles = makeStyles({
   dialog: {
+    width: '400px',
+    minHeight: '531px'
   },
 })

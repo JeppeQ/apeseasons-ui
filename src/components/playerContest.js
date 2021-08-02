@@ -59,7 +59,7 @@ export function PlayerContest(props) {
             <Box role="tabpanel" hidden={value !== 1} id='assetsTab' className={_styles.tabContent}>
               {value === 1 && (
                 <Box p={3} className={_styles.tabContent}>
-                  <AssetsTable swap={swapToken} />
+                  <AssetsTable swap={swapToken} tokens={props.playerTokens} />
                 </Box>
               )}
             </Box>

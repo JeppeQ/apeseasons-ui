@@ -7,15 +7,13 @@ import Box from '@material-ui/core/Box'
 import { componentStyles } from './styles'
 import { Typography } from '@material-ui/core'
 
-const filters = ['ongoing', 'upcoming', 'completed']
-
 export function ContestFilter(props) {
   const classes = useStyles()
   const _styles = componentStyles()
 
   return (
     <Box className={clsx(classes.container)}>
-      {filters.map(filter => {
+      {props.filters.map(filter => {
         if (filter === props.filter) {
           return <Box component={'button'} className={clsx(_styles.customBox, classes.filterButton)}>
             <Typography variant='subtitle1' style={{ color: '#fff' }}>{filter}</Typography>
