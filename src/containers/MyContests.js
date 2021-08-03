@@ -67,7 +67,7 @@ function MyContests() {
             </Box>
           }
 
-          {loading && <CircularProgress color='secondary' style={{ margin: 'auto' }} />}
+          {web3.address && loading && <CircularProgress color='secondary' style={{ margin: 'auto' }} />}
 
           {!loading && web3.address && tournaments.length === 0 &&
             <motion.div variants={fadeVariant} initial='initial' exit='exit' animate='enter'>
