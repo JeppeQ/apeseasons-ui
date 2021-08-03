@@ -20,8 +20,6 @@ import { SearchBar } from '../searchBar'
 import { TokenContext } from '../../contexts/tokenContext'
 import Logos from '../../helpers/logos'
 
-
-/* global BigInt */
 export function SelectTokenDialog(props) {
   const _classes = styles()
   const classes = useStyles()
@@ -31,34 +29,42 @@ export function SelectTokenDialog(props) {
   return (
     <Dialog open={props.open} onClose={props.close} maxWidth='sm'>
       <Box className={clsx(_classes.dialog, classes.dialog)}>
+
         <DialogTitle>
           <Box ml={2} mb={-3}>
             <Typography className={_classes.title}>Select a token</Typography>
           </Box>
         </DialogTitle>
+
         <Box mx={5} mt={3} mb={1}>
           <SearchBar search={search} setSearch={setSearch} />
         </Box>
+
         <Scrollbars autoHeight={true} autoHeightMax={400}>
           <DialogContent style={{ paddingTop: '0px' }}>
             <List>
-              {tokenProvider.tokens.
-                filter(t => t.name.toLowerCase().includes(search.toLowerCase()) || t.symbol.toLowerCase().includes(search.toLowerCase()))
+              {tokenProvider.tokens
+                .filter(t => t.name.toLowerCase().includes(search.toLowerCase()) || t.symbol.toLowerCase().includes(search.toLowerCase()))
                 .map(token => {
                   const playerToken = props.playerTokens.find(t => t.tokenAddress.toUpperCase() === token.address.toUpperCase())
                   return <ListItem button onClick={() => { props.select(token); props.close() }}>
+
                     <ListItemAvatar>
                       <Avatar src={Logos[token.symbol]} imgProps={{ style: { objectFit: 'contain' } }} />
                     </ListItemAvatar>
+
                     <ListItemText primary={token.symbol} secondary={token.name} />
+
                     <ListItemSecondaryAction>
                       <Typography>{playerToken ? playerToken.amountFloat : 0}</Typography>
                     </ListItemSecondaryAction>
+
                   </ListItem>
                 })}
             </List>
           </DialogContent>
         </Scrollbars>
+
       </Box>
     </Dialog>
   )

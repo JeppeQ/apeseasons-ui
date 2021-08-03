@@ -27,7 +27,7 @@ function LandingPage() {
           <Box className={classes.header}>
             <Box display='flex'>
               <motion.div className={classes.logoContainer} variants={fadeVariant} initial='initial' exit='exit' animate='enter'>
-                <img src={logo} width={'100%'} />
+                <img src={logo} width={'100%'} alt='logo' />
               </motion.div>
               <Box>
                 <Typography variant='h3'>APE SEASONS</Typography>

@@ -1,25 +1,17 @@
 import React, { useContext, useState, useEffect } from 'react'
-import clsx from 'clsx'
 import { motion } from 'framer-motion'
 import { Scrollbars } from 'react-custom-scrollbars'
-import NumberFormat from 'react-number-format'
-import { useQuery } from '@apollo/client'
-import { utils } from 'ethers'
 
 import Box from '@material-ui/core/Box'
 import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
-import Divider from '@material-ui/core/Divider'
 import { makeStyles } from '@material-ui/core/styles'
-import Skeleton from '@material-ui/lab/Skeleton'
 import CircularProgress from '@material-ui/core/CircularProgress'
 
 import { Contest } from '../components/contest'
-import { PlayerContest } from '../components/playerContest'
 import { ContestFilter } from '../components/contestFilter'
 import { fadeVariant } from '../helpers/variants'
 import { Web3Context } from '../contexts/web3Context'
-import { TokenContext } from '../contexts/tokenContext'
 import * as playerApi from '../api/player'
 
 const filters = ['ONGOING', 'UPCOMING', 'COMPLETED']

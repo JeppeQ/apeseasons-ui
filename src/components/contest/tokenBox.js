@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import NumberFormat from 'react-number-format'
 
 import Box from '@material-ui/core/Box'
@@ -24,7 +24,7 @@ export default function TokenBox(props) {
     <Box className={classes.tokenBox}>
       <Box display='flex' onClick={props.selectToken}>
         {props.token
-          ? <img src={Logos[props.token.symbol]} style={{ width: '50px', height: '50px' }} />
+          ? <img src={Logos[props.token.symbol]} style={{ width: '50px', height: '50px' }} alt='tokenSymbol' />
           : <CurrencyIcon style={{ fontSize: '50px' }} />
         }
         <Box ml={1} mr={3} width='140px'>

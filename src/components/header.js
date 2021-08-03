@@ -9,20 +9,14 @@ import Grid from '@material-ui/core/Grid'
 import Button from '@material-ui/core/Button'
 import IconButton from '@material-ui/core/IconButton'
 import { makeStyles } from '@material-ui/core/styles'
-import EcoIcon from '@material-ui/icons/Eco'
 import MenuIcon from '@material-ui/icons/Menu'
-import EqualizerIcon from '@material-ui/icons/Equalizer'
-import LocalAtmIcon from '@material-ui/icons/LocalAtm'
 import InfoIcon from '@material-ui/icons/Info'
-import ExposurePlus1Icon from '@material-ui/icons/ExposurePlus1'
 import useMediaQuery from '@material-ui/core/useMediaQuery'
-import AnnouncementIcon from '@material-ui/icons/Announcement'
 
 import { ellipseAddress } from '../helpers/utilities'
 import { fadeVariant } from '../helpers/variants'
 import Menu from './mobile/menu'
 import logo from '../assets/images/logo.png'
-import metamaskLogo from '../assets/images/metamask-icon.png'
 import { Web3Context } from '../contexts/web3Context'
 
 const menuItems = [
@@ -93,7 +87,7 @@ function Header() {
             </motion.div>
             <Link to='/'>
               <Box className={clsx(classes.logo, classes.item)}>
-                <img src={logo} className={classes.content} width={'35px'} />
+                <img src={logo} className={classes.content} width={'35px'} alt='logo' />
               </Box>
             </Link>
             {menuItems.map(item => {

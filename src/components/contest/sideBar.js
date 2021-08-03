@@ -19,7 +19,7 @@ export default function SideBar(props) {
     <Box className={classes.signupContainer}>
       <Box display='flex' alignItems='center' flexDirection='column'>
 
-        <img src={Medal} width={'40%'} />
+        <img src={Medal} width={'40%'} alt='prize' />
 
         <Box my={2} />
         <Typography variant='subtitle1'>Prize pool</Typography>

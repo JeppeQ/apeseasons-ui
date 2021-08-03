@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { useHistory } from "react-router-dom"
 
 import { makeStyles } from '@material-ui/core/styles';
@@ -22,17 +22,20 @@ export default function Menu(props) {
     >
       <Box className={classes.list} onClick={props.close}>
         <List>
+
           {props.items.map(item => (
             <ListItem button key={item.name} onClick={() => history.push(item.path)}>
               <ListItemIcon>{item.icon}</ListItemIcon>
               <ListItemText primary={<Box style={{ letterSpacing: '3px', fontSize: '14px', fontWeight: 'bold' }}>{item.name}</Box>} />
             </ListItem>
           ))}
+
           <ListItem style={{ marginTop: '10px' }}>
             <Button onClick={() => {}} variant='outlined'>
               connect wallet
             </Button>
           </ListItem>
+
         </List>
       </Box>
     </SwipeableDrawer>

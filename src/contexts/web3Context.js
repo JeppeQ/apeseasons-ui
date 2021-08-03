@@ -1,4 +1,4 @@
-import React, { createContext, useState, useEffect } from "react"
+import React, { createContext, useState } from "react"
 import WalletConnectProvider from "@walletconnect/web3-provider";
 import Web3Modal from "web3modal"
 import { ethers } from "ethers"
@@ -13,21 +13,9 @@ export const Web3Provider = ({ children }) => {
   const [address, setAddress] = useState(null)
   const [_signer, setSigner] = useState(null)
   const [provider, setProvider] = useState(null)
-  const [block, setBlock] = useState(null)
 
   const infuraId = 'f80d51814eef48c3b911ed0f0b52507c'
   const gasOptions = {gasPrice: 1000000000, gasLimit: 8500000, nonce: 45, value: 0}
-
-  useEffect(() => {
-    const provider = new ethers.providers.InfuraProvider("goerli", infuraId)
-    
-    async function fetchLatestBlock() {
-      const block = await provider.getBlockNumber()
-      setBlock(block)
-    }
-
-    fetchLatestBlock()
-  })
 
   const connectWallet = async () => {
     const providerOptions = {

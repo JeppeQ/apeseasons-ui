@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react'
+import React, { useContext } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import NumberFormat from 'react-number-format'
 import { DateTime } from 'luxon'
@@ -21,8 +21,8 @@ export default function ContestOverview(props) {
   const classes = useStyles()
   const web3 = useContext(Web3Context)
 
-  const { id, startTime, endTime, startBlock, endBlock, ticketPriceFloat,
-    ticketTokenSymbol, playerCount, ticketPrice, prizePool } = props.data
+  const { startTime, endTime, startBlock, endBlock, ticketPriceFloat,
+    ticketTokenSymbol, playerCount, prizePool } = props.data
 
   const { rank, netWorth, prize, prizeStatus } = props.playerData || {}
 
@@ -48,7 +48,7 @@ export default function ContestOverview(props) {
     <React.Fragment>
 
       <Box className={classes.section} mr={1} justifyContent={'center'}>
-        <img src={logo} style={{ width: '80%' }} />
+        <img src={logo} style={{ width: '80%' }} alt='contestImage' />
       </Box>
 
       <Box className={classes.section} width={'35%'}>
@@ -61,7 +61,7 @@ export default function ContestOverview(props) {
 
 
       {props.entry &&
-        <Section text={"Entry"} value={`${ticketPriceFloat} ${ticketTokenSymbol}`} icon={<img src={Logos[ticketTokenSymbol]} height={32} />} />
+        <Section text={"Entry"} value={`${ticketPriceFloat} ${ticketTokenSymbol}`} icon={<img src={Logos[ticketTokenSymbol]} height={32} alt='tokenSymbol' />} />
       }
 
       {props.players &&
@@ -86,21 +86,21 @@ export default function ContestOverview(props) {
       {props.prizePool &&
         <Section text={"Prize pool"}
           value={<NumberFormat value={prizePool} displayType={'text'} prefix={'$'} thousandSeparator />}
-          icon={<img src={Medal} width={'32px'} />}
+          icon={<img src={Medal} width={'32px'} alt='prize' />}
         />
       }
 
       {props.prize &&
         <Section text={"Prize"}
           value={<NumberFormat value={prize} displayType={'text'} prefix={'$'} thousandSeparator />}
-          icon={<img src={Medal} width={'32px'} />}
+          icon={<img src={Medal} width={'32px'} alt='prize' />}
         />
       }
 
       {props.prizeWithStatus &&
         <Box className={classes.section} width={'30%'}>
           <Box display='flex' alignItems='center'>
-            <img src={Medal} width={'32px'} />
+            <img src={Medal} width={'32px'} alt='prize' />
             <Box ml={1.5} mr={3} textAlign={'center'}>
               <Typography variant='subtitle2'>Prize</Typography>
               <Typography variant='h5'><NumberFormat value={prize} displayType={'text'} prefix={'$'} thousandSeparator /></Typography>

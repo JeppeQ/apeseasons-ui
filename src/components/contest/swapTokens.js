@@ -23,7 +23,7 @@ export function SwapTokens(props) {
     if (props.token) {
       setFromToken(tokenProvider.tokens.find(token => token.address === props.token.tokenAddress))
     }
-  }, [props.token])
+  }, [props.token, tokenProvider.tokens])
 
   useEffect(() => {
     if (!fromToken || !toToken || !fromAmount) {

@@ -1,17 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import { Scrollbars } from 'react-custom-scrollbars'
 import NumberFormat from 'react-number-format'
-import { useQuery } from '@apollo/client'
 
 import Box from '@material-ui/core/Box'
-import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
 import Table from '@material-ui/core/Table'
 import TableBody from '@material-ui/core/TableBody'
-import TableCell from '@material-ui/core/TableCell'
 import TableHead from '@material-ui/core/TableHead'
 import TableRow from '@material-ui/core/TableRow'
-import { withStyles } from '@material-ui/core/styles'
 import { makeStyles } from '@material-ui/core/styles'
 import Skeleton from '@material-ui/lab/Skeleton'
 
@@ -42,7 +38,7 @@ export function PlayersTable(props) {
     }
 
     getPlayers()
-  }, [])
+  }, [props.tournament])
 
   function loadingRow() {
     return (

@@ -34,6 +34,4 @@ export async function getCompleted(address) {
   }).catch(err => console.log(err))
 
   return response ? response.data : null
-
-  return response ? response.data : null
 }

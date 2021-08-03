@@ -1,20 +1,15 @@
-import React, { useState, useContext } from 'react'
+import React, { useContext } from 'react'
 import { Scrollbars } from 'react-custom-scrollbars'
 import NumberFormat from 'react-number-format'
 
 import Box from '@material-ui/core/Box'
-import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
 import Table from '@material-ui/core/Table'
 import TableBody from '@material-ui/core/TableBody'
-import TableCell from '@material-ui/core/TableCell'
 import TableHead from '@material-ui/core/TableHead'
 import TableRow from '@material-ui/core/TableRow'
-import { withStyles } from '@material-ui/core/styles'
 import { makeStyles } from '@material-ui/core/styles'
-import Skeleton from '@material-ui/lab/Skeleton'
 
-import { ellipseAddress } from '../../helpers/utilities'
 import { styles, CustomTableCell } from './styles'
 import Logos from '../../helpers/logos'
 import { TokenContext } from '../../contexts/tokenContext'
@@ -61,7 +56,7 @@ export function AssetsTable(props) {
 
                 <CustomTableCell>
                   <Box display='flex'>
-                    <img src={Logos[token.tokenSymbol]} style={{ marginRight: '5px' }} height={20} />
+                    <img src={Logos[token.tokenSymbol]} style={{ marginRight: '5px' }} height={20} alt='tokenSymbol' />
                     {token.tokenName}
                     <Box ml={1}>
                       <Typography variant='body1' color='textSecondary'>{token.tokenSymbol}</Typography>
