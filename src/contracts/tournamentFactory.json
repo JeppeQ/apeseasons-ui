@@ -12,6 +12,11 @@
           "internalType": "address",
           "name": "_sushiRouterAddress",
           "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "_tokenWhitelist",
+          "type": "address"
         }
       ],
       "stateMutability": "nonpayable",
@@ -49,6 +54,12 @@
           "internalType": "address",
           "name": "tournamentAddress",
           "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "string",
+          "name": "name",
+          "type": "string"
         }
       ],
       "name": "CreateTournament",
@@ -132,6 +143,21 @@
           "internalType": "address",
           "name": "_gameMaster",
           "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "_rewardTokenDistributor",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "_prizeStructure",
+          "type": "address"
+        },
+        {
+          "internalType": "string",
+          "name": "name",
+          "type": "string"
         }
       ],
       "name": "createTournament",
@@ -174,6 +200,19 @@
     {
       "inputs": [],
       "name": "sushiRouterAddress",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "tokenWhitelist",
       "outputs": [
         {
           "internalType": "address",

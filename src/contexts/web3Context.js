@@ -15,7 +15,7 @@ export const Web3Provider = ({ children }) => {
   const [provider, setProvider] = useState(null)
 
   const infuraId = 'f80d51814eef48c3b911ed0f0b52507c'
-  const gasOptions = {gasPrice: 1000000000, gasLimit: 8500000, nonce: 45, value: 0}
+  const gasOptions = { gasPrice: 1000000000, gasLimit: 8500000, nonce: 45, value: 0 }
 
   const connectWallet = async () => {
     const providerOptions = {
@@ -47,7 +47,7 @@ export const Web3Provider = ({ children }) => {
 
     return signer
   }
-  
+
   const getSigner = async () => {
     return _signer || connectWallet()
   }
@@ -69,30 +69,33 @@ export const Web3Provider = ({ children }) => {
     const contract = await getSignedContract(contestId)
     await contract.buyTicket(gasOptions)
   }
-  
-  const swapToken = async (contestId, token, swapTo) => {
+
+  const swapToken = async (contestId, tokenIn, tokenOut, amountIn) => {
     const contract = await getSignedContract(contestId)
-    await contract.trade(token, swapTo, gasOptions)
-  }
-  
-  const claimReward = async (contestId) => {
-    const contract = await getSignedContract(contestId)
-    await contract.withdrawWinnings(gasOptions)
+    await contract.trade(tokenIn, tokenOut, amountIn, 0, gasOptions)
   }
 
-  const createTournament = async (start, end, price) => {
+  const claimReward = async (contestId, playerPos) => {
+    const contract = await getSignedContract(contestId)
+    await contract.withdrawWinnings(playerPos, gasOptions)
+  }
+
+  const createTournament = async (name, start, end, price) => {
     if (!provider) {
       return connectWallet()
     }
 
     const currentBlock = await provider.getBlockNumber()
-    const startBlock = currentBlock + Math.round(start.diffNow('seconds').seconds / 15)   
+    const startBlock = currentBlock + Math.round(start.diffNow('seconds').seconds / 15)
     const endBlock = currentBlock + Math.round(end.diffNow('seconds').seconds / 15)
-    const entry = BigInt(10**18 * price) /* global BigInt */
+    const entry = BigInt(10 ** 18 * price) /* global BigInt */
+    const prizeStructureAddress = ''
+    const rewardDistributorAddress = ''
 
     const signer = await getSigner()
     const factory = new ethers.Contract(tournamentFactoryContract.address, tournamentFactoryContract.abi, signer)
-    await factory.createTournament(startBlock, endBlock, entry, daiContract.address, address, gasOptions)
+    await factory.createTournament(startBlock, endBlock, entry, daiContract.address, address,
+      prizeStructureAddress, rewardDistributorAddress, name, gasOptions)
   }
 
   return (

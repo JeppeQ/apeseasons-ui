@@ -15,18 +15,27 @@ export function CreateContest(props) {
   const classes = useStyles()
   const web3 = useContext(Web3Context)
 
+  const [name, setName] = useState('')
   const [entryFee, setEntryFee] = useState(100)
   const [start, setStart] = useState(DateTime.now())
   const [end, setEnd] = useState(DateTime.now())
 
   const createTourney = () => {
-    web3.createTournament(start, end, entryFee)
+    web3.createTournament(name, start, end, entryFee)
   }
 
   return (
     <Box className={classes.container}>
 
       <Typography variant='h6'>Create Contest</Typography>
+
+      <TextField
+        color='secondary'
+        label="Name"
+        fullWidth
+        value={name}
+        onChange={(event) => setName(event.target.value)}
+      />
 
       <TextField
         color='secondary'
@@ -74,7 +83,7 @@ const useStyles = makeStyles({
   container: {
     marginTop: '30px',
     width: '300px',
-    minHeight: '400px',
+    minHeight: '450px',
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
