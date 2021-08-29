@@ -8,7 +8,7 @@ import Box from '@material-ui/core/Box'
 import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
 import TwitterIcon from '@material-ui/icons/Twitter'
-import TelegramIcon from '@material-ui/icons/Telegram'
+import DiscordIcon from '../assets/images/discord.svg'
 import { makeStyles, withStyles } from '@material-ui/core/styles'
 
 import { fadeVariant } from '../helpers/variants'
@@ -38,7 +38,7 @@ function LandingPage() {
             </Box>
             <Box>
               <TwitterIcon style={{ marginRight: '20px' }} />
-              <TelegramIcon />
+              <img src={DiscordIcon} alt='' />
             </Box>
           </Box>
 
@@ -137,7 +137,6 @@ function SlideThree() {
       <Box className={classes.slideTextContainer} style={{ width: '40%' }}>
         <Typography className={classes.slideTwoText}>- Contests are sponsored by the $APE token</Typography>
         <Typography className={classes.slideTwoText}>- Players are rewarded with $APE tokens upon joining a contest</Typography>
-        <Typography className={classes.slideTwoText}>- 5% of the prize pools goes to $APE stakers</Typography>
       </Box>
       <Box pb={10} ml={4}>
         <Lottie animationData={monkeyAnimation} loop={true} style={{ width: '75%' }} />
