@@ -1,5 +1,5 @@
 {
-  "address": "0x83ef20482d2e99e1cadcde394a47a07fe8ad19d3",
+  "address": "0x4Dec879e9D0f4Ec50771039F3B64CB8678Ac07C2",
   "abi": [
     {
       "inputs": [
@@ -11,6 +11,11 @@
         {
           "internalType": "address",
           "name": "_sushiRouterAddress",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "_tokenWhitelist",
           "type": "address"
         }
       ],
@@ -49,6 +54,12 @@
           "internalType": "address",
           "name": "tournamentAddress",
           "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "string",
+          "name": "name",
+          "type": "string"
         }
       ],
       "name": "CreateTournament",
@@ -132,6 +143,21 @@
           "internalType": "address",
           "name": "_gameMaster",
           "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "_rewardTokenDistributor",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "_prizeStructure",
+          "type": "address"
+        },
+        {
+          "internalType": "string",
+          "name": "name",
+          "type": "string"
         }
       ],
       "name": "createTournament",
@@ -174,6 +200,19 @@
     {
       "inputs": [],
       "name": "sushiRouterAddress",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "tokenWhitelist",
       "outputs": [
         {
           "internalType": "address",

@@ -4,7 +4,7 @@ import Web3Modal from "web3modal"
 import { ethers } from "ethers"
 
 import tournamentContract from "../contracts/tournament.json"
-import daiContract from "../contracts/dai.json"
+import tokenContracts from "../contracts/tokens.json"
 import tournamentFactoryContract from "../contracts/tournamentFactory.json"
 
 export const Web3Context = createContext()
@@ -57,14 +57,14 @@ export const Web3Provider = ({ children }) => {
     return new ethers.Contract(address, tournamentContract.abi, signer);
   }
 
-  const approveDai = async (contractAddress, amount) => {
+  const approveToken = async (token, contractAddress, amount) => {
     const signer = await getSigner()
-    const dai = new ethers.Contract(daiContract.address, daiContract.abi, signer);
-    await dai.approve(contractAddress, amount)
+    const contract = new ethers.Contract(tokenContracts[token], tokenContracts.abi, signer);
+    await contract.approve(contractAddress, amount)
   }
 
-  const joinContest = async (contestId, price) => {
-    await approveDai(contestId, price)
+  const joinContest = async (contestId, price, entryToken) => {
+    await approveToken(entryToken, contestId, price)
 
     const contract = await getSignedContract(contestId)
     await contract.buyTicket(gasOptions)
@@ -80,7 +80,7 @@ export const Web3Provider = ({ children }) => {
     await contract.withdrawWinnings(gasOptions)
   }
 
-  const createTournament = async (start, end, price) => {
+  const createTournament = async (start, end, price, entryToken) => {
     if (!provider) {
       return connectWallet()
     }
@@ -92,7 +92,7 @@ export const Web3Provider = ({ children }) => {
 
     const signer = await getSigner()
     const factory = new ethers.Contract(tournamentFactoryContract.address, tournamentFactoryContract.abi, signer)
-    await factory.createTournament(startBlock, endBlock, entry, daiContract.address, address, gasOptions)
+    await factory.createTournament(startBlock, endBlock, entry, tokenContracts[entryToken], address, gasOptions)
   }
 
   return (

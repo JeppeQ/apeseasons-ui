@@ -18,9 +18,10 @@ export function CreateContest(props) {
   const [entryFee, setEntryFee] = useState(100)
   const [start, setStart] = useState(DateTime.now())
   const [end, setEnd] = useState(DateTime.now())
+  const [entryToken] = useState('MATIC')
 
   const createTourney = () => {
-    web3.createTournament(start, end, entryFee)
+    web3.createTournament(start, end, entryFee, entryToken)
   }
 
   return (
@@ -35,7 +36,7 @@ export function CreateContest(props) {
         value={entryFee}
         onChange={(event) => setEntryFee(event.target.value)}
         InputProps={{
-          endAdornment: <InputAdornment position="start">DAI</InputAdornment>,
+          endAdornment: <InputAdornment position="start">MATIC</InputAdornment>,
         }}
       />
 
