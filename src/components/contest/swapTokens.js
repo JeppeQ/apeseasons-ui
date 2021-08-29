@@ -35,7 +35,7 @@ export function SwapTokens(props) {
   }, [fromAmount, fromToken, toToken])
 
   const swapTokens = () => {
-    web3.swapToken(props.id, fromToken.address, toToken.address)
+    web3.swapToken(props.id, fromToken.address, toToken.address, fromAmount, toAmount)
   }
 
   return (

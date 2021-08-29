@@ -41,7 +41,7 @@ export default function ContestOverview(props) {
   }
 
   const claimReward = () => {
-    web3.claimReward(props.data.id)
+    web3.claimReward(props.data.id, rank - 1)
   }
 
   return (
