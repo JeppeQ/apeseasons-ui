@@ -56,7 +56,7 @@ export const mainTheme = createMuiTheme({
   overrides: {
     MuiPaper: {
       root: {
-        backgroundColor: '#1E2530'
+        backgroundColor: 'rgba(70, 45, 130, 1)'
       }
     },
     MuiButton: {

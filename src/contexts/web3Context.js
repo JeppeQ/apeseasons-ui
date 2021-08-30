@@ -1,11 +1,11 @@
-import React, { createContext, useState } from "react"
-import WalletConnectProvider from "@walletconnect/web3-provider";
+import React, { createContext, useEffect, useState } from "react"
 import Web3Modal from "web3modal"
 import { ethers } from "ethers"
 
 import tournamentContract from "../contracts/tournament.json"
 import tokenContracts from "../contracts/tokens.json"
 import tournamentFactoryContract from "../contracts/tournamentFactory.json"
+import { MetaMaskDialog } from "../components/dialogs/metamaskDialog"
 
 export const Web3Context = createContext()
 
@@ -13,30 +13,62 @@ export const Web3Provider = ({ children }) => {
   const [address, setAddress] = useState(null)
   const [_signer, setSigner] = useState(null)
   const [provider, setProvider] = useState(null)
+  const [networkSupported, setNetworkSupported] = useState(true)
+  const [forceAccount, setForceAccount] = useState(false)
+  const [metaMaskDialog, openMetaMaskDialog] = useState(false)
 
-  const infuraId = 'f80d51814eef48c3b911ed0f0b52507c'
   const gasOptions = { gasPrice: 1000000000, gasLimit: 8500000, nonce: 45, value: 0 }
+  const supportedChainIds = [137]
+
+  useEffect(() => {
+    if (!window.ethereum) {
+      return
+    }
+
+    connectWallet()
+    window.ethereum.on('chainChanged', (_chainId) => window.location.reload());
+    
+    // eslint-disable-next-line
+  }, [])
+
+  const disconnectWallet = () => {
+    setAddress(null)
+    setForceAccount(true)
+  }
 
   const connectWallet = async () => {
-    const providerOptions = {
-      walletconnect: {
-        package: WalletConnectProvider,
-        options: {
-          infuraId
-        }
-      }
-    };
+    if (!window.ethereum || !window.ethereum.isMetaMask) {
+      openMetaMaskDialog(true)
+      return
+    }
 
     const web3Modal = new Web3Modal({
-      network: "goerli", // optional
-      cacheProvider: false, // optional
-      providerOptions,
+      network: "matic", // optional
+      cacheProvider: true, // optional
       theme: 'dark',
     });
+
+    if (forceAccount) {
+      await window.ethereum.request({
+        method: "wallet_requestPermissions",
+        params: [
+          {
+            eth_accounts: {}
+          }
+        ]
+      });
+      setForceAccount(false)
+    }
 
     const web3ModalConnection = await web3Modal.connect();
 
     const web3Provider = new ethers.providers.Web3Provider(web3ModalConnection)
+
+    const network = await web3Provider.getNetwork()
+    if (!supportedChainIds.includes(network.chainId)) {
+      setNetworkSupported(false)
+    }
+
     setProvider(web3Provider)
 
     const signer = web3Provider.getSigner()
@@ -106,10 +138,13 @@ export const Web3Provider = ({ children }) => {
         joinContest,
         swapToken,
         claimReward,
-        createTournament
+        createTournament,
+        networkSupported,
+        disconnectWallet,
       }}
     >
       {children}
+      <MetaMaskDialog open={metaMaskDialog} close={() => openMetaMaskDialog(false)} />
     </Web3Context.Provider>
   );
 };

@@ -145,7 +145,7 @@ const useStyles = makeStyles({
   mainContainer: {
     width: '900px',
     margin: 'auto',
-    marginTop: '150px',
+    marginTop: '100px',
     marginBottom: '50px',
     padding: '0 10px',
   }

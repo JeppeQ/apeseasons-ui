@@ -17,7 +17,10 @@ import { ellipseAddress } from '../helpers/utilities'
 import { fadeVariant } from '../helpers/variants'
 import Menu from './mobile/menu'
 import logo from '../assets/images/logo.png'
+import metamask from "../assets/images/metamask-icon.png"
+import { Settings } from './settings'
 import { Web3Context } from '../contexts/web3Context'
+import { Typography } from '@material-ui/core'
 
 const menuItems = [
   {
@@ -45,6 +48,8 @@ function Header() {
   const [active, setActive] = useState({})
   const [menu, openMenu] = useState(false)
   const web3 = useContext(Web3Context)
+  const [settings, openSettings] = useState(false)
+  const anchorRef = React.useRef(null);
 
   useEffect(() => {
     setActive(menuItems.find(item => location.pathname === item.path))
@@ -78,6 +83,7 @@ function Header() {
       <Grid container className={classes.header} justify='space-between' alignItems='center'>
         <Grid item>
           <Grid container>
+
             <motion.div
               className={classes.activeContent}
               animate={{ left: active.left, width: active.activeWidth }}
@@ -85,11 +91,13 @@ function Header() {
             >
               <Box className={classes.activeGlow} />
             </motion.div>
+
             <Link to='/'>
               <Box className={clsx(classes.logo, classes.item)}>
                 <img src={logo} className={classes.content} width={'35px'} alt='logo' />
               </Box>
             </Link>
+
             {menuItems.map(item => {
               return <Link to={item.path} key={item.name} className={classes.item} style={{ width: item.width }}>
                 <Box className={classes.content} style={
@@ -101,17 +109,30 @@ function Header() {
                 </Box>
               </Link>
             })}
+
           </Grid>
         </Grid>
+
+        {!web3.networkSupported &&
+          <Grid item>
+            <Typography variant='h5'>!Unsupported network. Please switch to Polygon.</Typography>
+          </Grid>
+        }
+
         <Grid item>
+
           {!web3.address
             ? <Button onClick={() => { web3.connectWallet() }}>
               connect wallet
             </Button>
-            : <Button onClick={() => { }}>
+
+            : <Button onClick={() => openSettings(true)} ref={anchorRef} startIcon={<img src={metamask} alt='' width={'21px'} />}>
               {ellipseAddress(web3.address, 4, 4)}
             </Button>}
         </Grid>
+
+        <Settings anchor={anchorRef.current} open={settings} close={() => openSettings(false)} />
+
       </Grid >
     </motion.div>
   )
