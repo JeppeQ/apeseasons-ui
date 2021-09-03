@@ -62,7 +62,7 @@ export function SwapTokens(props) {
 
       <Box mt={2}>
         <Button variant='contained' color='primary'
-          disabled={!fromToken.address || !toToken.address}
+          disabled={!fromToken || !toToken}
           onClick={swapTokens}>
           SWAP
         </Button>

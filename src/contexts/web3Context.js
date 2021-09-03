@@ -1,3 +1,4 @@
+/* global BigInt */
 import React, { createContext, useEffect, useState } from "react"
 import Web3Modal from "web3modal"
 import { ethers } from "ethers"
@@ -17,7 +18,7 @@ export const Web3Provider = ({ children }) => {
   const [forceAccount, setForceAccount] = useState(false)
   const [metaMaskDialog, openMetaMaskDialog] = useState(false)
 
-  const gasOptions = { gasPrice: 1000000000, gasLimit: 8500000, nonce: 45, value: 0 }
+  const gasOptions = { gasPrice: 1000000000, gasLimit: 10000000, nonce: 45, value: 0 }
   const supportedChainIds = [137]
 
   useEffect(() => {
@@ -27,7 +28,7 @@ export const Web3Provider = ({ children }) => {
 
     connectWallet()
     window.ethereum.on('chainChanged', (_chainId) => window.location.reload());
-    
+
     // eslint-disable-next-line
   }, [])
 
@@ -92,19 +93,21 @@ export const Web3Provider = ({ children }) => {
   const approveToken = async (token, contractAddress, amount) => {
     const signer = await getSigner()
     const contract = new ethers.Contract(tokenContracts[token], tokenContracts.abi, signer);
-    await contract.approve(contractAddress, amount)
+    await contract.approve(contractAddress, String(amount*2))
   }
 
   const joinContest = async (contestId, price, entryToken) => {
     await approveToken(entryToken, contestId, price)
-
     const contract = await getSignedContract(contestId)
     await contract.buyTicket(gasOptions)
   }
 
   const swapToken = async (contestId, tokenIn, tokenOut, amountIn) => {
     const contract = await getSignedContract(contestId)
-    await contract.trade(tokenIn, tokenOut, amountIn, 0, gasOptions)
+
+    const amount = BigInt(10 ** 18 * amountIn)
+    console.log(tokenIn, tokenOut, amount)
+    await contract.trade(tokenIn, tokenOut, amount, 1, gasOptions)
   }
 
   const claimReward = async (contestId, playerPos) => {
@@ -120,9 +123,9 @@ export const Web3Provider = ({ children }) => {
     const currentBlock = await provider.getBlockNumber()
     const startBlock = currentBlock + Math.round(start.diffNow('seconds').seconds / 15)
     const endBlock = currentBlock + Math.round(end.diffNow('seconds').seconds / 15)
-    const entry = BigInt(10 ** 18 * price) /* global BigInt */
-    const prizeStructureAddress = ''
-    const rewardDistributorAddress = ''
+    const entry = BigInt(10 ** 18 * price)
+    const prizeStructureAddress = '0xA728e789f6c65aA75bD77844D0ea81C9c4D43950'
+    const rewardDistributorAddress = '0x0dea4Be9B1E4f4E8E4cdf53A1d3736Fff0f337C3'
 
     const signer = await getSigner()
     const factory = new ethers.Contract(tournamentFactoryContract.address, tournamentFactoryContract.abi, signer)

@@ -15,11 +15,11 @@ export function CreateContest(props) {
   const classes = useStyles()
   const web3 = useContext(Web3Context)
 
-  const [name, setName] = useState('')
-  const [entryFee, setEntryFee] = useState(100)
-  const [start, setStart] = useState(DateTime.now())
-  const [end, setEnd] = useState(DateTime.now())
-  const [entryToken] = useState('MATIC')
+  const [name, setName] = useState('Test')
+  const [entryFee, setEntryFee] = useState(0.01)
+  const [start, setStart] = useState(DateTime.now().plus({ hours: 5 }))
+  const [end, setEnd] = useState(DateTime.now().plus({ days: 7 }))
+  const [entryToken] = useState('DAI')
 
   const createTourney = () => {
     web3.createTournament(name, start, end, entryFee, entryToken)

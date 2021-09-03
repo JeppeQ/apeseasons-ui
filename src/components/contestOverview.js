@@ -22,7 +22,7 @@ export default function ContestOverview(props) {
   const web3 = useContext(Web3Context)
 
   const { startTime, endTime, startBlock, endBlock, ticketPriceFloat,
-    ticketTokenSymbol, playerCount, prizePool } = props.data
+    ticketTokenSymbol, playerCount, prizePool, name } = props.data
 
   const { rank, netWorth, prize, prizeStatus } = props.playerData || {}
 
@@ -52,7 +52,7 @@ export default function ContestOverview(props) {
       </Box>
 
       <Box className={classes.section} width={'35%'}>
-        <Typography variant='h5' className={classes.contestTitle}>Apeseason #1</Typography>
+        <Typography variant='h5' className={classes.contestTitle}>{name}</Typography>
         {props.startingIn && <Typography variant='subtitle2'>{`Starting in: ${formatTime(DateTime.fromMillis(startTime), DateTime.utc())}`}</Typography>}
         {props.runningFor && <Typography variant='subtitle2'>{`Running for: ${formatTime(DateTime.utc(), DateTime.fromMillis(startTime))}`}</Typography>}
         {props.endingIn && <Typography variant='subtitle2'>{`Ending in: ${formatTime(DateTime.fromMillis(endTime), DateTime.utc())}`}</Typography>}

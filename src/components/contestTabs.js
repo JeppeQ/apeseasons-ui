@@ -55,7 +55,7 @@ export default function ContestTabs(props) {
       <Box role="tabpanel" hidden={value !== 2} id='assetsTab' className={_styles.tabContent}>
         {value === 2 && (
           <Box p={3} className={_styles.tabContent}>
-            <AssetsTable swap={swapToken} tokens={props.playerTokens} swapAllowed={props.swapTab} />
+            <AssetsTable swap={swapToken} tokens={props.playerTokens} swapAvailable={props.swapTab} />
           </Box>
         )}
       </Box>
