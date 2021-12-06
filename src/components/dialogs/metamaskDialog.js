@@ -1,13 +1,13 @@
-import React from 'react'
-
+import { Button } from '@mui/material'
+import Box from '@mui/material/Box'
 import Dialog from '@mui/material/Dialog'
 import DialogActions from '@mui/material/DialogActions'
 import DialogContent from '@mui/material/DialogContent'
 import DialogTitle from '@mui/material/DialogTitle'
-import Box from '@mui/material/Box'
-import Typography from '@mui/material/Typography'
 import Link from '@mui/material/Link'
-import { styles, CustomButton } from './styles'
+import Typography from '@mui/material/Typography'
+import React from 'react'
+import { styles } from './styles'
 
 export function MetaMaskDialog(props) {
   const _classes = styles()
@@ -28,13 +28,15 @@ export function MetaMaskDialog(props) {
           </Box>
 
           <Box my={1}>
-            <Link target="_blank" href='https://metamask.io/download.html' style={{color: '#058665'}}>
+            <Link target="_blank" href='https://metamask.io/download.html' style={{ color: '#058665' }}>
               Click here to download MetaMask and create a wallet.
             </Link>
           </Box>
 
           <DialogActions style={{ paddingRight: '0' }}>
-            <CustomButton style={{ padding: '8px 15px' }} onClick={() => window.location.reload()} variant='outlined'>continue</CustomButton>
+            <Button onClick={() => window.location.reload()} variant='contained'>
+              continue
+            </Button>
           </DialogActions>
 
         </DialogContent>

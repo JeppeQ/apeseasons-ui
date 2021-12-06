@@ -26,7 +26,7 @@ export const Web3Provider = ({ children }) => {
       return
     }
 
-    connectWallet()
+    connectWallet(true)
     window.ethereum.on('chainChanged', (_chainId) => window.location.reload());
 
     // eslint-disable-next-line
@@ -37,7 +37,7 @@ export const Web3Provider = ({ children }) => {
     setForceAccount(true)
   }
 
-  const connectWallet = async () => {
+  const connectWallet = async (initial) => {
     if (!window.ethereum || !window.ethereum.isMetaMask) {
       openMetaMaskDialog(true)
       return
@@ -48,6 +48,10 @@ export const Web3Provider = ({ children }) => {
       cacheProvider: true, // optional
       theme: 'dark',
     });
+
+    if (initial && !web3Modal.cachedProvider) {
+      return
+    }
 
     if (forceAccount) {
       await window.ethereum.request({
@@ -93,7 +97,7 @@ export const Web3Provider = ({ children }) => {
   const approveToken = async (token, contractAddress, amount) => {
     const signer = await getSigner()
     const contract = new ethers.Contract(tokenContracts[token], tokenContracts.abi, signer);
-    await contract.approve(contractAddress, String(amount*2))
+    await contract.approve(contractAddress, String(amount * 2))
   }
 
   const joinContest = async (contestId, price, entryToken) => {
