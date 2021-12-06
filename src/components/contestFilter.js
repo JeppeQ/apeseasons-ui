@@ -28,8 +28,6 @@ export function ContestFilter(props) {
   )
 }
 
-
-
 const useStyles = makeStyles({
   container: {
     padding: '16px 0 14px',
