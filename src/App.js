@@ -9,6 +9,8 @@ import { AnimatePresence } from "framer-motion"
 import { ThemeProvider, StyledEngineProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline'
 import Box from '@mui/material/Box'
+import AdapterDateFns from '@mui/lab/AdapterDateFns'
+import LocalizationProvider from '@mui/lab/LocalizationProvider'
 
 import Header from './components/header'
 import { mainTheme } from './helpers/themes'
@@ -23,22 +25,24 @@ function App() {
         <StyledEngineProvider injectFirst>
           <ThemeProvider theme={mainTheme}>
             <CssBaseline />
-            <TokenProvider>
-              <Web3Provider>
-                <Box className='main'>
-                  <AnimatePresence exitBeforeEnter>
-                    <Header />
-                    <Route render={({ location }) => (
-                      <Switch location={location} key={location.pathname}>
-                        {routes.map((route, index) => {
-                          return <Route key={index} path={route.path} component={route.content} />
-                        })}
-                      </Switch>
-                    )} />
-                  </AnimatePresence>
-                </Box>
-              </Web3Provider>
-            </TokenProvider>
+            <LocalizationProvider dateAdapter={AdapterDateFns}>
+              <TokenProvider>
+                <Web3Provider>
+                  <Box className='main'>
+                    <AnimatePresence exitBeforeEnter>
+                      <Header />
+                      <Route render={({ location }) => (
+                        <Switch location={location} key={location.pathname}>
+                          {routes.map((route, index) => {
+                            return <Route key={index} path={route.path} component={route.content} />
+                          })}
+                        </Switch>
+                      )} />
+                    </AnimatePresence>
+                  </Box>
+                </Web3Provider>
+              </TokenProvider>
+            </LocalizationProvider>
           </ThemeProvider>
         </StyledEngineProvider>
       </Box>

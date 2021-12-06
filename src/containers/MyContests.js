@@ -57,7 +57,7 @@ function MyContests() {
       renderThumbVertical={({ style, ...props }) => <div {...props} style={{ ...style, backgroundColor: '#fff', borderRadius: '5px', opacity: '0.4' }} />}
     >
       <motion.div variants={fadeVariant} initial='initial' exit='exit' animate='enter'>
-        <Grid container direction='column' alignItems='flex-start' justifyContent='center' className={classes.mainContainer}>
+        <Grid container direction='column' alignItems='flex-start' className={classes.mainContainer}>
 
           <ContestFilter filter={filter} change={changeFilter} filters={filters} />
 
@@ -148,5 +148,6 @@ const useStyles = makeStyles({
     marginTop: '100px',
     marginBottom: '50px',
     padding: '0 10px',
+    minHeight: '500px'
   }
 });

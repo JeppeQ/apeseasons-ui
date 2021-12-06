@@ -24,7 +24,7 @@ export function Settings(props) {
         keepMounted
         open={props.open}
         onClose={props.close}
-        PaperProps={{ style: { marginTop: props.marginTop || '30px' } }}
+        PaperProps={{ style: { marginTop: props.marginTop || '10px' } }}
       >
 
         <MenuItem onClick={disconnect}>

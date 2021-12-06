@@ -65,7 +65,7 @@ export const mainTheme = createTheme({
     },
     MuiButton: {
       styleOverrides: {
-        label: {
+        root: {
           fontFamily: 'system-ui',
           color: 'white'
         }
@@ -101,4 +101,4 @@ export const mainTheme = createTheme({
       }
     }
   },
-}))
+})

@@ -10,7 +10,7 @@ import ListItem from '@mui/material/ListItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 
-export default function Menu(props) {
+export default function MobileMenu(props) {
   const classes = useStyles()
   const history = useHistory()
 

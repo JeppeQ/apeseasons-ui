@@ -15,7 +15,7 @@ import useMediaQuery from '@mui/material/useMediaQuery'
 
 import { ellipseAddress } from '../helpers/utilities'
 import { fadeVariant } from '../helpers/variants'
-import Menu from './mobile/menu'
+import MobileMenu from './mobile/menu'
 import logo from '../assets/images/logo.png'
 import metamask from "../assets/images/metamask-icon.png"
 import { Settings } from './settings'
@@ -73,7 +73,7 @@ function Header() {
           </Box>
           <Box width={'60px'} />
         </Grid>
-        <Menu open={menu} close={() => openMenu(false)} items={menuItems} active={active} />
+        <MobileMenu open={menu} close={() => openMenu(false)} items={menuItems} active={active} />
       </React.Fragment>
     );
   }
