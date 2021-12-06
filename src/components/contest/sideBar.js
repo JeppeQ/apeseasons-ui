@@ -1,11 +1,11 @@
 import React, { useContext } from 'react'
-import { makeStyles } from '@material-ui/core/styles'
+import makeStyles from '@mui/styles/makeStyles';
 import { Web3Context } from '../../contexts/web3Context'
 import NumberFormat from 'react-number-format'
 
-import Box from '@material-ui/core/Box'
-import Typography from '@material-ui/core/Typography'
-import Button from '@material-ui/core/Button'
+import Box from '@mui/material/Box'
+import Typography from '@mui/material/Typography'
+import Button from '@mui/material/Button'
 
 
 import Medal from '../../assets/images/medal.svg'

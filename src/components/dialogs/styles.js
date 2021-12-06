@@ -1,5 +1,6 @@
-import { makeStyles, withStyles } from '@material-ui/core/styles'
-import Button from '@material-ui/core/Button'
+import makeStyles from '@mui/styles/makeStyles';
+import withStyles from '@mui/styles/withStyles';
+import Button from '@mui/material/Button'
 
 export const CustomButton = withStyles(() => ({
   root: {

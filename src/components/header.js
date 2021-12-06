@@ -4,14 +4,14 @@ import { motion } from 'framer-motion'
 import clsx from 'clsx'
 import ReactGA from 'react-ga'
 
-import Box from '@material-ui/core/Box'
-import Grid from '@material-ui/core/Grid'
-import Button from '@material-ui/core/Button'
-import IconButton from '@material-ui/core/IconButton'
-import { makeStyles } from '@material-ui/core/styles'
-import MenuIcon from '@material-ui/icons/Menu'
-import InfoIcon from '@material-ui/icons/Info'
-import useMediaQuery from '@material-ui/core/useMediaQuery'
+import Box from '@mui/material/Box'
+import Grid from '@mui/material/Grid'
+import Button from '@mui/material/Button'
+import IconButton from '@mui/material/IconButton'
+import makeStyles from '@mui/styles/makeStyles';
+import MenuIcon from '@mui/icons-material/Menu'
+import InfoIcon from '@mui/icons-material/Info'
+import useMediaQuery from '@mui/material/useMediaQuery'
 
 import { ellipseAddress } from '../helpers/utilities'
 import { fadeVariant } from '../helpers/variants'
@@ -20,7 +20,7 @@ import logo from '../assets/images/logo.png'
 import metamask from "../assets/images/metamask-icon.png"
 import { Settings } from './settings'
 import { Web3Context } from '../contexts/web3Context'
-import { Typography } from '@material-ui/core'
+import { Typography } from '@mui/material'
 
 const menuItems = [
   {
@@ -64,8 +64,8 @@ function Header() {
   if (mobile) {
     return (
       <React.Fragment>
-        <Grid container className={classes.header} style={{ height: '60px', padding: '0' }} alignItems='center' justify='space-between'>
-          <IconButton onClick={() => openMenu(true)}>
+        <Grid container className={classes.header} style={{ height: '60px', padding: '0' }} alignItems='center' justifyContent='space-between'>
+          <IconButton onClick={() => openMenu(true)} size="large">
             <MenuIcon fontSize='large' />
           </IconButton>
           <Box style={{ letterSpacing: '3px', fontSize: '14px', fontWeight: 'bold' }}>
@@ -75,12 +75,12 @@ function Header() {
         </Grid>
         <Menu open={menu} close={() => openMenu(false)} items={menuItems} active={active} />
       </React.Fragment>
-    )
+    );
   }
 
   return (
     <motion.div variants={fadeVariant} initial='initial' exit='exit' animate='enter'>
-      <Grid container className={classes.header} justify='space-between' alignItems='center'>
+      <Grid container className={classes.header} justifyContent='space-between' alignItems='center'>
         <Grid item>
           <Grid container>
 
@@ -135,7 +135,7 @@ function Header() {
 
       </Grid >
     </motion.div>
-  )
+  );
 }
 
 export default Header

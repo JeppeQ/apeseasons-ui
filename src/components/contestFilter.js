@@ -1,11 +1,11 @@
 import React from 'react'
-import { makeStyles } from '@material-ui/core/styles'
+import makeStyles from '@mui/styles/makeStyles';
 import clsx from 'clsx'
 
-import Box from '@material-ui/core/Box'
+import Box from '@mui/material/Box'
 
 import { componentStyles } from './styles'
-import { Typography } from '@material-ui/core'
+import { Typography } from '@mui/material'
 
 export function ContestFilter(props) {
   const classes = useStyles()

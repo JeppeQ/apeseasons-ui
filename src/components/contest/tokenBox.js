@@ -1,14 +1,14 @@
 import React from 'react'
 import NumberFormat from 'react-number-format'
 
-import Box from '@material-ui/core/Box'
-import Typography from '@material-ui/core/Typography'
-import TextField from '@material-ui/core/TextField'
-import { makeStyles } from '@material-ui/core/styles'
-import WalletIcon from '@material-ui/icons/AccountBalanceWallet'
-import CurrencyIcon from '@material-ui/icons/MonetizationOn'
-import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown'
-import InputAdornment from '@material-ui/core/InputAdornment'
+import Box from '@mui/material/Box'
+import Typography from '@mui/material/Typography'
+import TextField from '@mui/material/TextField'
+import makeStyles from '@mui/styles/makeStyles';
+import WalletIcon from '@mui/icons-material/AccountBalanceWallet'
+import CurrencyIcon from '@mui/icons-material/MonetizationOn'
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
+import InputAdornment from '@mui/material/InputAdornment'
 
 import Logos from '../../helpers/logos'
 

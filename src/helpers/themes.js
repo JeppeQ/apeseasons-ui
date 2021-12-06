@@ -1,13 +1,15 @@
-import { createMuiTheme } from '@material-ui/core/styles'
+import { createTheme } from '@mui/material/styles';
 
-export const mainTheme = createMuiTheme({
+export const mainTheme = createTheme({
   palette: {
-    type: 'dark',
+    mode: 'dark',
     primary: {
       main: 'rgb(69, 59, 93)',
+      contrastText: "#fff"
     },
     secondary: {
       main: '#058665',
+      contrastText: "#fff"
     }
   },
   typography: {
@@ -53,38 +55,50 @@ export const mainTheme = createMuiTheme({
       lineHeight: 'none'
     }
   },
-  overrides: {
+  components: {
     MuiPaper: {
-      root: {
-        backgroundColor: 'rgba(70, 45, 130, 1)'
+      styleOverrides: {
+        root: {
+          backgroundColor: 'rgba(70, 45, 130, 1)'
+        }
       }
     },
     MuiButton: {
-      label: {
-        fontFamily: 'system-ui',
-        color: 'white'
-      },
+      styleOverrides: {
+        label: {
+          fontFamily: 'system-ui',
+          color: 'white'
+        }
+      }
     },
     MuiSlider: {
-      valueLabel: {
-        fontSize: '11px'
+      styleOverrides: {
+        valueLabel: {
+          fontSize: '11px'
+        }
       }
     },
     MuiDataGrid: {
-      root: {
-        borderRadius: '0',
-        border: ''
+      styleOverrides: {
+        root: {
+          borderRadius: '0',
+          border: ''
+        }
       }
     },
     MuiDialog: {
-      paper: {
-        margin: '10px'
+      styleOverrides: {
+        paper: {
+          margin: '10px'
+        }
       }
     },
     MuiTabs: {
-      indicator: {
-        background: 'mediumpurple'
+      styleOverrides: {
+        indicator: {
+          background: 'mediumpurple'
+        }
       }
     }
   },
-})
+}))

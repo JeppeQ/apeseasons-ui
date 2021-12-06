@@ -2,11 +2,11 @@ import React, { useContext, useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { Scrollbars } from 'react-custom-scrollbars'
 
-import Box from '@material-ui/core/Box'
-import Grid from '@material-ui/core/Grid'
-import Typography from '@material-ui/core/Typography'
-import { makeStyles } from '@material-ui/core/styles'
-import CircularProgress from '@material-ui/core/CircularProgress'
+import Box from '@mui/material/Box'
+import Grid from '@mui/material/Grid'
+import Typography from '@mui/material/Typography'
+import makeStyles from '@mui/styles/makeStyles';
+import CircularProgress from '@mui/material/CircularProgress'
 
 import { Contest } from '../components/contest'
 import { ContestFilter } from '../components/contestFilter'
@@ -57,7 +57,7 @@ function MyContests() {
       renderThumbVertical={({ style, ...props }) => <div {...props} style={{ ...style, backgroundColor: '#fff', borderRadius: '5px', opacity: '0.4' }} />}
     >
       <motion.div variants={fadeVariant} initial='initial' exit='exit' animate='enter'>
-        <Grid container direction='column' alignItems='flex-start' justify='center' className={classes.mainContainer}>
+        <Grid container direction='column' alignItems='flex-start' justifyContent='center' className={classes.mainContainer}>
 
           <ContestFilter filter={filter} change={changeFilter} filters={filters} />
 
@@ -136,7 +136,7 @@ function MyContests() {
         </Grid >
       </motion.div>
     </Scrollbars>
-  )
+  );
 }
 
 export default MyContests

@@ -1,15 +1,15 @@
 import React, { useContext } from 'react'
-import { makeStyles } from '@material-ui/core/styles'
+import makeStyles from '@mui/styles/makeStyles';
 import NumberFormat from 'react-number-format'
 import { DateTime } from 'luxon'
 
-import Box from '@material-ui/core/Box'
-import Button from '@material-ui/core/Button'
-import Typography from '@material-ui/core/Typography'
-import PlayersIcon from '@material-ui/icons/Person'
-import ScheduleIcon from '@material-ui/icons/Schedule'
-import NetWorthIcon from '@material-ui/icons/AccountBalanceWallet'
-import PlaceIcon from '@material-ui/icons/Place'
+import Box from '@mui/material/Box'
+import Button from '@mui/material/Button'
+import Typography from '@mui/material/Typography'
+import PlayersIcon from '@mui/icons-material/Person'
+import ScheduleIcon from '@mui/icons-material/Schedule'
+import NetWorthIcon from '@mui/icons-material/AccountBalanceWallet'
+import PlaceIcon from '@mui/icons-material/Place'
 
 import { formatTime } from '../helpers/utilities'
 import Medal from '../assets/images/medal.svg'

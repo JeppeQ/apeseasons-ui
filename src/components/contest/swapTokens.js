@@ -1,8 +1,8 @@
 import React, { useContext, useState, useEffect } from 'react'
 
-import Box from '@material-ui/core/Box'
-import Button from '@material-ui/core/Button'
-import { makeStyles } from '@material-ui/core/styles'
+import Box from '@mui/material/Box'
+import Button from '@mui/material/Button'
+import makeStyles from '@mui/styles/makeStyles';
 import { SelectTokenDialog } from '../dialogs/selectTokenDialog'
 import { TokenContext } from '../../contexts/tokenContext'
 import { Web3Context } from '../../contexts/web3Context'

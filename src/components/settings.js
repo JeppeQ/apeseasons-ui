@@ -1,11 +1,11 @@
 import React, { useContext } from 'react'
 
-import Menu from '@material-ui/core/Menu'
-import MenuItem from '@material-ui/core/MenuItem'
-import ListItemIcon from '@material-ui/core/ListItemIcon'
-import DisconnectIcon from '@material-ui/icons/ExitToApp';
+import Menu from '@mui/material/Menu'
+import MenuItem from '@mui/material/MenuItem'
+import ListItemIcon from '@mui/material/ListItemIcon'
+import DisconnectIcon from '@mui/icons-material/ExitToApp';
 
-import { Typography } from '@material-ui/core'
+import { Typography } from '@mui/material'
 import { Web3Context } from '../contexts/web3Context';
 
 export function Settings(props) {

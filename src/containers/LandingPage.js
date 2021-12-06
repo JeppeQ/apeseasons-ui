@@ -4,12 +4,13 @@ import { Scrollbars } from 'react-custom-scrollbars'
 import { Link } from "react-router-dom"
 import { motion } from 'framer-motion'
 
-import Box from '@material-ui/core/Box'
-import Button from '@material-ui/core/Button'
-import Typography from '@material-ui/core/Typography'
-import TwitterIcon from '@material-ui/icons/Twitter'
+import Box from '@mui/material/Box'
+import Button from '@mui/material/Button'
+import Typography from '@mui/material/Typography'
+import TwitterIcon from '@mui/icons-material/Twitter'
 import DiscordIcon from '../assets/images/discord.svg'
-import { makeStyles, withStyles } from '@material-ui/core/styles'
+import makeStyles from '@mui/styles/makeStyles';
+import withStyles from '@mui/styles/withStyles';
 
 import { fadeVariant } from '../helpers/variants'
 import blockchainAnimation from '../assets/animations/blockchain.json'

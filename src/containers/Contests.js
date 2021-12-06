@@ -2,11 +2,11 @@ import React, { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 import { Scrollbars } from 'react-custom-scrollbars'
 
-import Grid from '@material-ui/core/Grid'
-import Typography from '@material-ui/core/Typography'
-import Box from '@material-ui/core/Box'
-import { makeStyles } from '@material-ui/core/styles'
-import CircularProgress from '@material-ui/core/CircularProgress'
+import Grid from '@mui/material/Grid'
+import Typography from '@mui/material/Typography'
+import Box from '@mui/material/Box'
+import makeStyles from '@mui/styles/makeStyles';
+import CircularProgress from '@mui/material/CircularProgress'
 
 import { Contest } from '../components/contest'
 import { ContestFilter } from '../components/contestFilter'

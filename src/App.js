@@ -6,9 +6,9 @@ import {
 } from "react-router-dom";
 import { AnimatePresence } from "framer-motion"
 
-import { ThemeProvider } from '@material-ui/core/styles'
-import CssBaseline from '@material-ui/core/CssBaseline'
-import Box from '@material-ui/core/Box'
+import { ThemeProvider, StyledEngineProvider } from '@mui/material/styles';
+import CssBaseline from '@mui/material/CssBaseline'
+import Box from '@mui/material/Box'
 
 import Header from './components/header'
 import { mainTheme } from './helpers/themes'
@@ -20,28 +20,30 @@ function App() {
   return (
     <Router>
       <Box className='background'>
-        <ThemeProvider theme={mainTheme}>
-          <CssBaseline />
-          <TokenProvider>
-            <Web3Provider>
-              <Box className='main'>
-                <AnimatePresence exitBeforeEnter>
-                  <Header />
-                  <Route render={({ location }) => (
-                    <Switch location={location} key={location.pathname}>
-                      {routes.map((route, index) => {
-                        return <Route key={index} path={route.path} component={route.content} />
-                      })}
-                    </Switch>
-                  )} />
-                </AnimatePresence>
-              </Box>
-            </Web3Provider>
-          </TokenProvider>
-        </ThemeProvider>
+        <StyledEngineProvider injectFirst>
+          <ThemeProvider theme={mainTheme}>
+            <CssBaseline />
+            <TokenProvider>
+              <Web3Provider>
+                <Box className='main'>
+                  <AnimatePresence exitBeforeEnter>
+                    <Header />
+                    <Route render={({ location }) => (
+                      <Switch location={location} key={location.pathname}>
+                        {routes.map((route, index) => {
+                          return <Route key={index} path={route.path} component={route.content} />
+                        })}
+                      </Switch>
+                    )} />
+                  </AnimatePresence>
+                </Box>
+              </Web3Provider>
+            </TokenProvider>
+          </ThemeProvider>
+        </StyledEngineProvider>
       </Box>
     </Router>
-  )
+  );
 }
 
 export default App
