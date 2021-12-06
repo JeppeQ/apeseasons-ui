@@ -81,7 +81,7 @@ function SlideOne() {
   }
 
   return (
-    <Box className={classes.slideContainer} style={{ marginTop: 'calc(10vh + 50px)' }}>
+    <Box className={classes.slideContainer} style={{ marginTop: 'calc(10vh - 50px)' }}>
       <Box className={classes.slideTextContainer}>
         <Typography variant='h2'>
           Decentralized <Typography variant='h2'>investment contests on</Typography> Polygon
@@ -171,12 +171,10 @@ const useStyles = makeStyles({
     marginBottom: '10vh'
   },
   header: {
-    position: 'fixed',
-    top: '0',
     width: '100%',
     display: 'flex',
     justifyContent: 'space-between',
-    padding: '40px 60px 0px 0px'
+    padding: '40px 60px 0px 0px',
   },
   buttonsContainer: {
     position: 'fixed',
