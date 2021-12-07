@@ -128,8 +128,8 @@ export const Web3Provider = ({ children }) => {
     const startBlock = currentBlock + Math.round(start.diffNow('seconds').seconds / 15)
     const endBlock = currentBlock + Math.round(end.diffNow('seconds').seconds / 15)
     const entry = BigInt(10 ** 18 * price)
-    const prizeStructureAddress = '0xA728e789f6c65aA75bD77844D0ea81C9c4D43950'
-    const rewardDistributorAddress = '0x0dea4Be9B1E4f4E8E4cdf53A1d3736Fff0f337C3'
+    const prizeStructureAddress = '0xaF69D4fE7ba02C3FeDdDF0fd5d5D5a561Ada64b3'
+    const rewardDistributorAddress = '0xc473337DEDeC604e399EF7e200232C41a6400d80'
 
     const signer = await getSigner()
     const factory = new ethers.Contract(tournamentFactoryContract.address, tournamentFactoryContract.abi, signer)
