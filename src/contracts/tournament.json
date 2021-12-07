@@ -18,6 +18,11 @@
           "type": "uint256"
         },
         {
+          "internalType": "uint256",
+          "name": "_apeFee",
+          "type": "uint256"
+        },
+        {
           "internalType": "address",
           "name": "_ticketTokenAddress",
           "type": "address"
@@ -29,7 +34,7 @@
         },
         {
           "internalType": "address",
-          "name": "_wethAddress",
+          "name": "_tradeTokenAddress",
           "type": "address"
         },
         {
@@ -180,6 +185,19 @@
       ],
       "name": "WithdrawWinnings",
       "type": "event"
+    },
+    {
+      "inputs": [],
+      "name": "apeFee",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
     },
     {
       "inputs": [],
@@ -360,6 +378,19 @@
       "type": "function"
     },
     {
+      "inputs": [],
+      "name": "liquidationAmount",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
       "inputs": [
         {
           "internalType": "address",
@@ -410,61 +441,6 @@
           "internalType": "uint256",
           "name": "",
           "type": "uint256"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "address",
-          "name": "",
-          "type": "address"
-        }
-      ],
-      "name": "playerStates",
-      "outputs": [
-        {
-          "internalType": "bool",
-          "name": "hasTicket",
-          "type": "bool"
-        },
-        {
-          "internalType": "bool",
-          "name": "hasWithdrawn",
-          "type": "bool"
-        },
-        {
-          "internalType": "bool",
-          "name": "hasClaimed",
-          "type": "bool"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [],
-      "name": "prizeStructure",
-      "outputs": [
-        {
-          "internalType": "contract IPrizeStructure",
-          "name": "",
-          "type": "address"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [],
-      "name": "rewardDistributor",
-      "outputs": [
-        {
-          "internalType": "contract RewardDistributor",
-          "name": "",
-          "type": "address"
         }
       ],
       "stateMutability": "view",
@@ -663,7 +639,7 @@
     },
     {
       "inputs": [],
-      "name": "wethAddress",
+      "name": "tradeTokenAddress",
       "outputs": [
         {
           "internalType": "address",
