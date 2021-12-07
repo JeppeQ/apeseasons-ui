@@ -10,7 +10,7 @@ export const mainTheme = createTheme({
     secondary: {
       main: '#058665',
       contrastText: "#fff"
-    }
+    },
   },
   typography: {
     fontFamily: 'system-ui',
@@ -99,6 +99,6 @@ export const mainTheme = createTheme({
           background: 'mediumpurple'
         }
       }
-    }
+    },
   },
 })
