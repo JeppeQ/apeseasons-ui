@@ -39,7 +39,7 @@ export function SwapTokens(props) {
   }
 
   return (
-    <Box className={classes.mainContainer}>
+    <Box className={classes.mainContainer} mt={3}>
 
       <TokenBox
         text='swap from'
@@ -81,10 +81,8 @@ export function SwapTokens(props) {
 const useStyles = makeStyles({
   mainContainer: {
     width: '100%',
-    height: '450px',
     display: 'flex',
     flexDirection: 'column',
-    justifyContent: 'center',
     alignItems: 'center',
   }
 });

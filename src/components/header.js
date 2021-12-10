@@ -1,26 +1,23 @@
-import React, { useState, useEffect, useContext } from 'react'
-import { Link, useLocation } from "react-router-dom"
-import { motion } from 'framer-motion'
-import clsx from 'clsx'
-import ReactGA from 'react-ga'
-
-import Box from '@mui/material/Box'
-import Grid from '@mui/material/Grid'
-import Button from '@mui/material/Button'
-import IconButton from '@mui/material/IconButton'
-import makeStyles from '@mui/styles/makeStyles';
-import MenuIcon from '@mui/icons-material/Menu'
 import InfoIcon from '@mui/icons-material/Info'
+import MenuIcon from '@mui/icons-material/Menu'
+import Box from '@mui/material/Box'
+import Button from '@mui/material/Button'
+import Grid from '@mui/material/Grid'
+import IconButton from '@mui/material/IconButton'
 import useMediaQuery from '@mui/material/useMediaQuery'
-
+import makeStyles from '@mui/styles/makeStyles'
+import clsx from 'clsx'
+import { motion } from 'framer-motion'
+import React, { useContext, useEffect, useState } from 'react'
+import ReactGA from 'react-ga'
+import { Link, useLocation } from "react-router-dom"
+import logo from '../assets/images/logo.png'
+import metamask from "../assets/images/metamask-icon.png"
+import { Web3Context } from '../contexts/web3Context'
 import { ellipseAddress } from '../helpers/utilities'
 import { fadeVariant } from '../helpers/variants'
 import MobileMenu from './mobile/menu'
-import logo from '../assets/images/logo.png'
-import metamask from "../assets/images/metamask-icon.png"
 import { Settings } from './settings'
-import { Web3Context } from '../contexts/web3Context'
-import { Typography } from '@mui/material'
 
 const menuItems = [
   {
@@ -112,12 +109,6 @@ function Header() {
 
           </Grid>
         </Grid>
-
-        {!web3.networkSupported &&
-          <Grid item>
-            <Typography variant='h5'>!Unsupported network. Please switch to Polygon.</Typography>
-          </Grid>
-        }
 
         <Grid item>
 

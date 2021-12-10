@@ -105,9 +105,9 @@ export default function ContestOverview(props) {
               <Typography variant='subtitle2'>Prize</Typography>
               <Typography variant='h5'><NumberFormat value={prize} displayType={'text'} prefix={'$'} thousandSeparator /></Typography>
             </Box>
+            {prize > 0 && prizeStatus === 'unclaimed' && <Button variant='contained' color='secondary' fullWidth onClick={claimReward}>CLAIM</Button>}
+            {prizeStatus === 'claimed' && <Typography variant='subtitle2'>Prize Claimed</Typography>}
           </Box>
-          {prize > 0 && prizeStatus === 'unclaimed' && <Button variant='contained' color='secondary' fullWidth onClick={claimReward}>CLAIM</Button>}
-          {prizeStatus === 'claimed' && <Typography variant='subtitle2'>Prize Claimed</Typography>}
         </Box>
       }
 

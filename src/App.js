@@ -17,6 +17,7 @@ import { mainTheme } from './helpers/themes'
 import { routes } from './helpers/routes'
 import { Web3Provider } from './contexts/web3Context'
 import { TokenProvider } from './contexts/tokenContext'
+import { SnackbarProvider } from 'notistack';
 
 function App() {
   return (
@@ -24,25 +25,27 @@ function App() {
       <Box className='background'>
         <StyledEngineProvider injectFirst>
           <ThemeProvider theme={mainTheme}>
-            <CssBaseline />
-            <LocalizationProvider dateAdapter={AdapterDateFns}>
-              <TokenProvider>
-                <Web3Provider>
-                  <Box className='main'>
-                    <AnimatePresence exitBeforeEnter>
-                      <Header />
-                      <Route render={({ location }) => (
-                        <Switch location={location} key={location.pathname}>
-                          {routes.map((route, index) => {
-                            return <Route key={index} path={route.path} component={route.content} />
-                          })}
-                        </Switch>
-                      )} />
-                    </AnimatePresence>
-                  </Box>
-                </Web3Provider>
-              </TokenProvider>
-            </LocalizationProvider>
+            <SnackbarProvider anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }} preventDuplicate>
+              <CssBaseline />
+              <LocalizationProvider dateAdapter={AdapterDateFns}>
+                <TokenProvider>
+                  <Web3Provider>
+                    <Box className='main'>
+                      <AnimatePresence exitBeforeEnter>
+                        <Header />
+                        <Route render={({ location }) => (
+                          <Switch location={location} key={location.pathname}>
+                            {routes.map((route, index) => {
+                              return <Route key={index} path={route.path} component={route.content} />
+                            })}
+                          </Switch>
+                        )} />
+                      </AnimatePresence>
+                    </Box>
+                  </Web3Provider>
+                </TokenProvider>
+              </LocalizationProvider>
+            </SnackbarProvider>
           </ThemeProvider>
         </StyledEngineProvider>
       </Box>

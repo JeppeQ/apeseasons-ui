@@ -27,3 +27,12 @@ a {
   width: 100%;
   height: 100%;
 }
+
+.SnackbarItem-variantInfo {
+  background: rgb(50, 50, 50) !important;
+  color: #fff;
+}
+
+.MuiTab-textColorSecondary.Mui-selected {
+  color: #FFF !important;
+}
