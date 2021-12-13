@@ -11,7 +11,7 @@ import ScheduleIcon from '@mui/icons-material/Schedule'
 import NetWorthIcon from '@mui/icons-material/AccountBalanceWallet'
 import PlaceIcon from '@mui/icons-material/Place'
 
-import { formatTime } from '../helpers/utilities'
+import { formatTime, dateDiff } from '../helpers/utilities'
 import Medal from '../assets/images/medal.svg'
 import logo from '../assets/images/logo.png'
 import Logos from '../helpers/logos'
@@ -69,7 +69,7 @@ export default function ContestOverview(props) {
       }
 
       {props.duration &&
-        <Section text={"Duration"} value={`${Math.round((endBlock - startBlock) / 5760)} days`} icon={<ScheduleIcon style={{ fontSize: '32px' }} />} />
+        <Section text={"Duration"} value={`${dateDiff(endTime, startTime)} days`} icon={<ScheduleIcon style={{ fontSize: '32px' }} />} />
       }
 
       {props.netWorth &&
