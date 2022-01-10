@@ -25,7 +25,7 @@ function App() {
       <Box className='background'>
         <StyledEngineProvider injectFirst>
           <ThemeProvider theme={mainTheme}>
-            <SnackbarProvider anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }} preventDuplicate>
+            <SnackbarProvider anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }} preventDuplicate>
               <CssBaseline />
               <LocalizationProvider dateAdapter={AdapterDateFns}>
                 <TokenProvider>

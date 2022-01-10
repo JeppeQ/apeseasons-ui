@@ -38,7 +38,7 @@ export default function SideBar(props) {
 
         <Box width={'100%'} mt={5}>
           <Button fullWidth variant='contained' color='secondary' onClick={() => web3.joinContest(id, ticketPrice, ticketTokenSymbol)}>
-            ENTER
+            approve & ENTER
           </Button>
         </Box>
 

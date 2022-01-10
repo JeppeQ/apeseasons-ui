@@ -66,7 +66,7 @@ export function AssetsTable(props) {
 
               <CustomTableCell align={'right'}>
                 <NumberFormat displayType={'text'} prefix={'$'} thousandSeparator decimalScale={2}
-                  value={token.amountFloat * tokenData.price || 0} />
+                  value={token.amountFloat * tokenData?.price || 0} />
               </CustomTableCell>
 
               <CustomTableCell align={'right'}>
