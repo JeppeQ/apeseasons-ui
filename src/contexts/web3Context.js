@@ -1,13 +1,13 @@
 /* global BigInt */
-import React, { createContext, useEffect, useState } from "react"
-import { useSnackbar } from 'notistack'
-import Web3Modal from "web3modal"
 import { ethers } from "ethers"
-
-import tournamentContract from "../contracts/tournament.json"
-import tokenContracts from "../contracts/tokens.json"
-import tournamentFactoryContract from "../contracts/tournamentFactory.json"
+import { useSnackbar } from 'notistack'
+import React, { createContext, useEffect, useState } from "react"
+import Web3Modal from "web3modal"
 import { MetaMaskDialog } from "../components/dialogs/metamaskDialog"
+import tokenContracts from "../contracts/tokens.json"
+import tournamentContract from "../contracts/tournament.json"
+import tournamentFactoryContract from "../contracts/tournamentFactory.json"
+
 
 export const Web3Context = createContext()
 
@@ -20,7 +20,7 @@ export const Web3Provider = ({ children }) => {
   const [metaMaskDialog, openMetaMaskDialog] = useState(false)
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
-  const gasOptions = { gasPrice: 1000000000, gasLimit: 10000000, nonce: 45, value: 0 }
+  const gasOptions = { gasPrice: 35000000000, gasLimit: 10000000, nonce: 45, value: 0 }
   const supportedChainIds = [137]
 
   useEffect(() => {
@@ -157,22 +157,25 @@ export const Web3Provider = ({ children }) => {
     waitTransaction(tx)
   }
 
-  const createTournament = async (name, start, end, price, entryToken) => {
+  const createTournament = async (name, start, end, price, entryToken, apeTax, tradeRouteToken) => {
     if (!provider) {
       return connectWallet()
     }
 
     const currentBlock = await provider.getBlockNumber()
-    const startBlock = currentBlock + Math.round(start.diffNow('seconds').seconds / 15)
-    const endBlock = currentBlock + Math.round(end.diffNow('seconds').seconds / 15)
+
+    const startBlock = currentBlock + Math.round(start.diffNow('seconds').seconds / 2.1)
+    const endBlock = currentBlock + Math.round(end.diffNow('seconds').seconds / 2.1)
+
     const entry = BigInt(10 ** 18 * price)
+    const apeFee = BigInt(10 ** 18 * apeTax)
     const prizeStructureAddress = '0xaF69D4fE7ba02C3FeDdDF0fd5d5D5a561Ada64b3'
     const rewardDistributorAddress = '0xc473337DEDeC604e399EF7e200232C41a6400d80'
 
     const signer = await getSigner()
     const factory = new ethers.Contract(tournamentFactoryContract.address, tournamentFactoryContract.abi, signer)
 
-    await factory.createTournament(startBlock, endBlock, entry, tokenContracts[entryToken], address,
+    await factory.createTournament(startBlock, endBlock, entry, apeFee, tokenContracts[entryToken], address, tokenContracts[tradeRouteToken],
       prizeStructureAddress, rewardDistributorAddress, name, gasOptions)
   }
 

@@ -21,7 +21,7 @@ export default function ContestOverview(props) {
   const classes = useStyles()
   const web3 = useContext(Web3Context)
 
-  const { startTime, endTime, startBlock, endBlock, ticketPriceFloat,
+  const { startTime, endTime, ticketPriceFloat,
     ticketTokenSymbol, playerCount, prizePool, name } = props.data
 
   const { rank, netWorth, prize, prizeStatus } = props.playerData || {}

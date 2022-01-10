@@ -1,4 +1,4 @@
-import { differenceInCalendarDays, format } from 'date-fns'
+import { differenceInCalendarDays } from 'date-fns';
 
 export function ellipseAddress(address, start, end) {
   return `${address.slice(0, start)}...${address.slice(-end)}`.toUpperCase();

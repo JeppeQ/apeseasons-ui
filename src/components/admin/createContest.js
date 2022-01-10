@@ -14,16 +14,18 @@ export function CreateContest(props) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [name, setName] = useState('Test')
   const [entryFee, setEntryFee] = useState(0.01)
+  const [apeTax, setApeTax] = useState(10)
   const [start, setStart] = useState(DateTime.now().plus({ hours: 5 }))
   const [end, setEnd] = useState(DateTime.now().plus({ days: 7 }))
   const [entryToken, setEntryToken] = useState('DAI')
+  const [tradeRouteToken, setTradeRouteToken] = useState('ETH')
 
   const handleClose = () => {
     setAnchorEl(null);
   };
 
   const createTourney = () => {
-    web3.createTournament(name, start, end, entryFee, entryToken)
+    web3.createTournament(name, start, end, entryFee, entryToken, apeTax, tradeRouteToken)
   }
 
   return (
@@ -54,18 +56,34 @@ export function CreateContest(props) {
         }}
       />
 
+      <TextField
+        color='secondary'
+        label="Ape tax %"
+        fullWidth
+        value={apeTax}
+        onChange={(event) => setApeTax(event.target.value)}
+      />
+
+      <TextField
+        color='secondary'
+        label="Trade route token"
+        fullWidth
+        value={tradeRouteToken}
+        onChange={(event) => setTradeRouteToken(event.target.value)}
+      />
+
       <DateTimePicker
         label="Start date"
         value={start}
         onChange={(date) => setStart(date)}
-        renderInput={(params) => <TextField {...params} />}
+        renderInput={(params) => <TextField {...params} fullWidth />}
       />
 
       <DateTimePicker
         label="End date"
         value={end}
         onChange={(date) => setEnd(date)}
-        renderInput={(params) => <TextField {...params} />}
+        renderInput={(params) => <TextField {...params} fullWidth />}
       />
 
       <Button variant='contained' color='secondary' onClick={createTourney}>Create</Button>
@@ -92,7 +110,7 @@ const useStyles = makeStyles({
   container: {
     marginTop: '30px',
     width: '300px',
-    minHeight: '450px',
+    minHeight: '600px',
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
