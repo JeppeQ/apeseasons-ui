@@ -15,7 +15,6 @@ const cells = [
   { id: 'token', label: 'Token', align: 'left', sortable: true },
   { id: 'total', label: 'Amount', align: 'right', sortable: true },
   { id: 'usd', label: 'Value', align: 'right', sortable: true },
-  { id: 'actions', label: 'Actions', align: 'right' },
 ]
 
 export function AssetsTable(props) {
@@ -35,6 +34,14 @@ export function AssetsTable(props) {
                 </Box>
               </CustomTableCell>
             ))}
+
+            {props.swapAvailable &&
+              <CustomTableCell align={"center"}>
+                <Box>
+                  <Typography variant='body1' color='textSecondary'>Actions</Typography>
+                </Box>
+              </CustomTableCell>
+            }
           </TableRow>
         </TableHead>
         <TableBody>
@@ -69,12 +76,12 @@ export function AssetsTable(props) {
                   value={token.amountFloat * tokenData?.price || 0} />
               </CustomTableCell>
 
-              <CustomTableCell align={'right'}>
-                {props.swapAvailable
-                  && <Box className={_classes.link} onClick={() => { props.swap(token) }}>
+              {props.swapAvailable
+                && <CustomTableCell align={'center'}>
+                  <Box className={_classes.link} onClick={() => { props.swap(token) }}>
                     SWAP
-                  </Box>}
-              </CustomTableCell>
+                  </Box>
+                </CustomTableCell>}
             </TableRow>
           })}
         </TableBody>
@@ -87,6 +94,6 @@ const useStyles = makeStyles({
   playerTable: {
     width: '100%',
     backgroundColor: '#231E2F',
-    borderCollapse: 'collapse'
+    borderCollapse: 'collapse',
   },
 })

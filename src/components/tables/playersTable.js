@@ -1,22 +1,21 @@
-import Box from '@mui/material/Box'
-import Skeleton from '@mui/material/Skeleton'
-import Table from '@mui/material/Table'
-import TableBody from '@mui/material/TableBody'
-import TableHead from '@mui/material/TableHead'
-import TableRow from '@mui/material/TableRow'
-import Typography from '@mui/material/Typography'
-import makeStyles from '@mui/styles/makeStyles'
+import { AssetsTable } from '../tables/assetsTable';
 import React, { useEffect, useState } from 'react'
 import NumberFormat from 'react-number-format'
 import * as tournamentApi from '../../api/tournament'
 import { ellipseAddress } from '../../helpers/utilities'
 import { CustomTableCell, styles } from './styles'
+import { IconButton, Skeleton, Table, TableBody, TableHead, TableRow, Typography } from '@mui/material';
+import { Box } from '@mui/system';
+import makeStyles from '@mui/styles/makeStyles';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import { TradeHistoryTable } from './tradeHistoryTable';
 
 const cells = [
   { id: 'rank', label: '#', sortable: true },
   { id: 'player', label: 'Player', align: 'left', sortable: true },
   { id: 'networth', label: 'Net worth', align: 'right', sortable: true },
   { id: 'prize', label: 'Prize', align: 'right', sortable: true },
+  { id: 'assets', label: 'Assets', align: 'center', sortable: true },
 ]
 
 export function PlayersTable(props) {
@@ -25,6 +24,7 @@ export function PlayersTable(props) {
 
   const [loading, setLoading] = useState(true)
   const [players, setPlayers] = useState([])
+  const [viewPlayer, setViewPlayer] = useState()
 
   useEffect(() => {
     async function getPlayers() {
@@ -49,6 +49,38 @@ export function PlayersTable(props) {
     )
   }
 
+  if (viewPlayer) {
+    return <React.Fragment>
+      <Box display='flex' alignItems={'center'}>
+        <IconButton sx={{ mr: 1 }} onClick={() => setViewPlayer()}>
+          <ArrowBackIcon />
+        </IconButton>
+        <Typography>
+          {viewPlayer.address}
+        </Typography>
+      </Box>
+
+      <Box sx={{ my: 1 }}>
+        <Typography variant='h5'>
+          Assets
+        </Typography>
+      </Box>
+
+      <Box sx={{ border: '1px solid rgba(81, 81, 81, 1)' }}>
+        <AssetsTable tokens={viewPlayer.holdings} />
+      </Box>
+
+      <Box sx={{ my: 1, mt: 4 }}>
+        <Typography variant='h5'>
+          Trade history
+        </Typography>
+      </Box>
+      <Box sx={{ border: '1px solid rgba(81, 81, 81, 1)' }}>
+        <TradeHistoryTable trades={viewPlayer.trades} />
+      </Box>
+    </React.Fragment>
+  }
+
   return (
     <React.Fragment>
       <Table className={classes.playerTable} size='small'>
@@ -61,13 +93,6 @@ export function PlayersTable(props) {
                 </Box>
               </CustomTableCell>
             ))}
-            {props.history &&
-              <CustomTableCell align={'center'}>
-                <Box>
-                  <Typography variant='body1' color='textSecondary'>Trades</Typography>
-                </Box>
-              </CustomTableCell>
-            }
           </TableRow>
         </TableHead>
         <TableBody>
@@ -100,9 +125,9 @@ export function PlayersTable(props) {
                 </Typography>
               </CustomTableCell>
 
-              {props.history && <CustomTableCell align={'center'}>
-                <Box className={_classes.link} onClick={() => { }}>View</Box>
-              </CustomTableCell>}
+              <CustomTableCell align={'center'}>
+                <Box className={_classes.link} onClick={() => { setViewPlayer(player) }}>View</Box>
+              </CustomTableCell>
 
             </TableRow>
           ))}

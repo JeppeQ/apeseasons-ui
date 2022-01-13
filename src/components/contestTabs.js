@@ -36,7 +36,7 @@ export default function ContestTabs(props) {
       <Scrollbars autoHeight={true} autoHeightMax={400}>
         <Box p={2} className={classes.tabContent}>
 
-          {value === 0 && <PlayersTable tournament={props.data.id} />}
+          {value === 0 && <PlayersTable tournament={props.data.id} history />}
 
           {value === 1 && <TokenTable />}
 
