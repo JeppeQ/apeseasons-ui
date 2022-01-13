@@ -1,5 +1,5 @@
 import { AssetsTable } from '../tables/assetsTable';
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import NumberFormat from 'react-number-format'
 import * as tournamentApi from '../../api/tournament'
 import { ellipseAddress } from '../../helpers/utilities'
@@ -9,6 +9,7 @@ import { Box } from '@mui/system';
 import makeStyles from '@mui/styles/makeStyles';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { TradeHistoryTable } from './tradeHistoryTable';
+import { Web3Context } from '../../contexts/web3Context'
 
 const cells = [
   { id: 'rank', label: '#', sortable: true },
@@ -21,6 +22,7 @@ const cells = [
 export function PlayersTable(props) {
   const _classes = styles()
   const classes = useStyles()
+  const web3 = useContext(Web3Context)
 
   const [loading, setLoading] = useState(true)
   const [players, setPlayers] = useState([])
@@ -108,11 +110,15 @@ export function PlayersTable(props) {
             <TableRow key={player.id}>
 
               <CustomTableCell>
-                {player.rank}
+                <Typography sx={{ fontWeight: web3.address.toLowerCase() === player.address.toLowerCase() ? 'bold' : '' }}>
+                  {player.rank}
+                </Typography>
               </CustomTableCell>
 
               <CustomTableCell>
-                {ellipseAddress(player.id, 8, 4)}
+                <Typography sx={{ fontWeight: web3.address.toLowerCase() === player.address.toLowerCase() ? 'bold' : '' }}>
+                  {ellipseAddress(player.address, 8, 4)}
+                </Typography>
               </CustomTableCell>
 
               <CustomTableCell align={'right'}>
