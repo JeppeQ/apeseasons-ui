@@ -26,10 +26,10 @@ export default function ContestTabs(props) {
       <AppBar position="static">
         <Tabs value={value} onChange={(e, value) => setValue(value)} textColor='secondary'>
           {props.playerTab && <Tab label="players" value={0} />}
-          {props.tokenTab && <Tab label="tokens" value={1} />}
           {props.assetsTab && <Tab label="assets" value={2} />}
           {props.swapTab && <Tab label="swap" value={3} />}
           {props.infoTab && <Tab label="info" value={4} />}
+          {props.tokenTab && <Tab label="Market" value={1} />}
         </Tabs>
       </AppBar>
 
@@ -37,7 +37,7 @@ export default function ContestTabs(props) {
         <Box p={2} className={classes.tabContent}>
 
           {value === 0 && <PlayersTable tournament={props.data.id} history />}
-
+          
           {value === 1 && <TokenTable />}
 
           {value === 2 && <AssetsTable swap={swapToken} tokens={props.playerTokens} swapAvailable={props.swapTab} />}

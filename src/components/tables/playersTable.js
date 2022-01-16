@@ -110,13 +110,13 @@ export function PlayersTable(props) {
             <TableRow key={player.id}>
 
               <CustomTableCell>
-                <Typography sx={{ fontWeight: web3.address.toLowerCase() === player.address.toLowerCase() ? 'bold' : '' }}>
+                <Typography sx={{ fontWeight: web3.address?.toLowerCase() === player.address?.toLowerCase() ? 'bold' : '' }}>
                   {player.rank}
                 </Typography>
               </CustomTableCell>
 
               <CustomTableCell>
-                <Typography sx={{ fontWeight: web3.address.toLowerCase() === player.address.toLowerCase() ? 'bold' : '' }}>
+                <Typography sx={{ fontWeight: web3.address?.toLowerCase() === player.address?.toLowerCase() ? 'bold' : '' }}>
                   {ellipseAddress(player.address, 8, 4)}
                 </Typography>
               </CustomTableCell>

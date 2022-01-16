@@ -91,6 +91,7 @@ function MyContests() {
                 playerTab
                 assetsTab
                 swapTab
+                tokenTab
                 sideBar
               />
             )

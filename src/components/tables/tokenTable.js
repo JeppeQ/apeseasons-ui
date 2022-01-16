@@ -15,7 +15,8 @@ import { CustomTableCell } from './styles'
 const cells = [
   { id: 'logo', label: '', width: '70px' },
   { id: 'token', label: 'Token', sortable: true },
-  { id: 'price', label: 'Price', align: 'right' }
+  { id: 'price', label: 'Price', align: 'right' },
+  { id: 'priceChange', label: '24h', align: 'right' }
 ]
 
 export function TokenTable(props) {
@@ -83,6 +84,9 @@ export function TokenTable(props) {
                 <NumberFormat value={token.price} displayType={'text'} prefix={'$'} thousandSeparator decimalScale={2} />
               </CustomTableCell>
 
+              <CustomTableCell align='right' style={{ color: token.priceChangeDay < 0 ? '#e15241' : '#8dc647' }}>
+                <NumberFormat value={token.priceChangeDay} displayType={'text'} suffix={'%'} />
+              </CustomTableCell>
             </TableRow>
           ))}
         </TableBody>
