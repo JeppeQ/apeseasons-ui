@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@date-io/luxon": "1.x",
+    "@date-io/luxon": "^2.11.1",
     "@emotion/react": "^11.4.1",
     "@emotion/styled": "^11.3.0",
     "@metamask/detect-provider": "^1.2.0",

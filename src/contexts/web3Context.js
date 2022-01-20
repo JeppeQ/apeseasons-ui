@@ -1,13 +1,13 @@
 /* global BigInt */
 import { ethers } from "ethers"
 import { useSnackbar } from 'notistack'
-import React, { createContext, useEffect, useState } from "react"
+import React, { createContext, useContext, useEffect, useState } from "react"
 import Web3Modal from "web3modal"
 import { MetaMaskDialog } from "../components/dialogs/metamaskDialog"
 import tokenContracts from "../contracts/tokens.json"
 import tournamentContract from "../contracts/tournament.json"
 import tournamentFactoryContract from "../contracts/tournamentFactory.json"
-
+import { UpdateContext } from './updateContext'
 
 export const Web3Context = createContext()
 
@@ -19,8 +19,9 @@ export const Web3Provider = ({ children }) => {
   const [forceAccount, setForceAccount] = useState(false)
   const [metaMaskDialog, openMetaMaskDialog] = useState(false)
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+  const update = useContext(UpdateContext)
 
-  const gasOptions = { gasPrice: 35000000000, gasLimit: 10000000, nonce: 45, value: 0 }
+  const gasOptions = { gasLimit: 1000000, nonce: 45, value: 0 }
   const supportedChainIds = [137]
 
   useEffect(() => {
@@ -47,26 +48,35 @@ export const Web3Provider = ({ children }) => {
     // eslint-disable-next-line
   }, [networkSupported])
 
-  const waitTransaction = async (tx) => {
+  const waitTransaction = async (tx, callback) => {
     const key = enqueueSnackbar('Awaiting confirmation...', {
       variant: 'info',
       persist: true
     });
 
-    const result = await tx.wait()
-    
-    if (result) {
+    const receipt = await tx.wait()
+
+    if (receipt) {
       enqueueSnackbar('Transaction successful', { variant: 'success' });
+
+      if (callback) {
+        callback()
+      }
+
     } else {
       enqueueSnackbar('Transaction failed', { variant: 'error' });
     }
-    
+
     closeSnackbar(key)
   }
 
   const disconnectWallet = () => {
     setAddress(null)
     setForceAccount(true)
+  }
+
+  const calculateGasPrice = (gasEstimation) => {
+    return BigInt(10 ** 6 * gasEstimation.toNumber() * 2)
   }
 
   const connectWallet = async (initial) => {
@@ -137,23 +147,37 @@ export const Web3Provider = ({ children }) => {
 
     const contract = await getSignedContract(contestId)
 
-    const tx = await contract.buyTicket(gasOptions)
-    waitTransaction(tx)
+    const gasEstimation = await contract.estimateGas.buyTicket()
+    const gas = { ...gasOptions, gasPrice: calculateGasPrice(gasEstimation) }
+
+    const tx = await contract.buyTicket(gas)
+    waitTransaction(tx, () => update.setTournamentId(contestId))
   }
 
   const swapToken = async (contestId, tokenIn, tokenOut, amountIn) => {
-    const contract = await getSignedContract(contestId)
+    try {
+      const contract = await getSignedContract(contestId)
+      const amount = BigInt(10 ** 18 * amountIn)
 
-    const amount = BigInt(10 ** 18 * amountIn)
+      const gasEstimation = await contract.estimateGas.trade(tokenIn, tokenOut, amount, 1)
+      const gas = { ...gasOptions, gasPrice: calculateGasPrice(gasEstimation) }
 
-    const tx = await contract.trade(tokenIn, tokenOut, amount, 1, gasOptions)
-    waitTransaction(tx)
+      const tx = await contract.trade(tokenIn, tokenOut, amount, 1, gas)
+      waitTransaction(tx)
+    } catch (ex) {
+      enqueueSnackbar('Something went wrong. Try again.', { variant: 'error' });
+    }
+
+    update.setTradeInProgress(false)
   }
 
   const claimReward = async (contestId, playerPos) => {
     const contract = await getSignedContract(contestId)
 
-    const tx = await contract.withdrawWinnings(playerPos, gasOptions)
+    const gasEstimation = await contract.estimateGas.withdrawWinnings(playerPos)
+    const gas = { ...gasOptions, gasPrice: calculateGasPrice(gasEstimation) }
+
+    const tx = await contract.withdrawWinnings(playerPos, gas)
     waitTransaction(tx)
   }
 
@@ -163,7 +187,6 @@ export const Web3Provider = ({ children }) => {
     }
 
     const currentBlock = await provider.getBlockNumber()
-
     const startBlock = currentBlock + Math.round(start.diffNow('seconds').seconds / 2.1)
     const endBlock = currentBlock + Math.round(end.diffNow('seconds').seconds / 2.1)
 
@@ -176,7 +199,7 @@ export const Web3Provider = ({ children }) => {
     const factory = new ethers.Contract(tournamentFactoryContract.address, tournamentFactoryContract.abi, signer)
 
     await factory.createTournament(startBlock, endBlock, entry, apeFee, tokenContracts[entryToken], address, tokenContracts[tradeRouteToken],
-      prizeStructureAddress, rewardDistributorAddress, name, gasOptions)
+      prizeStructureAddress, rewardDistributorAddress, name, { ...gasOptions, gasPrice: BigInt(10 ** 12), gasLimit: 10000000 })
   }
 
   return (

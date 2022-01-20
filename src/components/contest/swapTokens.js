@@ -6,12 +6,15 @@ import makeStyles from '@mui/styles/makeStyles';
 import { SelectTokenDialog } from '../dialogs/selectTokenDialog'
 import { TokenContext } from '../../contexts/tokenContext'
 import { Web3Context } from '../../contexts/web3Context'
+import { UpdateContext } from '../../contexts/updateContext'
 import TokenBox from './tokenBox'
+import { Typography } from '@mui/material';
 
 export function SwapTokens(props) {
   const classes = useStyles()
   const tokenProvider = useContext(TokenContext)
   const web3 = useContext(Web3Context)
+  const update = useContext(UpdateContext)
 
   const [selectToken, openSelectToken] = useState(false)
   const [fromToken, setFromToken] = useState()
@@ -36,6 +39,16 @@ export function SwapTokens(props) {
 
   const swapTokens = () => {
     web3.swapToken(props.id, fromToken.address, toToken.address, fromAmount, toAmount)
+    update.setTradeInProgress(true)
+  }
+
+  const setToken = (token, amount) => {
+    if (selectToken === '1') {
+      setFromToken(token)
+      setFromAmount(amount)
+    } else {
+      setToToken(token)
+    }
   }
 
   return (
@@ -61,17 +74,23 @@ export function SwapTokens(props) {
       />
 
       <Box mt={2}>
-        <Button variant='contained' color='primary'
+        {!update.tradeInProgress && <Button variant='contained'
           disabled={!fromToken || !toToken}
           onClick={swapTokens}>
           SWAP
-        </Button>
+        </Button>}
+
+        {update.tradeInProgress &&
+          <Typography variant='subtitle2'>
+            Swap in progress...
+          </Typography>
+        }
       </Box>
 
       {selectToken && <SelectTokenDialog
         open={Boolean(selectToken)}
         close={() => openSelectToken(false)}
-        select={(x) => selectToken === '1' ? setFromToken(x) : setToToken(x)}
+        select={setToken}
         playerTokens={props.playerTokens} />
       }
     </Box>

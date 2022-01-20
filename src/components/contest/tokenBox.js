@@ -11,6 +11,7 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
 import InputAdornment from '@mui/material/InputAdornment'
 
 import Logos from '../../helpers/logos'
+import { getSignificantDecimals, roundNumber } from '../../helpers/utilities'
 
 export default function TokenBox(props) {
   const classes = useStyles()
@@ -19,7 +20,14 @@ export default function TokenBox(props) {
     props.setAmount(e.target.value)
   }
   
+  const handleBlur = (e) => {
+    if (e.target.value > playerToken?.amountFloat) {
+      props.setAmount(playerToken?.amountFloat)
+    }
+  }
+
   const playerToken = props.playerToken
+
   return (
     <Box className={classes.tokenBox}>
       <Box display='flex' onClick={props.selectToken}>
@@ -40,9 +48,10 @@ export default function TokenBox(props) {
 
       <TextField
         className={classes.input}
-        placeholder={0}
-        value={props.amount}
+        placeholder={"0"}
+        value={roundNumber(props.amount, props.token?.price)}
         onChange={handleChange}
+        onBlur={handleBlur}
         variant="outlined"
         fullWidth
         disabled={props.disabled}
@@ -54,7 +63,7 @@ export default function TokenBox(props) {
                 <Box style={{ cursor: 'pointer' }} display='flex' alignItems='center' onClick={() => props.setAmount(playerToken ? playerToken.amountFloat : 0)}>
                   <WalletIcon style={{ color: 'rgba(255, 255, 255, 0.6)', fontSize: 14, marginRight: '3px' }} />
                   <Typography variant='subtitle2'>
-                    <NumberFormat value={playerToken ? playerToken.amountFloat : 0} displayType={'text'} />
+                    <NumberFormat value={playerToken ? playerToken.amountFloat : 0} displayType={'text'} decimalScale={getSignificantDecimals(props.token?.price)} />
                   </Typography>
                 </Box>
                 <Box display='flex' alignItems='center'>

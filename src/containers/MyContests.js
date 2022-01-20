@@ -24,28 +24,40 @@ function MyContests() {
   const [filter, setFilter] = useState('ONGOING')
   const [tournaments, setTournaments] = useState([])
 
-  useEffect(() => {
-    async function getTournaments() {
-      setLoading(true)
-      let data = []
-      if (filter === 'UPCOMING') {
-        data = await playerApi.getUpcoming(web3.address)
-      } else if (filter === 'ONGOING') {
-        data = await playerApi.getRunning(web3.address)
-      } else if (filter === 'COMPLETED') {
-        data = await playerApi.getCompleted(web3.address)
-      }
-
-      if (data) {
-        setTournaments(data)
-      }
-      setLoading(false)
+  async function getTournaments() {
+    let data = []
+    if (filter === 'UPCOMING') {
+      data = await playerApi.getUpcoming(web3.address)
+    } else if (filter === 'ONGOING') {
+      data = await playerApi.getRunning(web3.address)
+    } else if (filter === 'COMPLETED') {
+      data = await playerApi.getCompleted(web3.address)
     }
 
+    if (data) {
+      setTournaments(data)
+    }
+    setLoading(false)
+  }
+
+  useEffect(() => {
     if (web3.address) {
+      setLoading(true)
       getTournaments()
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filter, web3.address])
+
+  useEffect(() => {
+    if (web3.address) {
+      const periodicFetch = setInterval(() => {
+        getTournaments()
+      }, 15000)
+
+      return () => clearInterval(periodicFetch)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [web3.address])
 
   const changeFilter = (filter) => {
     setLoading(true)

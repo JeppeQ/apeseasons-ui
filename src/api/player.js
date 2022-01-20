@@ -35,3 +35,15 @@ export async function getCompleted(address) {
 
   return response ? response.data : null
 }
+
+export async function isParticipant(address, tournamentId) {
+  const url = `${API_ROUTE}/participant`
+  const response = await axios.get(url, {
+    params: {
+      address,
+      tournamentId
+    }
+  }).catch(err => console.log(err))
+
+  return response ? response.data : null
+}

@@ -7,8 +7,11 @@ import TableRow from '@mui/material/TableRow'
 import Typography from '@mui/material/Typography'
 import makeStyles from '@mui/styles/makeStyles'
 import { DateTime } from 'luxon'
-import React from 'react'
+import React, { useContext } from 'react'
 import { CustomTableCell } from './styles'
+import { TokenContext } from '../../contexts/tokenContext'
+import NumberFormat from 'react-number-format'
+import { getSignificantDecimals } from '../../helpers/utilities'
 
 const cells = [
   { id: 'date', label: 'Date', align: 'left', sortable: true },
@@ -19,6 +22,7 @@ const cells = [
 
 export function TradeHistoryTable(props) {
   const classes = useStyles()
+  const tokenProvider = useContext(TokenContext)
 
   return (
     <React.Fragment>
@@ -43,6 +47,9 @@ export function TradeHistoryTable(props) {
           }
 
           {props.trades.map(trade => {
+            const fromTokenData = tokenProvider.tokens.find(t => t.symbol === trade.from)
+            const toTokenData = tokenProvider.tokens.find(t => t.symbol === trade.to)
+
             return <TableRow key={trade.id}>
 
               <CustomTableCell>
@@ -51,7 +58,7 @@ export function TradeHistoryTable(props) {
 
               <CustomTableCell>
                 <Box display='flex'>
-                  {trade.fromAmount}
+                  <NumberFormat value={trade.fromAmount} displayType={'text'} thousandSeparator decimalScale={getSignificantDecimals(fromTokenData?.price)} />
                   <Box ml={1}>
                     <Typography variant='body1' color='textSecondary'>{trade.from}</Typography>
                   </Box>
@@ -64,7 +71,7 @@ export function TradeHistoryTable(props) {
 
               <CustomTableCell>
                 <Box display='flex'>
-                  {trade.toAmount}
+                  <NumberFormat value={trade.toAmount} displayType={'text'} thousandSeparator decimalScale={getSignificantDecimals(toTokenData?.price)} />
                   <Box ml={1}>
                     <Typography variant='body1' color='textSecondary'>{trade.to}</Typography>
                   </Box>
