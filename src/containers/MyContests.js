@@ -57,7 +57,7 @@ function MyContests() {
       return () => clearInterval(periodicFetch)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [web3.address])
+  }, [filter, web3.address])
 
   const changeFilter = (filter) => {
     setLoading(true)
