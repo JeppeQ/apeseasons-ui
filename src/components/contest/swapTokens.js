@@ -35,10 +35,15 @@ export function SwapTokens(props) {
 
     setToAmount(fromAmount * fromToken.price / toToken.price)
 
-  }, [fromAmount, fromToken, toToken])
+    const holding = props.playerTokens.find(t => t.tokenAddress.toUpperCase() === fromToken.address.toUpperCase())
+    if (fromAmount > holding.floatAmount) {
+      setFromAmount(holding.floatAmount)
+    }
+
+  }, [fromAmount, fromToken, toToken, props.playerTokens])
 
   const swapTokens = () => {
-    web3.swapToken(props.id, fromToken.address, toToken.address, fromAmount, toAmount)
+    web3.swapToken(props.id, fromToken.address, toToken.address, fromAmount)
     update.setTradeInProgress(true)
   }
 

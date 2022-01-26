@@ -9,8 +9,8 @@ import React, { useContext } from 'react'
 import NumberFormat from 'react-number-format'
 import { TokenContext } from '../../contexts/tokenContext'
 import Logos from '../../helpers/logos'
-import { CustomTableCell, styles } from './styles'
 import { getSignificantDecimals } from '../../helpers/utilities'
+import { CustomTableCell, styles } from './styles'
 
 const cells = [
   { id: 'token', label: 'Token', align: 'left', sortable: true },
@@ -55,6 +55,7 @@ export function AssetsTable(props) {
 
           {props.tokens.map(token => {
             const tokenData = tokenProvider.tokens.find(t => t.address === token.tokenAddress)
+            const assetValue = token.amountFloat * tokenData?.price || 0
 
             return <TableRow key={token.tokenAddress}>
 
@@ -69,12 +70,12 @@ export function AssetsTable(props) {
               </CustomTableCell>
 
               <CustomTableCell align={'right'}>
-                <NumberFormat value={token.amountFloat} displayType={'text'} thousandSeparator decimalScale={getSignificantDecimals(tokenData?.price)} />
+                <NumberFormat value={assetValue > 0.001 ? token.amountFloat : 0} displayType={'text'} thousandSeparator decimalScale={getSignificantDecimals(tokenData?.price)} />
               </CustomTableCell>
 
               <CustomTableCell align={'right'}>
                 <NumberFormat displayType={'text'} prefix={'$'} thousandSeparator decimalScale={2}
-                  value={token.amountFloat * tokenData?.price || 0} />
+                  value={assetValue} />
               </CustomTableCell>
 
               {props.swapAvailable

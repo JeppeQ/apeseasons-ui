@@ -14,6 +14,7 @@ import Logos from '../../helpers/logos'
 import { getSignificantDecimals, roundNumber } from '../../helpers/utilities'
 
 export default function TokenBox(props) {
+  const playerToken = props.playerToken
   const classes = useStyles()
   
   const handleChange = (e) => {
@@ -26,7 +27,6 @@ export default function TokenBox(props) {
     }
   }
 
-  const playerToken = props.playerToken
 
   return (
     <Box className={classes.tokenBox}>
