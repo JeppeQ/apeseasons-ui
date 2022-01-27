@@ -1,24 +1,24 @@
-import React, { useState, useContext } from 'react'
-import clsx from 'clsx'
-import { Scrollbars } from 'react-custom-scrollbars'
-
+import Avatar from '@mui/material/Avatar'
+import Box from '@mui/material/Box'
 import Dialog from '@mui/material/Dialog'
 import DialogContent from '@mui/material/DialogContent'
 import DialogTitle from '@mui/material/DialogTitle'
-import Box from '@mui/material/Box'
-import Typography from '@mui/material/Typography'
 import List from '@mui/material/List'
 import ListItem from '@mui/material/ListItem'
-import ListItemText from '@mui/material/ListItemText'
 import ListItemAvatar from '@mui/material/ListItemAvatar'
 import ListItemSecondaryAction from '@mui/material/ListItemSecondaryAction'
-import Avatar from '@mui/material/Avatar'
-import makeStyles from '@mui/styles/makeStyles';
-
-import { styles } from './styles'
-import { SearchBar } from '../searchBar'
+import ListItemText from '@mui/material/ListItemText'
+import Typography from '@mui/material/Typography'
+import makeStyles from '@mui/styles/makeStyles'
+import clsx from 'clsx'
+import React, { useContext, useState } from 'react'
+import { Scrollbars } from 'react-custom-scrollbars'
 import { TokenContext } from '../../contexts/tokenContext'
 import Logos from '../../helpers/logos'
+import { SearchBar } from '../searchBar'
+import { styles } from './styles'
+
+
 
 export function SelectTokenDialog(props) {
   const _classes = styles()
@@ -56,7 +56,7 @@ export function SelectTokenDialog(props) {
                     <ListItemText primary={token.symbol} secondary={token.name} />
 
                     <ListItemSecondaryAction>
-                      <Typography>{playerToken ? playerToken.amountFloat : 0}</Typography>
+                      <Typography>{playerToken?.amountFloat || 0}</Typography>
                     </ListItemSecondaryAction>
 
                   </ListItem>
