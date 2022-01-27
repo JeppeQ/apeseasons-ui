@@ -39,7 +39,12 @@ export function Contest(props) {
 
             <ContestTabs {...props} />
 
-            {props.sideBar && <SideBar tournament={props.data} signup={props.signup} />}
+            {props.sideBar && <SideBar
+              tournament={props.data}
+              signup={props.signup}
+              player={props.playerData}
+              prize={props.prizeWithStatus}
+            />}
 
           </Box>
         </Collapse>

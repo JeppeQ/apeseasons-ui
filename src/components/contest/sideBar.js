@@ -16,8 +16,10 @@ export default function SideBar(props) {
 
   const [join, disableJoin] = useState(false)
   const [hasJoined, setHasJoined] = useState(false)
+  const [claim, disableClaim] = useState(false)
 
   const { id, prizePool, placesPaid, ticketPrice, ticketTokenSymbol } = props.tournament
+  const { rank, prize, prizeStatus } = props.player || {}
 
   useEffect(() => {
     async function get() {
@@ -33,6 +35,11 @@ export default function SideBar(props) {
   const joinTournament = () => {
     web3.joinContest(id, ticketPrice, ticketTokenSymbol)
     disableJoin(true)
+  }
+
+  const claimReward = () => {
+    web3.claimReward(id, rank)
+    disableClaim(true)
   }
 
   return (
@@ -66,6 +73,20 @@ export default function SideBar(props) {
             </Button>
           </Box>
         }
+      </Box>}
+
+      {props.prize && <Box display='flex' alignItems='center' flexDirection='column'>
+
+        <Typography variant='subtitle1'>Your prize</Typography>
+        <NumberFormat value={prize} displayType={'text'} prefix={'$'} thousandSeparator decimalScale={2} />
+        <Box mt={2} />
+
+        {prize > 0 && prizeStatus === 'unclaimed' &&
+          <Button variant='contained' color='secondary' onClick={claimReward} disabled={claim}>
+            CLAIM NOW
+          </Button>}
+
+        {prizeStatus === 'claimed' && <Typography variant='subtitle1'>Claimed</Typography>}
       </Box>}
 
     </Box>

@@ -1,25 +1,22 @@
-import React, { useContext } from 'react'
+import NetWorthIcon from '@mui/icons-material/AccountBalanceWallet';
+import PlayersIcon from '@mui/icons-material/Person';
+import PlaceIcon from '@mui/icons-material/Place';
+import ScheduleIcon from '@mui/icons-material/Schedule';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
 import makeStyles from '@mui/styles/makeStyles';
-import NumberFormat from 'react-number-format'
-import { DateTime } from 'luxon'
-
-import Box from '@mui/material/Box'
-import Button from '@mui/material/Button'
-import Typography from '@mui/material/Typography'
-import PlayersIcon from '@mui/icons-material/Person'
-import ScheduleIcon from '@mui/icons-material/Schedule'
-import NetWorthIcon from '@mui/icons-material/AccountBalanceWallet'
-import PlaceIcon from '@mui/icons-material/Place'
-
-import { formatTime, dateDiff } from '../helpers/utilities'
-import Medal from '../assets/images/medal.svg'
-import logo from '../assets/images/logo.png'
-import Logos from '../helpers/logos'
-import { Web3Context } from '../contexts/web3Context'
+import { DateTime } from 'luxon';
+import React from 'react';
+import NumberFormat from 'react-number-format';
+import logo from '../assets/images/logo.png';
+import Medal from '../assets/images/medal.svg';
+import Logos from '../helpers/logos';
+import { dateDiff, formatTime } from '../helpers/utilities';
+import PendingActionsIcon from '@mui/icons-material/PendingActions';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 
 export default function ContestOverview(props) {
   const classes = useStyles()
-  const web3 = useContext(Web3Context)
 
   const { startTime, endTime, ticketPriceFloat,
     ticketTokenSymbol, playerCount, prizePool, name } = props.data
@@ -38,10 +35,6 @@ export default function ContestOverview(props) {
         </Box>
       </Box>
     )
-  }
-
-  const claimReward = () => {
-    web3.claimReward(props.data.id, rank - 1)
   }
 
   return (
@@ -98,15 +91,19 @@ export default function ContestOverview(props) {
       }
 
       {props.prizeWithStatus &&
-        <Box className={classes.section} width={'30%'}>
+        <Box className={classes.section} width={'20%'}>
           <Box display='flex' alignItems='center'>
+
             <img src={Medal} width={'32px'} alt='prize' />
             <Box ml={1.5} mr={3} textAlign={'center'}>
               <Typography variant='subtitle2'>Prize</Typography>
-              <Typography variant='h5'><NumberFormat value={prize} displayType={'text'} prefix={'$'} thousandSeparator /></Typography>
+              <Typography variant='h5'>
+                <NumberFormat value={prize} displayType={'text'} prefix={'$'} thousandSeparator />
+              </Typography>
             </Box>
-            {prize > 0 && prizeStatus === 'unclaimed' && <Button variant='contained' color='secondary' fullWidth onClick={claimReward}>CLAIM</Button>}
-            {prizeStatus === 'claimed' && <Typography variant='subtitle2'>Prize Claimed</Typography>}
+
+            {prizeStatus === 'claimed' && <CheckCircleIcon color='secondary' />}
+            {prize > 0 && prizeStatus === 'unclaimed' && <PendingActionsIcon color='info' />}
           </Box>
         </Box>
       }
