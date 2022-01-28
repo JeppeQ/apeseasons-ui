@@ -14,12 +14,13 @@ import Logos from '../helpers/logos';
 import { dateDiff, formatTime } from '../helpers/utilities';
 import PendingActionsIcon from '@mui/icons-material/PendingActions';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import PendingIcon from '@mui/icons-material/Pending';
 
 export default function ContestOverview(props) {
   const classes = useStyles()
 
   const { startTime, endTime, ticketPriceFloat,
-    ticketTokenSymbol, playerCount, prizePool, name } = props.data
+    ticketTokenSymbol, playerCount, prizePool, name, finalized } = props.data
 
   const { rank, netWorth, prize, prizeStatus } = props.playerData || {}
 
@@ -102,8 +103,9 @@ export default function ContestOverview(props) {
               </Typography>
             </Box>
 
-            {prizeStatus === 'claimed' && <CheckCircleIcon color='secondary' />}
-            {prize > 0 && prizeStatus === 'unclaimed' && <PendingActionsIcon color='info' />}
+            {!finalized && <PendingIcon />}
+            {finalized && prizeStatus === 'claimed' && <CheckCircleIcon color='secondary' />}
+            {finalized && prize > 0 && prizeStatus === 'unclaimed' && <PendingActionsIcon color='info' />}
           </Box>
         </Box>
       }

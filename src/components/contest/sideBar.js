@@ -18,7 +18,7 @@ export default function SideBar(props) {
   const [hasJoined, setHasJoined] = useState(false)
   const [claim, disableClaim] = useState(false)
 
-  const { id, prizePool, placesPaid, ticketPrice, ticketTokenSymbol } = props.tournament
+  const { id, prizePool, placesPaid, ticketPrice, ticketTokenSymbol, finalized } = props.tournament
   const { rank, prize, prizeStatus } = props.player || {}
 
   useEffect(() => {
@@ -81,12 +81,16 @@ export default function SideBar(props) {
         <NumberFormat value={prize} displayType={'text'} prefix={'$'} thousandSeparator decimalScale={2} />
         <Box mt={2} />
 
-        {prize > 0 && prizeStatus === 'unclaimed' &&
+        {!finalized &&
+          <Typography variant='subtitle2'>Contest is being finalized..</Typography>
+        }
+
+        {finalized && prize > 0 && prizeStatus === 'unclaimed' &&
           <Button variant='contained' color='secondary' onClick={claimReward} disabled={claim}>
             CLAIM NOW
           </Button>}
 
-        {prizeStatus === 'claimed' && <Typography variant='subtitle1'>Claimed</Typography>}
+        {finalized && prizeStatus === 'claimed' && <Typography variant='subtitle1'>Claimed</Typography>}
       </Box>}
 
     </Box>
