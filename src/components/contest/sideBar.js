@@ -90,7 +90,7 @@ export default function SideBar(props) {
             CLAIM NOW
           </Button>}
 
-        {finalized && prizeStatus === 'claimed' && <Typography variant='subtitle1'>Claimed</Typography>}
+        {finalized && prizeStatus === 'claimed' && <Button>Claimed</Button>}
       </Box>}
 
     </Box>

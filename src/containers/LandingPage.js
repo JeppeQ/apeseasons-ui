@@ -1,21 +1,21 @@
-import React from 'react'
-import Lottie, { useLottie } from "lottie-react"
-import { Scrollbars } from 'react-custom-scrollbars'
-import { Link } from "react-router-dom"
-import { motion } from 'framer-motion'
-
+import TwitterIcon from '@mui/icons-material/Twitter'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
-import TwitterIcon from '@mui/icons-material/Twitter'
-import DiscordIcon from '../assets/images/discord.svg'
-import makeStyles from '@mui/styles/makeStyles';
-import withStyles from '@mui/styles/withStyles';
-
-import { fadeVariant } from '../helpers/variants'
+import makeStyles from '@mui/styles/makeStyles'
+import withStyles from '@mui/styles/withStyles'
+import { motion } from 'framer-motion'
+import { useLottie } from "lottie-react"
+import React from 'react'
+import { Scrollbars } from 'react-custom-scrollbars'
+import { Link } from "react-router-dom"
 import blockchainAnimation from '../assets/animations/blockchain.json'
-import monkeyAnimation from '../assets/animations/monkey.json'
+import claim_ss from '../assets/images/claim.png'
+import DiscordIcon from '../assets/images/discord.svg'
 import logo from '../assets/images/logo.png'
+import swap_ss from '../assets/images/swap.png'
+import upcoming_ss from '../assets/images/upcoming2.png'
+import { fadeVariant } from '../helpers/variants'
 
 function LandingPage() {
   const classes = useStyles()
@@ -44,8 +44,10 @@ function LandingPage() {
           </Box>
 
           {SlideOne()}
-          {SlideTwo()}
-          {SlideThree()}
+          <Box className={classes.divider} />
+          {Guide()}
+          <Box className={classes.divider} />
+          {ApeToken()}
 
           <Box className={classes.buttonsContainer}>
             <Box mb={1}>
@@ -81,66 +83,139 @@ function SlideOne() {
   }
 
   return (
-    <Box className={classes.slideContainer} style={{ marginTop: 'calc(10vh - 50px)' }}>
-      <Box className={classes.slideTextContainer}>
-        <Typography variant='h2'>
-          Decentralized <Typography variant='h2'>investment contests on</Typography> Polygon
-        </Typography>
-      </Box>
-      <Box ml={5} width='40%'>
-        <LottieAnim />
+    <Box sx={{ background: 'radial-gradient(ellipse at bottom, #30001f 0%, #131142 100%)' }}>
+      <Box className={classes.slideContainer} style={{ marginTop: 'calc(10vh - 50px)' }}>
+        <Box className={classes.slideTextContainer}>
+          <Typography variant='h2'>
+            Decentralized <Typography variant='h2'>investment contests on</Typography> Polygon
+          </Typography>
+        </Box>
+        <Box ml={5} width='40%'>
+          <LottieAnim />
+        </Box>
       </Box>
     </Box>
   )
 }
 
-function SlideTwo() {
+function Guide() {
   const classes = useStyles()
 
-  function tourney(name, players, starts, buy) {
-    function secText(title, value) {
-      return <Box className={classes.section}>
-        <Typography variant='subtitle1'>{title}</Typography>
-        <Typography variant='h5'>{value}</Typography>
-      </Box>
-    }
+  const renderStep = (step, headline1, text1, headline2, text2, image, reverse) => {
+    return <Box width='100%' display='flex' justifyContent='space-between' mt={13}>
 
-    return <Box className={classes.tourneyExample}>
-      {secText('name', name)}
-      {secText('players', players)}
-      {secText('starts in', starts)}
-      {secText('buy in', buy)}
+      {reverse && <img src={image} alt='' className={classes.imageContainer} />}
+
+      <Box width='500px'>
+
+        <Box mb={3}>
+          <Typography color='primary' variant='h6'>
+            {`Step ${step}`}
+          </Typography>
+        </Box>
+
+        <Box mb={3}>
+          <Typography variant='h6'>
+            {headline1}
+          </Typography>
+        </Box>
+
+        <Box mb={4}>
+          <Typography>
+            {text1}
+          </Typography>
+        </Box>
+
+        <Box mb={1}>
+          <Typography variant='h6'>
+            {headline2}
+          </Typography>
+        </Box>
+
+        <Box>
+          <Typography>
+            {text2}
+          </Typography>
+        </Box>
+
+      </Box>
+
+      {!reverse && <img src={image} alt='' className={classes.imageContainer} />}
+
     </Box>
   }
 
   return (
-    <Box className={classes.slideContainer} style={{ width: '80%' }}>
-      <Box pb={5} width='40%'>
-        {tourney('tourney#1', '30', '2H', '100 DAI')}
-        {tourney('tourney#2', '20', '5H', '100 DAI')}
-        {tourney('tourney#3', '10', '8H', '100 DAI')}
-      </Box >
-      <Box className={classes.slideTextContainer} style={{ width: '40%' }}>
-        <Typography className={classes.slideTwoText}>- the buy-in of the contests is your starting money (e.g. 100 DAI)</Typography>
-        <Typography className={classes.slideTwoText}>- Swap tokens to increase your net worth</Typography>
-        <Typography className={classes.slideTwoText}>- prize pool consists of everyone's net worth</Typography>
-        <Typography className={classes.slideTwoText}>- Race to the top and claim your reward</Typography>
+    <Box sx={{ background: 'radial-gradient(ellipse at top, #30001f 0%, #131142 100%);' }}>
+      <Box className={classes.guideContainer}>
+
+        <Box>
+          <Typography variant='h3'>How does it work?</Typography>
+        </Box>
+
+        <Box width='1128px' maxWidth='95%'>
+
+          {renderStep(
+            1,
+            'View upcoming contests',
+            `For each upcoming contest, you'll be able to see the entry fee, the duration,
+            and what tokens can be traded. The entry fee will vary from contest to contest
+            so come back later if nothing suits you.`,
+            'Join a contest',
+            `Use MetaMask to connect a wallet and make sure you have the necessary funds on Polygon.
+            Open up the contest you want to join, approve spending, and transfer the entry fee.
+            Once confirmed, you'll be able to see the contest under "My contests".
+            The entry fee is the money you'll be trading with.`,
+            upcoming_ss
+          )}
+
+          {renderStep(
+            2,
+            'Time to invest',
+            `Once the contest has begun, you can start investing your money (entry fee e.g. 10 DAI).
+            You do this by swapping tokens under the "swap" panel.`,
+            'Climb the ranks',
+            `Players will be ranked based on the value of their assets.
+            Keep track of your position on the leaderboard and invest accordingly.
+            Your goal is to have a higher net worth than your opponents.`,
+            swap_ss,
+            true
+          )}
+
+          {renderStep(
+            3,
+            'Scoring and prizing',
+            `Once the timer runs out, all positions will be liquidated and the final rankings will be determined.
+            The prize pool consists of everyone's net worth minus a protocol fee.
+            This means successful traders increase the prize pool and vice versa.
+            Prize distribution varies from contest to contest.`,
+            'Claim reward',
+            `The lucky winners will be able to claim their reward once the contest has been finalized.`,
+            claim_ss
+          )}
+
+        </Box>
       </Box>
     </Box>
   )
 }
 
-function SlideThree() {
+function ApeToken() {
   const classes = useStyles()
 
   return (
-    <Box className={classes.slideContainer} style={{ width: '80%' }}>
-      <Box className={classes.slideTextContainer} style={{ width: '40%' }}>
-        <Typography className={classes.slideTwoText}>- Contests are sponsored by the $APE token</Typography>
-        <Typography className={classes.slideTwoText}>- Players are rewarded with $APE tokens upon joining a contest</Typography>
-      </Box>
-      <Box pb={10} ml={4}>
-        <Lottie animationData={monkeyAnimation} loop={true} style={{ width: '75%' }} />
+    <Box sx={{ background: 'radial-gradient(ellipse at bottom, #30001f 0%, #131142 100%)' }}>
+      <Box className={classes.apeContainer}>
+
+        <Box>
+          <Typography variant='h3'>The $APE token</Typography>
+        </Box>
+
+        <Box mt={3}>
+          <Typography variant='h6'>
+            To be announced
+          </Typography>
+        </Box>
       </Box>
     </Box>
   )
@@ -186,10 +261,25 @@ const useStyles = makeStyles({
   slideContainer: {
     display: 'flex',
     width: '80%',
-    height: '70vh',
+    height: '78vh',
     margin: 'auto',
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  guideContainer: {
+    display: 'flex',
+    flexDirection: 'column',
+    width: '80%',
+    margin: 'calc(10vh) auto 200px',
+    minHeight: '70vh',
+    alignItems: 'center'
+  },
+  apeContainer: {
+    display: 'flex',
+    flexDirection: 'column',
+    width: '80%',
+    margin: 'calc(10vh) auto 200px',
+    alignItems: 'center'
   },
   slideTextContainer: {
     display: 'flex',
@@ -231,5 +321,25 @@ const useStyles = makeStyles({
     width: '90px',
     cursor: 'pointer',
     margin: '-16px 24px 0',
+  },
+  divider: {
+    height: '1px',
+    width: '60%',
+    margin: 'auto',
+    position: 'relative',
+    '&::before': {
+      content: "''",
+      position: 'absolute',
+      top: '0',
+      left: '5%',
+      right: '5%',
+      width: '90%',
+      height: '1px',
+      backgroundImage: 'linear-gradient(to right, transparent, rgba(255, 255, 255, 0.7), transparent)'
+    }
+  },
+  imageContainer: {
+    borderRadius: '15px',
+    opacity: '0.6'
   }
 });
