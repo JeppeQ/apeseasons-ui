@@ -172,7 +172,7 @@ function Guide() {
           {renderStep(
             2,
             'Time to invest',
-            `Once the contest has begun, you can start investing your money (entry fee e.g. 10 DAI).
+            `Once the contest has begun, you can start investing your money.
             You do this by swapping tokens under the "swap" panel.`,
             'Climb the ranks',
             `Players will be ranked based on the value of their assets.
@@ -185,12 +185,12 @@ function Guide() {
           {renderStep(
             3,
             'Scoring and prizing',
-            `Once the timer runs out, all positions will be liquidated and the final rankings will be determined.
+            `When the timer runs out, all positions will be liquidated and the final rankings will be determined.
             The prize pool consists of everyone's net worth minus a protocol fee.
             This means successful traders increase the prize pool and vice versa.
             Prize distribution varies from contest to contest.`,
             'Claim reward',
-            `The lucky winners will be able to claim their reward once the contest has been finalized.`,
+            `The lucky winners will be able to claim their prize once the contest has been finalized.`,
             claim_ss
           )}
 

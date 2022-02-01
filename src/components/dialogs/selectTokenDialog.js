@@ -18,8 +18,6 @@ import Logos from '../../helpers/logos'
 import { SearchBar } from '../searchBar'
 import { styles } from './styles'
 
-
-
 export function SelectTokenDialog(props) {
   const _classes = styles()
   const classes = useStyles()
