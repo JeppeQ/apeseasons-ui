@@ -8,6 +8,7 @@ import tokenContracts from "../contracts/tokens.json"
 import tournamentContract from "../contracts/tournament.json"
 import tournamentFactoryContract from "../contracts/tournamentFactory.json"
 import { UpdateContext } from './updateContext'
+import { Polygon } from "../helpers/addresses"
 
 export const Web3Context = createContext()
 
@@ -192,14 +193,12 @@ export const Web3Provider = ({ children }) => {
 
     const entry = BigInt(10 ** 18 * price)
     const apeFee = BigInt(10 ** 18 * apeTax)
-    const prizeStructureAddress = '0xaF69D4fE7ba02C3FeDdDF0fd5d5D5a561Ada64b3'
-    const rewardDistributorAddress = '0xc473337DEDeC604e399EF7e200232C41a6400d80'
 
     const signer = await getSigner()
-    const factory = new ethers.Contract(tournamentFactoryContract.address, tournamentFactoryContract.abi, signer)
+    const factory = new ethers.Contract(Polygon.tournamentFactory, tournamentFactoryContract.abi, signer)
 
     await factory.createTournament(startBlock, endBlock, entry, apeFee, tokenContracts[entryToken], address, tokenContracts[tradeRouteToken],
-      prizeStructureAddress, rewardDistributorAddress, name, { ...gasOptions, gasPrice: BigInt(10 ** 12), gasLimit: 10000000 })
+      Polygon.prizeStructure, Polygon.rewardDistributor, name, { ...gasOptions, gasPrice: BigInt(10 ** 12), gasLimit: 10000000 })
   }
 
   return (
