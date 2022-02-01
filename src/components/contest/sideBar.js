@@ -38,7 +38,7 @@ export default function SideBar(props) {
   }
 
   const claimReward = () => {
-    web3.claimReward(id, rank)
+    web3.claimReward(id, rank - 1)
     disableClaim(true)
   }
 
