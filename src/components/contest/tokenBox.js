@@ -11,7 +11,7 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
 import InputAdornment from '@mui/material/InputAdornment'
 
 import Logos from '../../helpers/logos'
-import { getSignificantDecimals, roundNumber } from '../../helpers/utilities'
+import { getSignificantDecimals } from '../../helpers/utilities'
 
 export default function TokenBox(props) {
   const playerToken = props.playerToken

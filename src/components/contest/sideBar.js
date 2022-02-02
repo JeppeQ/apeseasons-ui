@@ -9,6 +9,7 @@ import { Web3Context } from '../../contexts/web3Context'
 import { UpdateContext } from '../../contexts/updateContext'
 import * as playerApi from '../../api/player'
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import { BigNumber } from 'ethers'
 
 export default function SideBar(props) {
   const classes = useStyles()
@@ -16,8 +17,10 @@ export default function SideBar(props) {
   const update = useContext(UpdateContext)
 
   const [join, disableJoin] = useState(false)
-  const [hasJoined, setHasJoined] = useState(false)
+  const [approve, disableApprove] = useState(false)
+
   const [claim, disableClaim] = useState(false)
+  const [hasJoined, setHasJoined] = useState(false)
   const [hasApproved, setHasApproved] = useState(false)
 
   const { id, prizePool, placesPaid, ticketPrice, ticketTokenSymbol, finalized } = props.tournament
@@ -31,8 +34,26 @@ export default function SideBar(props) {
 
     if (web3.address) {
       get()
+      checkAllowance()
     }
+
+    // eslint-disable-next-line
   }, [web3.address, id])
+
+  async function checkAllowance() {
+    const allowance = await web3.getAllowance(web3.address, id, ticketTokenSymbol)
+    if (allowance.gt(BigNumber.from(0))) {
+      setHasApproved(true)
+    } else {
+      setHasApproved(false)
+      disableApprove(false)
+    }
+  }
+
+  const approveSpending = () => {
+    web3.approveToken(ticketTokenSymbol, id, ticketPrice, () => setHasApproved(true))
+    disableApprove(true)
+  }
 
   const joinTournament = () => {
     web3.joinContest(id, ticketPrice, ticketTokenSymbol)
@@ -75,8 +96,8 @@ export default function SideBar(props) {
               fullWidth
               variant='contained'
               color='secondary'
-              onClick={joinTournament}
-              disabled={hasApproved}
+              onClick={approveSpending}
+              disabled={approve || hasApproved}
               endIcon={hasApproved ? <CheckCircleIcon /> : null}
             >
               approve
@@ -85,7 +106,7 @@ export default function SideBar(props) {
             <Button
               fullWidth
               variant='contained'
-              color='secondary' onClick={joinTournament} disabled={join}>
+              color='secondary' onClick={joinTournament} disabled={join || !hasApproved}>
               ENTER
             </Button>
 

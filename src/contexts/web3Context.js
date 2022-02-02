@@ -1,5 +1,5 @@
 /* global BigInt */
-import { ethers } from "ethers"
+import { BigNumber, ethers } from "ethers"
 import { useSnackbar } from 'notistack'
 import React, { createContext, useContext, useEffect, useState } from "react"
 import Web3Modal from "web3modal"
@@ -128,6 +128,10 @@ export const Web3Provider = ({ children }) => {
     return signer
   }
 
+  const handleErr = (ex) => {
+    enqueueSnackbar(`${ex?.data?.message || 'Something went wrong.'}`, { variant: 'error' });
+  }
+
   const getSigner = async () => {
     return _signer || connectWallet()
   }
@@ -137,34 +141,41 @@ export const Web3Provider = ({ children }) => {
     return new ethers.Contract(address, tournamentContract.abi, signer);
   }
 
-  const approveToken = async (token, contractAddress, amount) => {
-    const signer = await getSigner()
-    const contract = new ethers.Contract(tokenContracts[token], tokenContracts.abi, signer);
-    
-    await contract.approve(contractAddress, String(amount * 2))
-  }
-  
-  const getAllowance = async (address, contestId, token) => {
-    if (!provider) {
-      return 0
-    }
 
+  const getAllowance = async (address, contestId, token) => {
     const contract = new ethers.Contract(tokenContracts[token], tokenContracts.abi, provider);
     const allowance = await contract.allowance(address, contestId)
 
-    return allowance?.toNumber() || 0
+    return allowance || BigNumber.from(0)
   }
 
-  const joinContest = async (contestId, price, entryToken) => {
-    await approveToken(entryToken, contestId, price)
+  const approveToken = async (token, contractAddress, amount, callback) => {
+    try {
+      const signer = await getSigner()
+      const contract = new ethers.Contract(tokenContracts[token], tokenContracts.abi, signer);
 
-    const contract = await getSignedContract(contestId)
+      const gasEstimation = await contract.estimateGas.approve(contractAddress, String(amount))
+      const gas = { ...gasOptions, gasPrice: calculateGasPrice(gasEstimation) }
 
-    const gasEstimation = await contract.estimateGas.buyTicket()
-    const gas = { ...gasOptions, gasPrice: calculateGasPrice(gasEstimation) }
+      const tx = await contract.approve(contractAddress, String(amount), gas)
+      waitTransaction(tx, callback)
+    } catch (ex) {
+      handleErr(ex)
+    }
+  }
 
-    const tx = await contract.buyTicket(gas)
-    waitTransaction(tx, () => update.setTournamentId(contestId))
+  const joinContest = async (contestId) => {
+    try {
+      const contract = await getSignedContract(contestId)
+
+      const gasEstimation = await contract.estimateGas.buyTicket()
+      const gas = { ...gasOptions, gasPrice: calculateGasPrice(gasEstimation) }
+
+      const tx = await contract.buyTicket(gas)
+      waitTransaction(tx, () => update.setTournamentId(contestId))
+    } catch (ex) {
+      handleErr(ex)
+    }
   }
 
   const swapToken = async (contestId, tokenIn, tokenOut, amountIn) => {
@@ -178,20 +189,24 @@ export const Web3Provider = ({ children }) => {
       const tx = await contract.trade(tokenIn, tokenOut, amount, 1, gas)
       waitTransaction(tx)
     } catch (ex) {
-      enqueueSnackbar(`Something went wrong. "${ex?.data?.message}"`, { variant: 'error' });
+      handleErr(ex)
     }
 
     update.setTradeInProgress(false)
   }
 
   const claimReward = async (contestId, playerPos) => {
-    const contract = await getSignedContract(contestId)
+    try {
+      const contract = await getSignedContract(contestId)
 
-    const gasEstimation = await contract.estimateGas.withdrawWinnings(playerPos)
-    const gas = { ...gasOptions, gasPrice: calculateGasPrice(gasEstimation) }
+      const gasEstimation = await contract.estimateGas.withdrawWinnings(playerPos)
+      const gas = { ...gasOptions, gasPrice: calculateGasPrice(gasEstimation) }
 
-    const tx = await contract.withdrawWinnings(playerPos, gas)
-    waitTransaction(tx)
+      const tx = await contract.withdrawWinnings(playerPos, gas)
+      waitTransaction(tx)
+    } catch (ex) {
+      handleErr(ex)
+    }
   }
 
   const createTournament = async (name, start, end, price, entryToken, apeTax, tradeRouteToken) => {
@@ -224,7 +239,8 @@ export const Web3Provider = ({ children }) => {
         createTournament,
         networkSupported,
         disconnectWallet,
-        getAllowance
+        getAllowance,
+        approveToken
       }}
     >
       {children}

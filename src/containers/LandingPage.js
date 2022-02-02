@@ -61,7 +61,8 @@ function LandingPage() {
           </Box>
 
         </Box >
-      </motion.div></Scrollbars >
+      </motion.div>
+    </Scrollbars >
   )
 }
 
