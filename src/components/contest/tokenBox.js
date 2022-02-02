@@ -49,7 +49,7 @@ export default function TokenBox(props) {
       <TextField
         className={classes.input}
         placeholder={"0"}
-        value={roundNumber(props.amount, props.token?.price)}
+        value={props.amount}
         onChange={handleChange}
         onBlur={handleBlur}
         variant="outlined"

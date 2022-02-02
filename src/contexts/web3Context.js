@@ -140,7 +140,19 @@ export const Web3Provider = ({ children }) => {
   const approveToken = async (token, contractAddress, amount) => {
     const signer = await getSigner()
     const contract = new ethers.Contract(tokenContracts[token], tokenContracts.abi, signer);
+    
     await contract.approve(contractAddress, String(amount * 2))
+  }
+  
+  const getAllowance = async (address, contestId, token) => {
+    if (!provider) {
+      return 0
+    }
+
+    const contract = new ethers.Contract(tokenContracts[token], tokenContracts.abi, provider);
+    const allowance = await contract.allowance(address, contestId)
+
+    return allowance?.toNumber() || 0
   }
 
   const joinContest = async (contestId, price, entryToken) => {
@@ -166,7 +178,7 @@ export const Web3Provider = ({ children }) => {
       const tx = await contract.trade(tokenIn, tokenOut, amount, 1, gas)
       waitTransaction(tx)
     } catch (ex) {
-      enqueueSnackbar('Something went wrong. Try again.', { variant: 'error' });
+      enqueueSnackbar(`Something went wrong. "${ex?.data?.message}"`, { variant: 'error' });
     }
 
     update.setTradeInProgress(false)
@@ -212,6 +224,7 @@ export const Web3Provider = ({ children }) => {
         createTournament,
         networkSupported,
         disconnectWallet,
+        getAllowance
       }}
     >
       {children}

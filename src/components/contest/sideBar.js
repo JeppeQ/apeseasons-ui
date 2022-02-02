@@ -8,6 +8,7 @@ import Medal from '../../assets/images/medal.svg'
 import { Web3Context } from '../../contexts/web3Context'
 import { UpdateContext } from '../../contexts/updateContext'
 import * as playerApi from '../../api/player'
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 
 export default function SideBar(props) {
   const classes = useStyles()
@@ -17,6 +18,7 @@ export default function SideBar(props) {
   const [join, disableJoin] = useState(false)
   const [hasJoined, setHasJoined] = useState(false)
   const [claim, disableClaim] = useState(false)
+  const [hasApproved, setHasApproved] = useState(false)
 
   const { id, prizePool, placesPaid, ticketPrice, ticketTokenSymbol, finalized } = props.tournament
   const { rank, prize, prizeStatus } = props.player || {}
@@ -58,7 +60,7 @@ export default function SideBar(props) {
 
       </Box>
 
-      {props.signup && <Box display='flex' alignItems='center' flexDirection='column'>
+      {props.signup && <Box display='flex' alignItems='center' flexDirection='column' width={'90%'}>
 
         {/* <Typography variant='subtitle1'>Sign up bonus</Typography>
         <Typography variant='h5'>2 $APE</Typography> */}
@@ -68,9 +70,25 @@ export default function SideBar(props) {
             You have joined
           </Typography>
           : <Box width={'100%'} mt={5}>
-            <Button fullWidth variant='contained' color='secondary' onClick={joinTournament} disabled={join}>
-              approve & ENTER
+
+            <Button
+              fullWidth
+              variant='contained'
+              color='secondary'
+              onClick={joinTournament}
+              disabled={hasApproved}
+              endIcon={hasApproved ? <CheckCircleIcon /> : null}
+            >
+              approve
             </Button>
+            <Box mt={2} width={'100%'} />
+            <Button
+              fullWidth
+              variant='contained'
+              color='secondary' onClick={joinTournament} disabled={join}>
+              ENTER
+            </Button>
+
           </Box>
         }
       </Box>}
