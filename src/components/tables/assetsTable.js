@@ -9,7 +9,6 @@ import React, { useContext } from 'react'
 import NumberFormat from 'react-number-format'
 import { TokenContext } from '../../contexts/tokenContext'
 import Logos from '../../helpers/logos'
-import { getSignificantDecimals } from '../../helpers/utilities'
 import { CustomTableCell, styles } from './styles'
 
 const cells = [
@@ -70,7 +69,7 @@ export function AssetsTable(props) {
               </CustomTableCell>
 
               <CustomTableCell align={'right'}>
-                <NumberFormat value={assetValue > 0.001 ? token.amountFloat : 0} displayType={'text'} thousandSeparator decimalScale={getSignificantDecimals(tokenData?.price)} />
+                {assetValue > 0.001 ? token.amountRounded : 0}
               </CustomTableCell>
 
               <CustomTableCell align={'right'}>

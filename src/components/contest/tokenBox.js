@@ -1,29 +1,28 @@
+import WalletIcon from '@mui/icons-material/AccountBalanceWallet'
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
+import CurrencyIcon from '@mui/icons-material/MonetizationOn'
+import Box from '@mui/material/Box'
+import InputAdornment from '@mui/material/InputAdornment'
+import TextField from '@mui/material/TextField'
+import Typography from '@mui/material/Typography'
+import makeStyles from '@mui/styles/makeStyles'
 import React from 'react'
 import NumberFormat from 'react-number-format'
-
-import Box from '@mui/material/Box'
-import Typography from '@mui/material/Typography'
-import TextField from '@mui/material/TextField'
-import makeStyles from '@mui/styles/makeStyles';
-import WalletIcon from '@mui/icons-material/AccountBalanceWallet'
-import CurrencyIcon from '@mui/icons-material/MonetizationOn'
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
-import InputAdornment from '@mui/material/InputAdornment'
-
 import Logos from '../../helpers/logos'
-import { getSignificantDecimals } from '../../helpers/utilities'
+
+
 
 export default function TokenBox(props) {
   const playerToken = props.playerToken
   const classes = useStyles()
-  
+
   const handleChange = (e) => {
     props.setAmount(e.target.value)
   }
-  
+
   const handleBlur = (e) => {
-    if (e.target.value > playerToken?.amountFloat) {
-      props.setAmount(playerToken?.amountFloat)
+    if (e.target.value > playerToken?.amountRounded) {
+      props.setAmount(playerToken?.amountRounded)
     }
   }
 
@@ -60,10 +59,10 @@ export default function TokenBox(props) {
           endAdornment: (
             <React.Fragment>
               {!props.disabled && <Box>
-                <Box style={{ cursor: 'pointer' }} display='flex' alignItems='center' onClick={() => props.setAmount(playerToken ? playerToken.amountFloat : 0)}>
+                <Box style={{ cursor: 'pointer' }} display='flex' alignItems='center' onClick={() => props.setAmount(playerToken ? playerToken.amountRounded : 0)}>
                   <WalletIcon style={{ color: 'rgba(255, 255, 255, 0.6)', fontSize: 14, marginRight: '3px' }} />
                   <Typography variant='subtitle2'>
-                    <NumberFormat value={playerToken ? playerToken.amountFloat : 0} displayType={'text'} decimalScale={getSignificantDecimals(props.token?.price)} />
+                    {playerToken ? playerToken.amountRounded : 0}
                   </Typography>
                 </Box>
                 <Box display='flex' alignItems='center'>

@@ -19,7 +19,7 @@ export function SwapTokens(props) {
   const [selectToken, openSelectToken] = useState(false)
   const [fromToken, setFromToken] = useState()
   const [toToken, setToToken] = useState()
-  const [fromAmount, setFromAmount] = useState(props.token ? props.token.amountFloat : undefined)
+  const [fromAmount, setFromAmount] = useState(props.token ? props.token.amountRounded : undefined)
   const [toAmount, setToAmount] = useState()
 
   useEffect(() => {
@@ -35,15 +35,13 @@ export function SwapTokens(props) {
 
     setToAmount(fromAmount * fromToken.price / toToken.price)
 
-    const holding = props.playerTokens.find(t => t.tokenAddress.toUpperCase() === fromToken.address.toUpperCase())
-    if (fromAmount > holding.floatAmount) {
-      setFromAmount(holding.floatAmount)
-    }
-
-  }, [fromAmount, fromToken, toToken, props.playerTokens])
+  }, [fromAmount, fromToken, toToken])
 
   const swapTokens = () => {
-    web3.swapToken(props.id, fromToken.address, toToken.address, fromAmount)
+    const holding = props.playerTokens.find(t => t.tokenAddress.toUpperCase() === fromToken.address.toUpperCase())
+    
+    web3.swapToken(props.id, fromToken.address, toToken.address, Math.min(holding.amountFloat, fromAmount))
+    
     update.setTradeInProgress(true)
   }
 

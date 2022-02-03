@@ -9,7 +9,6 @@ import makeStyles from '@mui/styles/makeStyles'
 import clsx from 'clsx'
 import { motion } from 'framer-motion'
 import React, { useContext, useEffect, useState } from 'react'
-import ReactGA from 'react-ga'
 import { Link, useLocation } from "react-router-dom"
 import logo from '../assets/images/logo.png'
 import metamask from "../assets/images/metamask-icon.png"
@@ -50,8 +49,6 @@ function Header() {
 
   useEffect(() => {
     setActive(menuItems.find(item => location.pathname === item.path))
-    ReactGA.pageview(location.pathname)
-    ReactGA.set({ page: location.pathname })
   }, [location])
 
   if (!active || !active.name) {

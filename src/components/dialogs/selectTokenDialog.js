@@ -45,7 +45,7 @@ export function SelectTokenDialog(props) {
                 .filter(t => t.name.toLowerCase().includes(search.toLowerCase()) || t.symbol.toLowerCase().includes(search.toLowerCase()))
                 .map(token => {
                   const playerToken = props.playerTokens.find(t => t.tokenAddress.toUpperCase() === token.address.toUpperCase())
-                  return <ListItem button onClick={() => { props.select(token, playerToken?.amountFloat || 0); props.close() }} key={token.symbol}>
+                  return <ListItem button onClick={() => { props.select(token, playerToken?.amountRounded || 0); props.close() }} key={token.symbol}>
 
                     <ListItemAvatar>
                       <Avatar src={Logos[token.symbol]} imgProps={{ style: { objectFit: 'contain' } }} />
@@ -54,7 +54,7 @@ export function SelectTokenDialog(props) {
                     <ListItemText primary={token.symbol} secondary={token.name} />
 
                     <ListItemSecondaryAction>
-                      <Typography>{playerToken?.amountFloat || 0}</Typography>
+                      <Typography>{playerToken?.amountRounded || 0}</Typography>
                     </ListItemSecondaryAction>
 
                   </ListItem>
