@@ -77,7 +77,7 @@ export const Web3Provider = ({ children }) => {
   }
 
   const calculateGasPrice = (gasEstimation) => {
-    return BigInt(10 ** 6 * gasEstimation.toNumber() * 1.1)
+    return BigInt(10 ** 6 * gasEstimation.toNumber())
   }
 
   const connectWallet = async (initial) => {
