@@ -22,7 +22,7 @@ export const Web3Provider = ({ children }) => {
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   const update = useContext(UpdateContext)
 
-  const gasOptions = { gasLimit: 1000000, nonce: 45, value: 0 }
+  const gasOptions = { gasLimit: 500000, nonce: 45, value: 0 }
   const supportedChainIds = [137]
 
   useEffect(() => {
@@ -77,7 +77,7 @@ export const Web3Provider = ({ children }) => {
   }
 
   const calculateGasPrice = (gasEstimation) => {
-    return BigInt(10 ** 6 * gasEstimation.toNumber() * 2)
+    return BigInt(10 ** 6 * gasEstimation.toNumber() * 1.1)
   }
 
   const connectWallet = async (initial) => {
