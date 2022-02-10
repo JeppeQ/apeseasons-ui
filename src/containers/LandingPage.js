@@ -1,14 +1,12 @@
 import TwitterIcon from '@mui/icons-material/Twitter'
-import Box from '@mui/material/Box'
-import Button from '@mui/material/Button'
-import Typography from '@mui/material/Typography'
+import { Box, Button, Link, Typography } from '@mui/material'
 import makeStyles from '@mui/styles/makeStyles'
 import withStyles from '@mui/styles/withStyles'
 import { motion } from 'framer-motion'
 import { useLottie } from "lottie-react"
 import React from 'react'
 import { Scrollbars } from 'react-custom-scrollbars'
-import { Link } from "react-router-dom"
+import { Link as RouterLink } from "react-router-dom"
 import blockchainAnimation from '../assets/animations/blockchain.json'
 import claim_ss from '../assets/images/claim.png'
 import DiscordIcon from '../assets/images/discord.svg'
@@ -51,13 +49,18 @@ function LandingPage() {
 
           <Box className={classes.buttonsContainer}>
             <Box mb={1}>
-              <Link to='/contests'>
+              <RouterLink to='/contests'>
                 <CustomButton variant='contained' color='primary'>View contests</CustomButton>
-              </Link>
+              </RouterLink>
             </Box>
-            <CustomButton variant='contained' color='primary'>
-              <Typography style={{ fontSize: '21px' }}>Read docs</Typography>
-            </CustomButton>
+
+            <Link href='https://docs.apeseasons.com/' target={'_blank'}>
+              <CustomButton variant='contained' color='primary' onClick={() => { }}>
+                <Typography style={{ fontSize: '21px' }}>
+                  Read docs
+                </Typography>
+              </CustomButton>
+            </Link>
           </Box>
 
         </Box >
