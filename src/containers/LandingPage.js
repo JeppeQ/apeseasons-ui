@@ -1,5 +1,5 @@
 import TwitterIcon from '@mui/icons-material/Twitter'
-import { Box, Button, Link, Typography } from '@mui/material'
+import { Box, Button, IconButton, Link, Typography } from '@mui/material'
 import makeStyles from '@mui/styles/makeStyles'
 import withStyles from '@mui/styles/withStyles'
 import { motion } from 'framer-motion'
@@ -35,9 +35,22 @@ function LandingPage() {
                 </Box>
               </Box>
             </Box>
-            <Box>
-              <TwitterIcon style={{ marginRight: '20px' }} />
-              <img src={DiscordIcon} alt='' />
+            <Box display='flex' alignItems='center'>
+
+              <Link href='https://twitter.com/ApeSeasons' target='_blank'>
+                <IconButton>
+                  <TwitterIcon />
+                </IconButton>
+              </Link>
+
+              <Box ml={1} />
+              
+              <Link href='https://twitter.com/ApeSeasons' target='_blank'>
+                <IconButton sx={{ padding: '14px 15px' }}>
+                  <img src={DiscordIcon} alt='' width='19px' />
+                </IconButton>
+              </Link>
+
             </Box>
           </Box>
 
