@@ -35,7 +35,7 @@ function LandingPage() {
                 </Box>
               </Box>
             </Box>
-            <Box display='flex' alignItems='center'>
+            <Box display='flex' alignItems='baseline'>
 
               <Link href='https://twitter.com/ApeSeasons' target='_blank'>
                 <IconButton>
@@ -45,7 +45,7 @@ function LandingPage() {
 
               <Box ml={1} />
               
-              <Link href='https://twitter.com/ApeSeasons' target='_blank'>
+              <Link href='https://discord.gg/qqNjQaF3tt' target='_blank'>
                 <IconButton sx={{ padding: '14px 15px' }}>
                   <img src={DiscordIcon} alt='' width='19px' />
                 </IconButton>

@@ -1,4 +1,5 @@
 /* global BigInt */
+import { Box } from "@mui/system"
 import { BigNumber, ethers } from "ethers"
 import { useSnackbar } from 'notistack'
 import React, { createContext, useContext, useEffect, useState } from "react"
@@ -7,8 +8,8 @@ import { MetaMaskDialog } from "../components/dialogs/metamaskDialog"
 import tokenContracts from "../contracts/tokens.json"
 import tournamentContract from "../contracts/tournament.json"
 import tournamentFactoryContract from "../contracts/tournamentFactory.json"
-import { UpdateContext } from './updateContext'
 import { Polygon } from "../helpers/addresses"
+import { UpdateContext } from './updateContext'
 
 export const Web3Context = createContext()
 
@@ -38,10 +39,13 @@ export const Web3Provider = ({ children }) => {
 
   useEffect(() => {
     if (!networkSupported) {
-      enqueueSnackbar('Unsupported network. Please switch to Polygon.', {
+      enqueueSnackbar('Unsupported network.', {
         variant: 'error',
         persist: true,
-        anchorOrigin: { vertical: 'top', horizontal: 'center' }
+        anchorOrigin: { vertical: 'top', horizontal: 'center' },
+        action: <Box sx={{ borderBottom: '1px solid white', cursor: 'pointer', ml: '-10px' }} onClick={switchNetwork}>
+          Switch to Polygon
+        </Box>
       });
     } else {
       closeSnackbar()
@@ -78,6 +82,27 @@ export const Web3Provider = ({ children }) => {
 
   const calculateGasPrice = (gasEstimation) => {
     return BigInt(10 ** 6 * gasEstimation.toNumber())
+  }
+
+  const switchNetwork = () => {
+    if (!window.ethereum) {
+      return
+    }
+
+    window.ethereum.request({
+      method: "wallet_addEthereumChain",
+      params: [{
+        chainId: "0x89",
+        rpcUrls: ["https://polygon-rpc.com"],
+        chainName: "Polygon",
+        nativeCurrency: {
+          name: "MATIC",
+          symbol: "MATIC",
+          decimals: 18
+        },
+        blockExplorerUrls: ["https://polygonscan.com/"]
+      }]
+    });
   }
 
   const connectWallet = async (initial) => {
@@ -240,7 +265,8 @@ export const Web3Provider = ({ children }) => {
         networkSupported,
         disconnectWallet,
         getAllowance,
-        approveToken
+        approveToken,
+        switchNetwork
       }}
     >
       {children}
