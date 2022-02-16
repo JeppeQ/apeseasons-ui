@@ -30,7 +30,9 @@ export const mainTheme = createTheme({
       fontSize: 33
     },
     h4: {
-      fontSize: 35,
+      letterSpacing: '1px',
+      fontFamily: 'astrospace',
+      fontSize: 25
     },
     h5: {
       fontSize: 16,

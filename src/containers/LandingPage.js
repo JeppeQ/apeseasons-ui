@@ -44,7 +44,7 @@ function LandingPage() {
               </Link>
 
               <Box ml={1} />
-              
+
               <Link href='https://discord.gg/qqNjQaF3tt' target='_blank'>
                 <IconButton sx={{ padding: '14px 15px' }}>
                   <img src={DiscordIcon} alt='' width='19px' />
@@ -67,13 +67,13 @@ function LandingPage() {
               </RouterLink>
             </Box>
 
-            <Link href='https://docs.apeseasons.com/' target={'_blank'}>
-              <CustomButton variant='contained' color='primary' onClick={() => { }}>
+            <RouterLink to='/docs'>
+              <CustomButton variant='contained' color='primary'>
                 <Typography style={{ fontSize: '21px' }}>
                   Read docs
                 </Typography>
               </CustomButton>
-            </Link>
+            </RouterLink>
           </Box>
 
         </Box >
@@ -104,7 +104,7 @@ function SlideOne() {
       <Box className={classes.slideContainer} style={{ marginTop: 'calc(10vh - 50px)' }}>
         <Box className={classes.slideTextContainer}>
           <Typography variant='h2'>
-            Decentralized <Typography variant='h2'>investment contests on</Typography> Polygon
+            Decentralized <Box>investment contests on</Box> Polygon
           </Typography>
         </Box>
         <Box ml={5} width='40%'>

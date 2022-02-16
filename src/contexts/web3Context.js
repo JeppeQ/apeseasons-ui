@@ -10,6 +10,7 @@ import tournamentContract from "../contracts/tournament.json"
 import tournamentFactoryContract from "../contracts/tournamentFactory.json"
 import { Polygon } from "../helpers/addresses"
 import { UpdateContext } from './updateContext'
+import { useLocation } from "react-router-dom"
 
 export const Web3Context = createContext()
 
@@ -21,6 +22,7 @@ export const Web3Provider = ({ children }) => {
   const [forceAccount, setForceAccount] = useState(false)
   const [metaMaskDialog, openMetaMaskDialog] = useState(false)
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+  const location = useLocation()
   const update = useContext(UpdateContext)
 
   const gasOptions = { gasLimit: 500000, nonce: 45, value: 0 }
@@ -38,12 +40,12 @@ export const Web3Provider = ({ children }) => {
   }, [])
 
   useEffect(() => {
-    if (!networkSupported) {
+    if (!networkSupported && !['/', '/docs'].includes(location.pathname)) {
       enqueueSnackbar('Unsupported network.', {
         variant: 'error',
         persist: true,
         anchorOrigin: { vertical: 'top', horizontal: 'center' },
-        action: <Box sx={{ borderBottom: '1px solid white', cursor: 'pointer', ml: '-10px' }} onClick={switchNetwork}>
+        action: <Box sx={{ borderBottom: '1px solid white', cursor: 'pointer', ml: '-10px', mr: '10px' }} onClick={switchNetwork}>
           Switch to Polygon
         </Box>
       });
@@ -51,7 +53,7 @@ export const Web3Provider = ({ children }) => {
       closeSnackbar()
     }
     // eslint-disable-next-line
-  }, [networkSupported])
+  }, [networkSupported, location])
 
   const waitTransaction = async (tx, callback) => {
     const key = enqueueSnackbar('Awaiting confirmation...', {
