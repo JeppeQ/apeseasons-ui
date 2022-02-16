@@ -1,38 +1,66 @@
-import { Typography } from '@mui/material'
 import Box from '@mui/material/Box'
 import makeStyles from '@mui/styles/makeStyles'
 import { motion } from 'framer-motion'
 import React, { useState } from 'react'
 import { Scrollbars } from 'react-custom-scrollbars'
+import Actions from '../components/docs/Actions'
+import Contests from '../components/docs/Contests'
+import FAQ from '../components/docs/FAQ'
+import NavBar from '../components/docs/NavBar'
+import Overview from '../components/docs/Overview'
+import Roadmap from '../components/docs/Roadmap'
+import Scoring from '../components/docs/Scoring'
+import Team from '../components/docs/Team'
+import Tokenomics from '../components/docs/Tokenomics'
+import Trading from '../components/docs/Trading'
 import { fadeVariant } from '../helpers/variants'
+
+const pages = [
+  {
+    name: 'Overview',
+    category: 'Product',
+    content: <Overview />
+  },
+  {
+    name: 'Contests',
+    category: 'Product',
+    content: <Contests />
+  },
+  {
+    name: 'Trading',
+    category: 'Product',
+    content: <Trading />
+  },
+  {
+    name: 'Scoring & Rewards',
+    category: 'Product',
+    content: <Scoring />
+  },
+  {
+    name: 'Tokenomics',
+    category: 'Token',
+    content: <Tokenomics />
+  },
+  {
+    name: 'Team',
+    category: 'Other',
+    content: <Team />
+  },
+  {
+    name: 'Roadmap',
+    category: 'Other',
+    content: <Roadmap />
+  },
+  {
+    name: 'FAQ',
+    category: 'Other',
+    content: <FAQ />
+  },
+]
 
 function DocsPage() {
   const classes = useStyles()
-  const [active, setActive] = useState()
-
-  const section = (name) => {
-    return <Box sx={{ padding: '12px 17px 4px' }}>
-      <Typography color='primary' variant='h6'>
-        {name}
-      </Typography>
-    </Box>
-  }
-
-  const navLink = (name) => {
-    if (active === name) {
-      return <Box sx={{ padding: '12px 16px 7px', border: '1px solid rgba(255, 255, 255, 0.5)', borderRight: 'none', background: '#131142', cursor: 'pointer' }}>
-        <Typography fontFamily={'astrospace'} fontSize={'14px'} color={'white'}>
-          {name}
-        </Typography>
-      </Box>
-    }
-
-    return <Box sx={{ padding: '13px 17px 8px', '&:hover': { background: '#292840' }, cursor: 'pointer' }} onClick={() => setActive(name)}>
-      <Typography fontFamily={'astrospace'} fontSize={'14px'} color={'rgba(255, 255, 255, 0.7)'}>
-        {name}
-      </Typography>
-    </Box>
-  }
+  const [active, setActive] = useState('Overview')
 
   return (
     <Scrollbars
@@ -44,31 +72,13 @@ function DocsPage() {
 
           <Box className={classes.contentContainer}>
 
-            <Box className={classes.navBar}>
+            <NavBar active={active} setActive={setActive} />
 
-              <Box className={classes.logo}>
-                <Typography variant='h4'>
-                  Ape Docs
-                </Typography>
-              </Box>
+            <Box className={classes.content}>
 
-              <Box className={classes.navigationLinks}>
-                {section('product')}
-                {navLink('Overview')}
-                {navLink('Contests')}
-                {navLink('Trading')}
-                {navLink('Scoring')}
-                {section('Token')}
-                {navLink('Tokenomics')}
-                {section('Other')}
-                {navLink('Team')}
-                {navLink('Roadmap')}
-                {navLink('FAQ')}
-              </Box>
+              {pages.find(p => p.name === active)?.content}
 
-              <Box mt={1}>
-                {section('Powered by apes')}
-              </Box>
+              <Actions pages={pages} active={active} setActive={setActive} />
 
             </Box>
 
@@ -107,5 +117,9 @@ const useStyles = makeStyles({
   },
   navigationLinks: {
     paddingTop: '8px'
+  },
+  content: {
+    width: '810px',
+    margin: '24px 80px'
   }
 });
