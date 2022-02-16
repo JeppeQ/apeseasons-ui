@@ -48,7 +48,7 @@ function DocsPage() {
 
               <Box className={classes.logo}>
                 <Typography variant='h4'>
-                  Ape Seasons
+                  Ape Docs
                 </Typography>
               </Box>
 
