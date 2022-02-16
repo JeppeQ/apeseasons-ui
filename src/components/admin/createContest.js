@@ -6,12 +6,15 @@ import React, { useContext, useState } from 'react';
 import { Web3Context } from '../../contexts/web3Context';
 
 const entryTokens = ['DAI', 'MATIC']
+const rewardTokens = ['DAI', 'MATIC']
 
 export function CreateContest(props) {
   const classes = useStyles()
   const web3 = useContext(Web3Context)
 
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const [rewardAnchorEl, setRewardAnchorEl] = React.useState(null);
+
   const [name, setName] = useState('Test')
   const [entryFee, setEntryFee] = useState(0.01)
   const [apeTax, setApeTax] = useState(10)
@@ -20,8 +23,12 @@ export function CreateContest(props) {
   const [entryToken, setEntryToken] = useState('DAI')
   const [tradeRouteToken, setTradeRouteToken] = useState('ETH')
 
+  const [rewardAmount, setRewardAmount] = useState(2)
+  const [rewardToken, setRewardToken] = useState('DAI')
+
   const handleClose = () => {
     setAnchorEl(null);
+    setRewardAnchorEl(null);
   };
 
   const createTourney = () => {
@@ -66,6 +73,21 @@ export function CreateContest(props) {
 
       <TextField
         color='secondary'
+        label="Reward amount"
+        fullWidth
+        value={rewardAmount}
+        onChange={(event) => setRewardAmount(event.target.value)}
+        InputProps={{
+          endAdornment: <Box onClick={(event) => setRewardAnchorEl(event.currentTarget)}>
+            <InputAdornment position="start">
+              {rewardToken}
+            </InputAdornment>
+          </Box>,
+        }}
+      />
+
+      <TextField
+        color='secondary'
         label="Trade route token"
         fullWidth
         value={tradeRouteToken}
@@ -100,6 +122,19 @@ export function CreateContest(props) {
           </MenuItem>)
         )}
       </Menu>
+
+      <Menu
+        anchorEl={rewardAnchorEl}
+        open={Boolean(rewardAnchorEl)}
+        onClose={handleClose}
+      >
+        {React.Children.toArray(
+          rewardTokens.map(token => <MenuItem
+            onClick={() => { setRewardToken(token); handleClose(); }}>
+            {token}
+          </MenuItem>)
+        )}
+      </Menu>
     </Box>
   )
 }
@@ -110,7 +145,7 @@ const useStyles = makeStyles({
   container: {
     marginTop: '30px',
     width: '300px',
-    minHeight: '600px',
+    minHeight: '650px',
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',

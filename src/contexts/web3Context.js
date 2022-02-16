@@ -236,7 +236,7 @@ export const Web3Provider = ({ children }) => {
     }
   }
 
-  const createTournament = async (name, start, end, price, entryToken, apeTax, tradeRouteToken) => {
+  const createTournament = async (name, start, end, price, entryToken, apeTax, tradeRouteToken, rewardAmount, rewardToken) => {
     if (!provider) {
       return connectWallet()
     }
@@ -247,12 +247,24 @@ export const Web3Provider = ({ children }) => {
 
     const entry = BigInt(10 ** 18 * price)
     const apeFee = BigInt(10 ** 18 * apeTax)
+    const reward = BigInt(10 ** 18 * rewardAmount)
 
     const signer = await getSigner()
     const factory = new ethers.Contract(Polygon.tournamentFactory, tournamentFactoryContract.abi, signer)
 
-    await factory.createTournament(startBlock, endBlock, entry, apeFee, tokenContracts[entryToken], address, tokenContracts[tradeRouteToken],
-      Polygon.prizeStructure, Polygon.rewardDistributor, name, { ...gasOptions, gasPrice: BigInt(10 ** 12), gasLimit: 10000000 })
+    await factory.createTournament(
+      startBlock,
+      endBlock,
+      entry,
+      apeFee,
+      reward,
+      tokenContracts[entryToken],
+      tokenContracts[tradeRouteToken],
+      tokenContracts[rewardToken],
+      Polygon.prizeStructure,
+      name,
+      { ...gasOptions, gasPrice: BigInt(10 ** 12), gasLimit: 10000000 }
+    )
   }
 
   return (
