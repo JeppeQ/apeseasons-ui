@@ -21,6 +21,12 @@ function Contests() {
         </Typography>
       </Box>
 
+      <Box>
+        <Typography>
+          A contest is a smart contract deployed to the Polygon Network. 
+        </Typography>
+      </Box>
+
     </Box>
   )
 }

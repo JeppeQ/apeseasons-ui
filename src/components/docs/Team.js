@@ -1,6 +1,7 @@
 import { Typography } from '@mui/material'
 import Box from '@mui/material/Box'
 import React from 'react'
+import monkeys from '../../assets/images/moneyTeam.jpg'
 
 function Team() {
 
@@ -16,9 +17,7 @@ function Team() {
       <Box sx={classes.divider} />
 
       <Box>
-        <Typography color='primary' variant='h6'>
-          Purpose
-        </Typography>
+        <img src={monkeys} alt='team' width={'650px'} style={{ opacity: 0.9 }} />
       </Box>
 
     </Box>

@@ -63,7 +63,8 @@ export default NavBar
 const classes = {
   navBar: {
     width: '240px',
-    borderRight: '1px solid rgba(255, 255, 255, 0.5)'
+    borderRight: '1px solid rgba(255, 255, 255, 0.5)',
+    position: 'fixed',
   },
   logo: {
     display: 'flex',

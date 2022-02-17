@@ -119,7 +119,8 @@ const useStyles = makeStyles({
     paddingTop: '8px'
   },
   content: {
-    width: '810px',
-    margin: '24px 80px'
+    width: '1050px',
+    margin: '24px 80px',
+    paddingLeft: '240px'
   }
 });
