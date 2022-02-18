@@ -1,8 +1,24 @@
-import { Typography } from '@mui/material'
+import { Table, TableBody, TableCell, TableHead, TableRow, Typography } from '@mui/material'
 import Box from '@mui/material/Box'
 import React from 'react'
 
-function Contests() {
+const cells = [
+  { id: 'type', label: 'Type', align: 'left' },
+  { id: 'players', label: 'Max Players', align: 'center' },
+  { id: 'prize', label: 'Prize Structure', align: 'left' },
+  { id: 'description', label: 'Description', align: 'left' },
+]
+
+const rows = [
+  {
+    type: 'Classic',
+    players: '100',
+    prize: 'Standard',
+    description: 'Trade freely between the available tokens. Players are ranked by the value of their tokens.'
+  }
+]
+
+function Contests(props) {
 
   return (
     <Box sx={classes.container}>
@@ -17,16 +33,62 @@ function Contests() {
 
       <Box>
         <Typography color='primary' variant='h6'>
-          Type of contests
+          Overview of contests
         </Typography>
       </Box>
 
-      <Box>
+      <Box mt={1}>
         <Typography>
-          A contest is a smart contract deployed to the Polygon Network. 
+          The following table gives an overview of the different types and variations of contests on Ape Seasons.
+          Table will be updated as more types are added.
         </Typography>
       </Box>
 
+      <Box mt={3}>
+        <Table sx={{ border: '1px solid grey' }} size='medium'>
+          <TableHead>
+            <TableRow style={{ borderBottom: '1px solid grey' }}>
+              {cells.map(cell => (
+                <TableCell key={cell.id} align={cell.align}>
+                  <Box>
+                    <Typography variant='body1' color='textSecondary' noWrap>{cell.label}</Typography>
+                  </Box>
+                </TableCell>
+              ))}
+            </TableRow>
+          </TableHead>
+
+          <TableBody>
+
+            {React.Children.toArray(
+              rows.map(row => (
+                <TableRow>
+
+                  <TableCell>
+                    {row.type}
+                  </TableCell>
+
+                  <TableCell align='center'>
+                    {row.players}
+                  </TableCell>
+
+                  <TableCell>
+                    <Box onClick={() => props.setActive('Scoring & Rewards')} sx={classes.link}>
+                      {row.prize}
+                    </Box>
+                  </TableCell>
+
+                  <TableCell>
+                    {row.description}
+                  </TableCell>
+
+                </TableRow>
+              ))
+            )}
+
+          </TableBody>
+        </Table>
+      </Box>
     </Box>
   )
 }
@@ -53,4 +115,14 @@ const classes = {
       backgroundImage: 'linear-gradient(to right, rgba(255, 255, 255, 0.7), transparent)'
     }
   },
+  link: {
+    paddingTop: '3px',
+    cursor: 'pointer',
+    fontSize: '12px',
+    fontFamily: 'astrospace',
+    color: '#058665',
+    "&:hover": {
+      color: 'rgba(24, 113, 43, 0.9)'
+    }
+  }
 };

@@ -15,52 +15,52 @@ import Tokenomics from '../components/docs/Tokenomics'
 import Trading from '../components/docs/Trading'
 import { fadeVariant } from '../helpers/variants'
 
-const pages = [
-  {
-    name: 'Overview',
-    category: 'Product',
-    content: <Overview />
-  },
-  {
-    name: 'Contests',
-    category: 'Product',
-    content: <Contests />
-  },
-  {
-    name: 'Trading',
-    category: 'Product',
-    content: <Trading />
-  },
-  {
-    name: 'Scoring & Rewards',
-    category: 'Product',
-    content: <Scoring />
-  },
-  {
-    name: 'Tokenomics',
-    category: 'Token',
-    content: <Tokenomics />
-  },
-  {
-    name: 'Team',
-    category: 'Other',
-    content: <Team />
-  },
-  {
-    name: 'Roadmap',
-    category: 'Other',
-    content: <Roadmap />
-  },
-  {
-    name: 'FAQ',
-    category: 'Other',
-    content: <FAQ />
-  },
-]
-
 function DocsPage() {
   const classes = useStyles()
   const [active, setActive] = useState('Overview')
+
+  const pages = [
+    {
+      name: 'Overview',
+      category: 'Product',
+      content: <Overview />
+    },
+    {
+      name: 'Contests',
+      category: 'Product',
+      content: <Contests setActive={setActive} />
+    },
+    {
+      name: 'Trading',
+      category: 'Product',
+      content: <Trading />
+    },
+    {
+      name: 'Scoring & Rewards',
+      category: 'Product',
+      content: <Scoring />
+    },
+    {
+      name: 'Tokenomics',
+      category: 'Token',
+      content: <Tokenomics />
+    },
+    {
+      name: 'Team',
+      category: 'Other',
+      content: <Team />
+    },
+    {
+      name: 'Roadmap',
+      category: 'Other',
+      content: <Roadmap />
+    },
+    {
+      name: 'FAQ',
+      category: 'Other',
+      content: <FAQ />
+    },
+  ]
 
   return (
     <Scrollbars
