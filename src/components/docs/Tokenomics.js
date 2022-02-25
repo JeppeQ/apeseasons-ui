@@ -17,7 +17,7 @@ function Tokenomics() {
 
       <Box>
         <Typography color='primary' variant='h6'>
-          Purpose
+          TO BE ANNOUNCED
         </Typography>
       </Box>
 
