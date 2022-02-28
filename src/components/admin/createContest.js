@@ -32,7 +32,7 @@ export function CreateContest(props) {
   };
 
   const createTourney = () => {
-    web3.createTournament(name, start, end, entryFee, entryToken, apeTax, tradeRouteToken)
+    web3.createTournament(name, start, end, entryFee, entryToken, apeTax, tradeRouteToken, rewardAmount, rewardToken)
   }
 
   return (

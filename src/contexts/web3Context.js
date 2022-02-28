@@ -246,7 +246,7 @@ export const Web3Provider = ({ children }) => {
     const endBlock = currentBlock + Math.round(end.diffNow('seconds').seconds / 2.1)
 
     const entry = BigInt(10 ** 18 * price)
-    const apeFee = BigInt(10 ** 18 * apeTax)
+    const apeFee = BigInt(10 ** 7 * apeTax)
     const reward = BigInt(10 ** 18 * rewardAmount)
 
     const signer = await getSigner()
@@ -263,7 +263,7 @@ export const Web3Provider = ({ children }) => {
       tokenContracts[rewardToken],
       Polygon.prizeStructure,
       name,
-      { ...gasOptions, gasPrice: BigInt(10 ** 12), gasLimit: 10000000 }
+      { ...gasOptions, gasPrice: BigInt(10 ** 11), gasLimit: 10000000 }
     )
   }
 
