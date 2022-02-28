@@ -86,7 +86,7 @@ function Scoring() {
       </Box>
 
       <Box mt={3}>
-        <Typography color='secondary' variant='h6'>
+        <Typography color='secondary' variant='h6' fontSize={'14px'}>
           standard distribution
         </Typography>
       </Box>

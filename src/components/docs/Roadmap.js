@@ -15,10 +15,61 @@ function Roadmap() {
 
       <Box sx={classes.divider} />
 
-      <Box>
-        <Typography color='primary' variant='h6'>
-          Purpose
-        </Typography>
+      <Box sx={classes.boxContainer}>
+        <Box sx={classes.box}>
+          <Typography variant='h5' color='primary' fontSize='20px' sx={{ px: 2.5 }}>
+            Q1 2022
+          </Typography>
+
+          <ul>
+            <li>
+              <Typography fontSize={'14px'}>
+                Launch v. 0.1
+              </Typography>
+            </li>
+          </ul>
+        </Box>
+
+        <Box sx={classes.box}>
+          <Typography variant='h5' color='primary' fontSize='20px' sx={{ px: 2.5 }}>
+            Q2 2022
+          </Typography>
+
+          <Box>
+            <ul>
+              <li>
+                <Typography fontSize={'14px'}>
+                  $APE token
+                </Typography>
+              </li>
+              <li>
+                <Typography fontSize={'14px'}>
+                  Leaderboards
+                </Typography>
+              </li>
+              <li>
+                <Typography fontSize={'14px'}>
+                  New types of contests
+                </Typography>
+              </li>
+            </ul>
+          </Box>
+        </Box>
+
+        <Box sx={classes.box}>
+          <Typography variant='h5' color='primary' fontSize='20px' sx={{ px: 2.5 }}>
+            Q3 2022
+          </Typography>
+
+          <ul>
+            <li>
+              <Typography fontSize={'14px'}>
+                Multi-chain
+              </Typography>
+            </li>
+          </ul>
+        </Box>
+
       </Box>
 
     </Box>
@@ -47,4 +98,18 @@ const classes = {
       backgroundImage: 'linear-gradient(to right, rgba(255, 255, 255, 0.7), transparent)'
     }
   },
+  boxContainer: {
+    width: '100%',
+    display: 'flex',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between'
+  },
+  box: {
+    width: '31%',
+    height: '200px',
+    border: '1px solid rgba(255, 255, 255, 0.7)',
+    borderRadius: '5px',
+    py: 1,
+    mb: 3
+  }
 };
