@@ -103,9 +103,9 @@ export default function ContestOverview(props) {
               </Typography>
             </Box>
 
-            {!finalized && <PendingIcon />}
-            {finalized && prizeStatus === 'claimed' && <CheckCircleIcon color='secondary' />}
-            {finalized && prize > 0 && prizeStatus === 'unclaimed' && <PendingActionsIcon color='info' />}
+            {finalized !== 'COMPLETED' && <PendingIcon />}
+            {finalized === 'COMPLETED' && prizeStatus === 'claimed' && <CheckCircleIcon color='secondary' />}
+            {finalized === 'COMPLETED'  && prize > 0 && prizeStatus === 'unclaimed' && <PendingActionsIcon color='info' />}
           </Box>
         </Box>
       }
