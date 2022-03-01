@@ -25,7 +25,7 @@ export const Web3Provider = ({ children }) => {
   const location = useLocation()
   const update = useContext(UpdateContext)
 
-  const gasOptions = { gasLimit: 500000, nonce: 45, value: 0 }
+  const gasOptions = { gasLimit: 500000, value: 0 }
   const supportedChainIds = [137]
 
   useEffect(() => {
